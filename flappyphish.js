@@ -13,19 +13,19 @@ let isGameOver = false;
 
 // Load images
 let bg = new Image();
-bg.src = "background.png";
+bg.src = "underwater.png";
 bg.onload = () => console.log("Background image loaded");
 
 let obstacleTop = new Image();
-obstacleTop.src = "obstacleTop.png";
+obstacleTop.src = "computerpiletop.png";
 obstacleTop.onload = () => console.log("Top obstacle image loaded");
 
 let obstacleBottom = new Image();
-obstacleBottom.src = "obstacleBottom.png";
+obstacleBottom.src = "computerpiletop.png";
 obstacleBottom.onload = () => console.log("Bottom obstacle image loaded");
 
 let fg = new Image();
-fg.src = "foreground.png";
+fg.src = "seafloor.png";
 fg.onload = () => console.log("Foreground image loaded");
 
 let fish = new Image();
