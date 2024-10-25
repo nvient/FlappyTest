@@ -2,12 +2,17 @@
 const canvas = document.getElementById("flappyCanvas");
 const ctx = canvas.getContext("2d");
 
-// Game variables
+// Reference game dimensions
+const referenceWidth = 1198;
+const referenceHeight = 797;
+
+// Responsive variables
+let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
 let fishX = 50;
 let fishY = 150;
-let gravity = 1.5; // Controls fall speed
-let jumpHeight = 25; // Controls jump height
-let gap = 120;
+let gravity = 1.5;
+let jumpHeight = 25;
+let gap = 150;
 let obstacles = [];
 let score = 0;
 let isGameOver = false;
@@ -15,27 +20,22 @@ let isGameOver = false;
 // Load images
 let bg = new Image();
 bg.src = "underwater.png";
-bg.onload = () => console.log("Background image loaded");
 
 let obstacleTop = new Image();
 obstacleTop.src = "computerpiletop.png";
-obstacleTop.onload = () => console.log("Obstacle image loaded");
 
-let obstacleBottom = obstacleTop; // Using the same image for bottom obstacle
+let obstacleBottom = obstacleTop;
 
 let fg = new Image();
 fg.src = "seafloor.png";
-fg.onload = () => console.log("Foreground image loaded");
 
 let fish = new Image();
 fish.src = "fish.png";
-fish.onload = () => console.log("Fish image loaded");
 
 // Track loaded images
 let imagesLoaded = 0;
-const totalImages = 4; // Total images to load (using obstacleTop for both)
+const totalImages = 4;
 
-// Increment imagesLoaded counter
 function imageLoaded() {
   imagesLoaded++;
   if (imagesLoaded === totalImages) {
@@ -49,6 +49,25 @@ obstacleTop.onload = imageLoaded;
 fg.onload = imageLoaded;
 fish.onload = imageLoaded;
 
+// Resize canvas based on window size
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  scaleX = canvas.width / referenceWidth;
+  scaleY = canvas.height / referenceHeight;
+
+  // Scale elements based on canvas size
+  fishWidth = 50 * scaleX;
+  fishHeight = 38 * scaleY;
+  obstacleWidth = 80 * scaleX;
+  obstacleHeight = 300 * scaleY;
+  fgHeight = 80 * scaleY;
+
+  // Adjust fishY to stay in view
+  fishY = Math.min(fishY, canvas.height - fgHeight - fishHeight);
+}
+
 // Function to display a random fact on collision
 function displayFact() {
   const facts = [
@@ -60,16 +79,25 @@ function displayFact() {
   document.getElementById("fact").innerText = randomFact;
 }
 
-// Initialize the first obstacle
-obstacles[0] = {
-  x: canvas.width,
-  y: Math.floor(Math.random() * obstacleTop.height) - obstacleTop.height
-};
+// Function to reset game variables and prepare for a new game
+function resetGame() {
+  fishY = 150;
+  obstacles = [
+    {
+      x: canvas.width,
+      y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
+    }
+  ];
+  score = 0;
+  isGameOver = false;
+}
 
 // Function to move fish up
 document.addEventListener("keydown", moveUp);
 function moveUp() {
-  fishY -= jumpHeight;
+  if (!isGameOver) {
+    fishY -= jumpHeight * scaleY;
+  }
 }
 
 // Main draw function
@@ -77,61 +105,62 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw background
-  ctx.drawImage(bg, 0, 0);
+  ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
   // Draw and update obstacles
   for (let i = 0; i < obstacles.length; i++) {
-    let constant = obstacleTop.height + gap;
-    ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y);
-    ctx.drawImage(obstacleBottom, obstacles[i].x, obstacles[i].y + constant);
+    let constant = obstacleHeight + gap * scaleY;
+    ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
+    ctx.drawImage(obstacleBottom, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
     // Move obstacles to the left
-    obstacles[i].x--;
+    obstacles[i].x -= 2 * scaleX;
 
     // Add a new obstacle
-    if (obstacles[i].x === 125) {
+    if (obstacles[i].x === 125 * scaleX) {
       obstacles.push({
         x: canvas.width,
-        y: Math.floor(Math.random() * obstacleTop.height) - obstacleTop.height
+        y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
       });
     }
 
     // Check for collision with obstacles or ground
     if (
-      (fishX + fish.width >= obstacles[i].x &&
-        fishX <= obstacles[i].x + obstacleTop.width &&
-        (fishY <= obstacles[i].y + obstacleTop.height ||
-          fishY + fish.height >= obstacles[i].y + constant)) ||
-      fishY + fish.height >= canvas.height - fg.height
+      (fishX + fishWidth >= obstacles[i].x &&
+        fishX <= obstacles[i].x + obstacleWidth &&
+        (fishY <= obstacles[i].y + obstacleHeight ||
+          fishY + fishHeight >= obstacles[i].y + constant)) ||
+      fishY + fishHeight >= canvas.height - fgHeight
     ) {
       if (!isGameOver) {
         displayFact();
         isGameOver = true;
-        setTimeout(() => location.reload(), 1000);
+        setTimeout(() => document.getElementById("startButton").style.display = "block", 1000);
+        return; // Stop the draw loop on game over
       }
     }
 
     // Increase score when passing an obstacle
-    if (obstacles[i].x === 5) {
+    if (obstacles[i].x === 5 * scaleX) {
       score++;
     }
   }
 
   // Draw foreground
-  ctx.drawImage(fg, 0, canvas.height - fg.height);
+  ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
 
   // Draw fish and apply gravity
-  ctx.drawImage(fish, fishX, fishY);
-  fishY += gravity; // Apply gravity to make the fish fall
+  ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
+  fishY += gravity * scaleY;
 
   // Display score
   ctx.fillStyle = "#000";
-  ctx.font = "20px Verdana";
-  ctx.fillText("Score: " + score, 10, canvas.height - 20);
+  ctx.font = `${20 * scaleY}px Verdana`;
+  ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
   // Continue animation if game is not over
   if (!isGameOver) {
-    requestAnimationFrame(draw); // Continuously calls draw() for animation
+    requestAnimationFrame(draw);
   }
 }
 
@@ -139,9 +168,14 @@ function draw() {
 function startGame() {
   if (imagesLoaded === totalImages) {
     document.getElementById("startButton").style.display = "none";
+    resetGame(); // Reset game variables
     draw(); // Start the game loop
   }
 }
+
+// Resize canvas initially and on window resize
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 // Attach startGame to button
 document.getElementById("startButton").onclick = startGame;
