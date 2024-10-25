@@ -13,40 +13,46 @@ let isGameOver = false;
 
 // Load images
 let bg = new Image();
-bg.src = "underwater.png";
+bg.src = "background.png";
+bg.onload = () => console.log("Background image loaded");
 
 let obstacleTop = new Image();
-obstacleTop.src = "computerpiletop.png";
+obstacleTop.src = "obstacleTop.png";
+obstacleTop.onload = () => console.log("Top obstacle image loaded");
 
 let obstacleBottom = new Image();
-obstacleBottom.src = "computerpiletop.png";
+obstacleBottom.src = "obstacleBottom.png";
+obstacleBottom.onload = () => console.log("Bottom obstacle image loaded");
 
 let fg = new Image();
-fg.src = "seafloor.png";
+fg.src = "foreground.png";
+fg.onload = () => console.log("Foreground image loaded");
 
 let fish = new Image();
 fish.src = "fish.png";
+fish.onload = () => console.log("Fish image loaded");
 
-// Flag to track if all images are loaded
+// Track loaded images
 let imagesLoaded = 0;
 const totalImages = 5;
 
-// Increment imagesLoaded when each image finishes loading
+// Increment imagesLoaded counter
 function imageLoaded() {
   imagesLoaded++;
+  console.log(`Images loaded: ${imagesLoaded}/${totalImages}`);
   if (imagesLoaded === totalImages) {
     document.getElementById("startButton").disabled = false;
   }
 }
 
-// Attach onload to each image
+// Attach onload listeners to count loaded images
 bg.onload = imageLoaded;
 obstacleTop.onload = imageLoaded;
 obstacleBottom.onload = imageLoaded;
 fg.onload = imageLoaded;
 fish.onload = imageLoaded;
 
-// Function to display a random fact on collision
+// Display a random fact on collision
 function displayFact() {
   const facts = [
     "Fact 1: Phishing is dangerous!",
@@ -57,7 +63,7 @@ function displayFact() {
   document.getElementById("fact").innerText = randomFact;
 }
 
-// Initialize first obstacle
+// Initialize the first obstacle
 obstacles[0] = {
   x: canvas.width,
   y: Math.floor(Math.random() * obstacleTop.height) - obstacleTop.height
@@ -71,13 +77,13 @@ function moveUp() {
 
 // Main draw function
 function draw() {
-  // Clear the canvas before each frame
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  console.log("Drawing frame...");
 
   // Draw background
   ctx.drawImage(bg, 0, 0);
 
-  // Draw and update obstacles
+  // Draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
     let constant = obstacleTop.height + gap;
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y);
@@ -86,7 +92,7 @@ function draw() {
     // Move obstacles to the left
     obstacles[i].x--;
 
-    // Add new obstacle when one reaches a certain position
+    // Add a new obstacle
     if (obstacles[i].x === 125) {
       obstacles.push({
         x: canvas.width,
@@ -94,7 +100,7 @@ function draw() {
       });
     }
 
-    // Check for collision with obstacles or ground
+    // Collision detection
     if (
       fishX + fish.width >= obstacles[i].x &&
       fishX <= obstacles[i].x + obstacleTop.width &&
@@ -105,11 +111,11 @@ function draw() {
       if (!isGameOver) {
         displayFact();
         isGameOver = true;
-        setTimeout(() => location.reload(), 1000); // Delay before reload
+        setTimeout(() => location.reload(), 1000);
       }
     }
 
-    // Increase score when passing an obstacle
+    // Score update
     if (obstacles[i].x === 5) {
       score++;
     }
@@ -121,7 +127,7 @@ function draw() {
   // Draw fish
   ctx.drawImage(fish, fishX, fishY);
 
-  // Apply gravity to the fish
+  // Apply gravity
   fishY += gravity;
 
   // Display score
@@ -129,19 +135,19 @@ function draw() {
   ctx.font = "20px Verdana";
   ctx.fillText("Score: " + score, 10, canvas.height - 20);
 
-  // Continue animation if game is not over
   if (!isGameOver) {
     requestAnimationFrame(draw);
   }
 }
 
-// Start game function triggered by "Start Game" button
+// Start game when button is clicked
 function startGame() {
   if (imagesLoaded === totalImages) {
-    document.getElementById("startButton").style.display = "none"; // Hide start button
-    draw(); // Start the game loop
+    console.log("Starting game...");
+    document.getElementById("startButton").style.display = "none";
+    draw();
   }
 }
 
-// Attach startGame to the button
+// Attach startGame to button
 document.getElementById("startButton").onclick = startGame;
