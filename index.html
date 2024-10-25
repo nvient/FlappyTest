@@ -8,14 +8,19 @@
     body, html {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Prevents scrolling */
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     canvas {
       display: block;
-      margin: 0 auto;
       border: 1px solid #000;
-      width: 100%;
-      height: 100%;
+      max-width: 800px; /* Set max width */
+      max-height: 600px; /* Set max height */
+      width: 100%; /* Adjust to fit within viewport */
+      height: 100%; /* Adjust to fit within viewport */
     }
     #startButton {
       display: block;
