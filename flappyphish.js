@@ -51,6 +51,9 @@ function displayFact() {
 
 // Main game drawing function
 function draw() {
+  // Clear the canvas before each draw to reduce “glitches”
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   // Draw background
   ctx.drawImage(bg, 0, 0);
 
@@ -60,9 +63,10 @@ function draw() {
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y);
     ctx.drawImage(obstacleBottom, obstacles[i].x, obstacles[i].y + constant);
 
-    obstacles[i].x--;
+    // Move obstacles
+    obstacles[i].x -= 2;
 
-    // Add a new obstacle when one moves past a certain point
+    // Spawn a new obstacle with a controlled interval
     if (obstacles[i].x === 125) {
       obstacles.push({
         x: canvas.width,
@@ -70,22 +74,13 @@ function draw() {
       });
     }
 
-    // Check for collision
-    if (
-      (fishX + fish.width >= obstacles[i].x &&
-        fishX <= obstacles[i].x + obstacleTop.width &&
-        (fishY <= obstacles[i].y + obstacleTop.height ||
-          fishY + fish.height >= obstacles[i].y + constant)) ||
-      fishY + fish.height >= canvas.height - fg.height
-    ) {
-      displayFact();
-      location.reload(); // Reload game on collision
+    // Limit the obstacle count for smoother gameplay
+    if (obstacles.length > 5) {
+      obstacles.shift();
     }
 
-    // Increase score when passing an obstacle
-    if (obstacles[i].x === 5) {
-      score++;
-    }
+    // Check for collision
+    checkCollision();
   }
 
   // Draw foreground
@@ -93,7 +88,7 @@ function draw() {
 
   // Draw fish
   ctx.drawImage(fish, fishX, fishY);
-
+  
   // Apply gravity
   fishY += gravity;
 
@@ -101,6 +96,7 @@ function draw() {
   ctx.fillStyle = "#000";
   ctx.font = "20px Verdana";
   ctx.fillText("Score : " + score, 10, canvas.height - 20);
+}
 
   requestAnimationFrame(draw);
 }
