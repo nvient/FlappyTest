@@ -11,7 +11,7 @@ const obstacleBottom = new Image();
 
 fish.src = "images/fish.png"; // The fish image you uploaded
 bg.src = "images/underwater.png"; // The underwater background you uploaded
-fg.src = "images/underwater.png"; // Sea floor - reuse the background for simplicity, or replace with another image
+fg.src = "images/seafloor.png"; // Sea floor 
 obstacleTop.src = "images/computerpiletop.png"; // The tech obstacle image (top pile of tech)
 obstacleBottom.src = "images/computerpiletop.png"; // Reusing the same tech image for the bottom pile of tech
 
