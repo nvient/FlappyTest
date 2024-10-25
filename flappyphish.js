@@ -13,7 +13,7 @@ let isGameOver = false;
 
 // Load images
 let bg = new Image();
-bg.src = "underwater.png"; // Ensure these paths are correct
+bg.src = "underwater.png";
 
 let obstacleTop = new Image();
 obstacleTop.src = "computerpiletop.png";
@@ -26,6 +26,25 @@ fg.src = "seafloor.png";
 
 let fish = new Image();
 fish.src = "fish.png";
+
+// Flag to track if all images are loaded
+let imagesLoaded = 0;
+const totalImages = 5;
+
+// Increment imagesLoaded when each image finishes loading
+function imageLoaded() {
+  imagesLoaded++;
+  if (imagesLoaded === totalImages) {
+    document.getElementById("startButton").disabled = false;
+  }
+}
+
+// Attach onload to each image
+bg.onload = imageLoaded;
+obstacleTop.onload = imageLoaded;
+obstacleBottom.onload = imageLoaded;
+fg.onload = imageLoaded;
+fish.onload = imageLoaded;
 
 // Function to display a random fact on collision
 function displayFact() {
@@ -116,7 +135,13 @@ function draw() {
   }
 }
 
-// Start the game loop
-bg.onload = function() {
-  draw(); // Start game once background loads
-};
+// Start game function triggered by "Start Game" button
+function startGame() {
+  if (imagesLoaded === totalImages) {
+    document.getElementById("startButton").style.display = "none"; // Hide start button
+    draw(); // Start the game loop
+  }
+}
+
+// Attach startGame to the button
+document.getElementById("startButton").onclick = startGame;
