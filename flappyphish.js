@@ -1,44 +1,33 @@
-// Set up canvas and context
+// Get canvas and context
 const canvas = document.getElementById("flappyCanvas");
 const ctx = canvas.getContext("2d");
-
-// Load images
-let bg = new Image();
-bg.src = "underwater.png"; // Replace with the correct path
-
-let obstacleTop = new Image();
-obstacleTop.src = "computerpiletop.png"; // Replace with the correct path
-
-let obstacleBottom = new Image();
-obstacleBottom.src = "computerpiletop.png"; // Replace with the correct path
-
-let fg = new Image();
-fg.src = "seafloor.png"; // Replace with the correct path
-
-let fish = new Image();
-fish.src = "fish.png"; // Replace with the correct path
 
 // Game variables
 let fishX = 50;
 let fishY = 150;
 let gravity = 1.5;
-let gap = 100;
+let gap = 120;
 let obstacles = [];
 let score = 0;
+let isGameOver = false;
 
-// Initialize first obstacle
-obstacles[0] = {
-  x: canvas.width,
-  y: Math.floor(Math.random() * obstacleTop.height) - obstacleTop.height
-};
+// Load images
+let bg = new Image();
+bg.src = "underwater.png"; // Ensure these paths are correct
 
-// Function to move fish up on spacebar
-document.addEventListener("keydown", moveUp);
-function moveUp() {
-  fishY -= 25; // Adjust jump height as needed
-}
+let obstacleTop = new Image();
+obstacleTop.src = "computerpiletop.png";
 
-// Function to display random fact on collision
+let obstacleBottom = new Image();
+obstacleBottom.src = "computerpiletop.png";
+
+let fg = new Image();
+fg.src = "seafloor.png";
+
+let fish = new Image();
+fish.src = "fish.png";
+
+// Function to display a random fact on collision
 function displayFact() {
   const facts = [
     "Fact 1: Phishing is dangerous!",
@@ -49,9 +38,21 @@ function displayFact() {
   document.getElementById("fact").innerText = randomFact;
 }
 
-// Main game drawing function
+// Initialize first obstacle
+obstacles[0] = {
+  x: canvas.width,
+  y: Math.floor(Math.random() * obstacleTop.height) - obstacleTop.height
+};
+
+// Move fish up on spacebar press
+document.addEventListener("keydown", moveUp);
+function moveUp() {
+  fishY -= 25;
+}
+
+// Main draw function
 function draw() {
-  // Clear the canvas before each draw to reduce “glitches”
+  // Clear the canvas before each frame
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw background
@@ -63,10 +64,10 @@ function draw() {
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y);
     ctx.drawImage(obstacleBottom, obstacles[i].x, obstacles[i].y + constant);
 
-    // Move obstacles
-    obstacles[i].x -= 2;
+    // Move obstacles to the left
+    obstacles[i].x--;
 
-    // Spawn a new obstacle with a controlled interval
+    // Add new obstacle when one reaches a certain position
     if (obstacles[i].x === 125) {
       obstacles.push({
         x: canvas.width,
@@ -74,13 +75,25 @@ function draw() {
       });
     }
 
-    // Limit the obstacle count for smoother gameplay
-    if (obstacles.length > 5) {
-      obstacles.shift();
+    // Check for collision with obstacles or ground
+    if (
+      fishX + fish.width >= obstacles[i].x &&
+      fishX <= obstacles[i].x + obstacleTop.width &&
+      (fishY <= obstacles[i].y + obstacleTop.height ||
+        fishY + fish.height >= obstacles[i].y + constant) ||
+      fishY + fish.height >= canvas.height - fg.height
+    ) {
+      if (!isGameOver) {
+        displayFact();
+        isGameOver = true;
+        setTimeout(() => location.reload(), 1000); // Delay before reload
+      }
     }
 
-    // Check for collision
-    checkCollision();
+    // Increase score when passing an obstacle
+    if (obstacles[i].x === 5) {
+      score++;
+    }
   }
 
   // Draw foreground
@@ -88,18 +101,22 @@ function draw() {
 
   // Draw fish
   ctx.drawImage(fish, fishX, fishY);
-  
-  // Apply gravity
+
+  // Apply gravity to the fish
   fishY += gravity;
 
   // Display score
   ctx.fillStyle = "#000";
   ctx.font = "20px Verdana";
-  ctx.fillText("Score : " + score, 10, canvas.height - 20);
+  ctx.fillText("Score: " + score, 10, canvas.height - 20);
+
+  // Continue animation if game is not over
+  if (!isGameOver) {
+    requestAnimationFrame(draw);
+  }
 }
 
-  requestAnimationFrame(draw);
-}
-
-// Start the game
-draw();
+// Start the game loop
+bg.onload = function() {
+  draw(); // Start game once background loads
+};
