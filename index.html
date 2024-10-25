@@ -5,11 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flappy Phish</title>
   <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevents scrolling */
+    }
     canvas {
-      background-color: #87CEEB;
       display: block;
       margin: 0 auto;
       border: 1px solid #000;
+      width: 100%;
+      height: 100%;
     }
     #startButton {
       display: block;
@@ -21,7 +27,7 @@
   </style>
 </head>
 <body>
-  <canvas id="flappyCanvas" width="1198" height="797"></canvas>
+  <canvas id="flappyCanvas"></canvas>
   <div id="fact" style="text-align: center; font-family: Arial, sans-serif; font-size: 18px; margin-top: 20px;"></div>
   <button id="startButton">Start Game</button>
   <script src="flappyphish.js"></script>
