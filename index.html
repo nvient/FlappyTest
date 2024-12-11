@@ -8,33 +8,64 @@
     body, html {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background-color: #87CEEB; /* Matches background to avoid visible gaps */
+    }
+    .game-container {
+      position: relative;
+      width: 60%; /* Canvas width as percentage of viewport */
+      height: 70%; /* Canvas height as percentage of viewport */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000; /* Optional border-like appearance */
     }
     canvas {
       display: block;
-      border: 1px solid #000;
-      max-width: 1200px; /* Set max width */
-      max-height: 800px; /* Set max height */
-      width: 100%; /* Adjust to fit within viewport */
-      height: 100%; /* Adjust to fit within viewport */
+      width: 100%;
+      height: 100%;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none; /* Allows clicks to pass through unless elements are visible */
     }
     #startButton {
-      display: block;
-      margin: 20px auto;
+      pointer-events: auto; /* Enables button interaction */
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
       padding: 10px 20px;
       font-size: 18px;
       cursor: pointer;
+      border-radius: 5px;
+      display: none; /* Initially hidden */
+    }
+    #fact {
+      font-size: 20px;
+      margin-top: 20px;
+      display: none; /* Initially hidden */
     }
   </style>
 </head>
 <body>
-  <canvas id="flappyCanvas"></canvas>
-  <div id="fact" style="text-align: center; font-family: Arial, sans-serif; font-size: 18px; margin-top: 20px;"></div>
-  <button id="startButton">Start Game</button>
+  <div class="game-container">
+    <canvas id="flappyCanvas"></canvas>
+    <div class="overlay">
+      <button id="startButton">Start Game</button>
+      <div id="fact"></div>
+    </div>
+  </div>
   <script src="flappyphish.js"></script>
 </body>
 </html>
