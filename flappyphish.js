@@ -135,7 +135,6 @@ startButton.onclick = () => {
   startButton.blur();
 };
 
-// Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -144,7 +143,7 @@ function draw() {
 
   // Update and draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
-    let constant = obstacleHeight + gap * scaleY;
+    let constant = obstacleHeight + obstacles[i].gap;
 
     // Draw top and bottom obstacles
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
@@ -156,16 +155,17 @@ function draw() {
     // Check if the obstacle is off the screen
     if (obstacles[i].x + obstacleWidth < 0) {
       obstacles.splice(i, 1); // Remove off-screen obstacle
-      i--;
+      i--; // Adjust index after removal
+      continue; // Skip to the next iteration
     }
 
-    // Check for collisions
+    // Collision detection
     if (
-      (fishX + fishWidth >= obstacles[i].x &&
-        fishX <= obstacles[i].x + obstacleWidth &&
-        (fishY <= obstacles[i].y + obstacleHeight ||
-          fishY + fishHeight >= obstacles[i].y + constant)) ||
-      fishY + fishHeight >= canvas.height - fgHeight
+      (fishX + fishWidth > obstacles[i].x && // Fish overlaps obstacle horizontally
+        fishX < obstacles[i].x + obstacleWidth &&
+        (fishY < obstacles[i].y + obstacleHeight || // Fish hits top obstacle
+          fishY + fishHeight > obstacles[i].y + constant)) || // Fish hits bottom obstacle
+      fishY + fishHeight >= canvas.height - fgHeight // Fish hits the ground
     ) {
       if (!isGameOver) {
         displayFact();
