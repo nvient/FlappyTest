@@ -10,8 +10,10 @@ const referenceHeight = 797;
 
 // Game variables
 let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
-let fishX = 50;
-let fishY = 150;
+
+// Center the fish horizontally and vertically
+let fishX = referenceWidth / 4; // Move to 1/4th of the canvas width (left-to-right)
+let fishY = referenceHeight / 2; // Center vertically
 let gravity = 1.5;
 let jumpHeight = 25;
 let gap = 150;
