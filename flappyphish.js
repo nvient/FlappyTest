@@ -19,7 +19,7 @@ let isGameOver = false;
 
 // Load images
 let bg = new Image();
-bg.src = "underwater.png";
+bg.src = "UnderseaBackground.png";
 
 let obstacleTop = new Image();
 obstacleTop.src = "computerpiletop.png";
@@ -27,7 +27,7 @@ obstacleTop.src = "computerpiletop.png";
 let obstacleBottom = obstacleTop;
 
 let fg = new Image();
-fg.src = "seafloor.png";
+fg.src = "UnderseaForeground.png";
 
 let fish = new Image();
 fish.src = "fish.png";
