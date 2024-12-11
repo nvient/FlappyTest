@@ -221,7 +221,7 @@ function draw() {
   ctx.fillText("Click Start to Play Again", canvas.width / 2, canvas.height / 2 + 20 * scaleY);
 
   return; // Exit draw loop
-  }
+}
 
   // Continue game loop
   requestAnimationFrame(draw);
