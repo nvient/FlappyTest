@@ -36,6 +36,10 @@ fg.onload = () => console.log("Foreground image loaded");
 let fish = new Image();
 fish.src = "fish.png";
 fish.onload = () => console.log("Fish image loaded");
+  fishWidth = canvas.width / 12;
+  fishHeight = fishWidth * (fish.height / fish.width);
+  console.log("Fish dimensions set:", fishWidth, fishHeight);
+};
 
 // Track loaded images
 let imagesLoaded = 0;
@@ -76,17 +80,29 @@ function resizeCanvas() {
   scaleX = canvas.width / referenceWidth;
   scaleY = canvas.height / referenceHeight;
 
-  fishWidth = canvas.width / 12;
-  fishHeight = fish.Width * (fish.height / fish.width);
-  obstacleWidth = 80 * scaleX;
-  obstacleHeight = 300 * scaleY;
-  fgHeight = 80 * scaleY;
-  
-  // Dynamically set fish's starting position
-  fishX = canvas.width / 4; // 1/4th of the current canvas width
-  fishY = canvas.height / 2; // Centered vertically
+  // Calculate obstacle and foreground sizes
+  obstacleWidth = 80 * scaleX; // Obstacle width scales with canvas width
+  obstacleHeight = 300 * scaleY; // Obstacle height scales with canvas height
+  fgHeight = 80 * scaleY; // Foreground height scales with canvas height
+
+  // Calculate fish size dynamically
+  fishWidth = canvas.width / 12; // Fish width as 1/12th of canvas width
+  fishHeight = fishWidth * (fish.height / fish.width); // Maintain aspect ratio
+
+  // Set fish position dynamically
+  fishX = canvas.width / 4; // 1/4th of canvas width from the left
+  fishY = canvas.height / 2; // Vertically centered
+
   console.log("Canvas resized:", canvas.width, canvas.height);
+  console.log("Fish dimensions and position:", fishWidth, fishHeight, fishX, fishY);
 }
+
+// Ensure fish dimensions are recalculated when the image loads
+fish.onload = () => {
+  fishWidth = canvas.width / 12;
+  fishHeight = fishWidth * (fish.height / fish.width);
+  console.log("Fish dimensions set after image load:", fishWidth, fishHeight);
+};
 
 // Function to reset game variables
 function resetGame() {
