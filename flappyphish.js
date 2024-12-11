@@ -1,10 +1,10 @@
-// Get canvas, context, and overlays
+// Get canvas, context, and overlay elements
 const canvas = document.getElementById("flappyCanvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("startButton");
 const factDisplay = document.getElementById("fact");
 
-// Reference background image dimensions
+// Reference game dimensions
 const referenceWidth = 1198;
 const referenceHeight = 797;
 
@@ -41,7 +41,7 @@ const totalImages = 4;
 function imageLoaded() {
   imagesLoaded++;
   if (imagesLoaded === totalImages) {
-    startButton.style.display = "block"; // Show the start button once images are loaded
+    startButton.style.display = "block"; // Show start button when images are ready
   }
 }
 
@@ -51,13 +51,13 @@ obstacleTop.onload = imageLoaded;
 fg.onload = imageLoaded;
 fish.onload = imageLoaded;
 
-// Resize canvas and scale elements proportionally
+// Resize canvas and adjust scaling
 function resizeCanvas() {
   const container = document.querySelector(".game-container");
   const containerWidth = container.offsetWidth;
   const containerHeight = container.offsetHeight;
 
-  // Scale canvas to container while preserving aspect ratio
+  // Preserve aspect ratio
   const canvasRatio = referenceWidth / referenceHeight;
   const containerRatio = containerWidth / containerHeight;
 
@@ -77,8 +77,6 @@ function resizeCanvas() {
   obstacleWidth = 80 * scaleX;
   obstacleHeight = 300 * scaleY;
   fgHeight = 80 * scaleY;
-
-  fishY = Math.min(fishY, canvas.height - fgHeight - fishHeight);
 }
 
 // Function to reset game variables
@@ -106,13 +104,13 @@ function displayFact() {
   factDisplay.style.display = "block";
 }
 
-// Game logic functions (unchanged)...
+// Main game logic (unchanged)...
 
 // Start game when button is clicked
 startButton.onclick = () => {
   startButton.style.display = "none"; // Hide start button
   resetGame();
-  draw(); // Start the game loop
+  draw(); // Start game loop
 };
 
 // Initialize canvas and handle resizing
