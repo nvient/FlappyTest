@@ -167,6 +167,11 @@ function draw() {
           fishY + fishHeight > obstacles[i].y + constant)) || // Fish hits bottom obstacle
       fishY + fishHeight >= canvas.height - fgHeight // Fish hits the ground
     ) {
+      if (isGameOver) {
+  // Draw semi-opaque overlay
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the entire canvas
+}
       if (!isGameOver) {
         displayFact();
         isGameOver = true;
