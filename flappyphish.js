@@ -48,7 +48,7 @@ bg.onload = imageLoaded;
 obstacleTop.onload = imageLoaded;
 fg.onload = imageLoaded;
 fish.onload = () => {
-  fishWidth = canvas.width / 12;
+  fishWidth = canvas.width / 16;
   fishHeight = fishWidth * (fish.height / fish.width);
   console.log("Fish dimensions set after image load:", fishWidth, fishHeight);
   imageLoaded();
