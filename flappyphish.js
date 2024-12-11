@@ -104,8 +104,21 @@ function moveUp() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw background
-  ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+// Draw background with preserved aspect ratio
+let bgRatio = bg.width / bg.height;
+let canvasRatio = canvas.width / canvas.height;
+
+if (bgRatio > canvasRatio) {
+  // Background is wider than canvas
+  let bgHeight = canvas.height;
+  let bgWidth = bg.height * bgRatio;
+  ctx.drawImage(bg, (canvas.width - bgWidth) / 2, 0, bgWidth, bgHeight);
+} else {
+  // Background is taller or equal to canvas
+  let bgWidth = canvas.width;
+  let bgHeight = bg.width / bgRatio;
+  ctx.drawImage(bg, 0, (canvas.height - bgHeight) / 2, bgWidth, bgHeight);
+}
 
   // Draw and update obstacles
   for (let i = 0; i < obstacles.length; i++) {
@@ -146,8 +159,18 @@ function draw() {
     }
   }
 
-  // Draw foreground
-  ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
+// Draw foreground with preserved aspect ratio
+let fgRatio = fg.width / fg.height;
+
+if (fgRatio > canvasRatio) {
+  // Foreground is wider than canvas
+  let fgHeightScaled = fg.height * (canvas.width / fg.width);
+  ctx.drawImage(fg, 0, canvas.height - fgHeightScaled, canvas.width, fgHeightScaled);
+} else {
+  // Foreground is taller or equal to canvas
+  let fgWidthScaled = fg.width * (canvas.height / fg.height);
+  ctx.drawImage(fg, (canvas.width - fgWidthScaled) / 2, canvas.height - fgHeight, fgWidthScaled, fgHeight);
+}
 
   // Draw fish and apply gravity
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
