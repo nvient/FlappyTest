@@ -5,8 +5,8 @@ const startButton = document.getElementById("startButton");
 const factDisplay = document.getElementById("fact");
 
 // Reference game dimensions
-const referenceWidth = 1198;
-const referenceHeight = 797;
+const referenceWidth = 3125;
+const referenceHeight = 2084;
 
 // Game variables
 let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
