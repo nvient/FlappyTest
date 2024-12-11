@@ -205,14 +205,22 @@ function draw() {
   ctx.font = `${20 * scaleY}px Verdana`;
   ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
-  // Display game over overlay
   if (isGameOver) {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#FFF";
-    ctx.font = `${30 * scaleY}px Verdana`;
-    ctx.fillText("Game Over!", canvas.width / 2 - 100 * scaleX, canvas.height / 2);
-    return; // Exit the draw loop
+  // Draw semi-opaque overlay
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Draw "Game Over" text
+  ctx.fillStyle = "#FFF";
+  ctx.font = `${40 * scaleY}px "Courier New", monospace`;
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 20 * scaleY);
+
+  // Draw instructions
+  ctx.font = `${20 * scaleY}px "Arial", sans-serif`;
+  ctx.fillText("Click Start to Play Again", canvas.width / 2, canvas.height / 2 + 20 * scaleY);
+
+  return; // Exit draw loop
   }
 
   // Continue game loop
