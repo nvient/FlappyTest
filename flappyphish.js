@@ -138,7 +138,6 @@ startButton.onclick = () => {
 // Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  console.log("Drawing frame...");
 
   // Draw background
   ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
@@ -146,18 +145,18 @@ function draw() {
   // Update and draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
     let constant = obstacleHeight + gap * scaleY;
+
+    // Draw top and bottom obstacles
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
-    // Move obstacles
-    obstacles[i].x -= 2 * scaleX;
+    // Move obstacles to the left
+    obstacles[i].x -= (2 * scaleX) + (score * 0.1); // Speed increases slightly with score
 
-    // Add new obstacle when needed
-    if (obstacles[i].x === 125 * scaleX) {
-      obstacles.push({
-        x: canvas.width,
-        y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
-      });
+    // Check if the obstacle is off the screen
+    if (obstacles[i].x + obstacleWidth < 0) {
+      obstacles.splice(i, 1); // Remove off-screen obstacle
+      i--;
     }
 
     // Check for collisions
@@ -177,11 +176,25 @@ function draw() {
       }
     }
 
-    // Update score
-    if (obstacles[i].x === 5 * scaleX) {
+    // Increase score when the fish clears an obstacle
+    if (!obstacles[i].scored && obstacles[i].x + obstacleWidth < fishX) {
       score++;
-      console.log("Score updated:", score); // Debug: Confirm score update
+      obstacles[i].scored = true; // Mark obstacle as scored
+      console.log("Score updated:", score);
     }
+  }
+
+  // Add new obstacles at varying heights and gaps
+  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.75) {
+    let newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
+    let newGap = gap * (0.8 + Math.random() * 0.4); // Vary the gap size slightly
+
+    obstacles.push({
+      x: canvas.width, // Start just outside the canvas
+      y: newObstacleY,
+      gap: newGap,
+      scored: false // Mark for scoring
+    });
   }
 
   // Draw foreground
