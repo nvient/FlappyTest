@@ -220,17 +220,21 @@ function displayGameOver() {
   ctx.fillStyle = "#FFF"; // White text
   ctx.font = `${40 * scaleY}px "Courier New", monospace`;
   ctx.textAlign = "center";
-  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 20 * scaleY);
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40 * scaleY);
 
-  // Draw restart instructions
-  ctx.font = `${20 * scaleY}px "Arial", sans-serif`;
-  ctx.fillText("Click Start to Play Again", canvas.width / 2, canvas.height / 2 + 20 * scaleY);
+  // Position Start Button dynamically within the canvas
+  startButton.style.position = "absolute";
+  startButton.style.top = `${canvas.getBoundingClientRect().top + canvas.height / 2 + 20 * scaleY}px`; // Below "Game Over"
+  startButton.style.left = `${canvas.getBoundingClientRect().left + canvas.width / 2}px`; // Centered horizontally
+  startButton.style.transform = "translate(-50%, -50%)`;
+  startButton.style.display = "block"; // Show button
 
-  // Show the start button
-  setTimeout(() => {
-    startButton.style.display = "block";
-    factDisplay.style.display = "block"; // Ensure fact is shown
-  }, 500);
+  // Position Fact Display
+  factDisplay.style.position = "absolute";
+  factDisplay.style.top = `${canvas.getBoundingClientRect().top + canvas.height / 2 + 70 * scaleY}px`; // Below the button
+  factDisplay.style.left = `${canvas.getBoundingClientRect().left + canvas.width / 2}px`; // Centered horizontally
+  factDisplay.style.transform = "translate(-50%, -50%)`;
+  factDisplay.style.display = "block";
 }
 
 // Initialize canvas
