@@ -13,7 +13,7 @@ let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeig
 let fishX, fishY;
 let gravity = 1.5;
 let jumpHeight = 25;
-let gap = 175;
+let gap = 195;
 let obstacles = [];
 let score = 0;
 let isGameOver = false;
@@ -186,7 +186,7 @@ function draw() {
   }
 
   // Add new obstacles at varying heights and gaps
-  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.9) {
+  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.6) {
     const newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
     obstacles.push({
       x: canvas.width,
