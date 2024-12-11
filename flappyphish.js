@@ -10,8 +10,6 @@ const referenceHeight = 797;
 
 // Game variables
 let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
-
-// Center the fish horizontally and vertically
 let fishX, fishY;
 let gravity = 1.5;
 let jumpHeight = 25;
@@ -23,23 +21,15 @@ let isGameOver = false;
 // Load images
 let bg = new Image();
 bg.src = "UnderseaBackground.png";
-bg.onload = () => console.log("Background image loaded");
 
 let obstacleTop = new Image();
 obstacleTop.src = "computerpiletop.png";
-obstacleTop.onload = () => console.log("Obstacle image loaded");
 
 let fg = new Image();
 fg.src = "UnderseaForeground.png";
-fg.onload = () => console.log("Foreground image loaded");
 
 let fish = new Image();
 fish.src = "fish.png";
-fish.onload = () => console.log("Fish image loaded");
-  fishWidth = canvas.width / 12;
-  fishHeight = fishWidth * (fish.height / fish.width);
-  console.log("Fish dimensions set:", fishWidth, fishHeight);
-};
 
 // Track loaded images
 let imagesLoaded = 0;
@@ -53,11 +43,16 @@ function imageLoaded() {
   }
 }
 
-// Attach onload listeners to count loaded images
+// Attach `onload` listeners to increment image load counter
 bg.onload = imageLoaded;
 obstacleTop.onload = imageLoaded;
 fg.onload = imageLoaded;
-fish.onload = imageLoaded;
+fish.onload = () => {
+  fishWidth = canvas.width / 12;
+  fishHeight = fishWidth * (fish.height / fish.width);
+  console.log("Fish dimensions set after image load:", fishWidth, fishHeight);
+  imageLoaded();
+};
 
 // Resize canvas and adjust scaling
 function resizeCanvas() {
@@ -80,42 +75,31 @@ function resizeCanvas() {
   scaleX = canvas.width / referenceWidth;
   scaleY = canvas.height / referenceHeight;
 
-  // Calculate obstacle and foreground sizes
-  obstacleWidth = 80 * scaleX; // Obstacle width scales with canvas width
-  obstacleHeight = 300 * scaleY; // Obstacle height scales with canvas height
-  fgHeight = 80 * scaleY; // Foreground height scales with canvas height
+  obstacleWidth = 80 * scaleX;
+  obstacleHeight = 300 * scaleY;
+  fgHeight = 80 * scaleY;
 
-  // Calculate fish size dynamically
-  fishWidth = canvas.width / 12; // Fish width as 1/12th of canvas width
-  fishHeight = fishWidth * (fish.height / fish.width); // Maintain aspect ratio
-
-  // Set fish position dynamically
-  fishX = canvas.width / 4; // 1/4th of canvas width from the left
-  fishY = canvas.height / 2; // Vertically centered
-
-  console.log("Canvas resized:", canvas.width, canvas.height);
-  console.log("Fish dimensions and position:", fishWidth, fishHeight, fishX, fishY);
-}
-
-// Ensure fish dimensions are recalculated when the image loads
-fish.onload = () => {
   fishWidth = canvas.width / 12;
   fishHeight = fishWidth * (fish.height / fish.width);
-  console.log("Fish dimensions set after image load:", fishWidth, fishHeight);
-};
+  fishX = canvas.width / 4;
+  fishY = canvas.height / 2;
+
+  console.log("Canvas resized:", canvas.width, canvas.height);
+}
 
 // Function to reset game variables
 function resetGame() {
-  fishY = 150;
+  fishY = canvas.height / 2; // Start vertically centered
   obstacles = [
     {
       x: canvas.width,
-      y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
+      y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight,
+      scored: false,
     }
   ];
   score = 0;
   isGameOver = false;
-  factDisplay.style.display = "none"; // Hide fact display
+  factDisplay.style.display = "none";
   console.log("Game reset");
 }
 
@@ -133,109 +117,82 @@ function displayFact() {
 // Add keydown listener
 document.addEventListener("keydown", moveUp);
 
-function moveUp(event) {
+function moveUp() {
   if (!isGameOver) {
     fishY -= jumpHeight * scaleY;
-    console.log("Fish moved up:", fishY); // Debug: Confirm fish movement
+    console.log("Fish moved up:", fishY);
   }
 }
 
 // Start game when button is clicked
 startButton.onclick = () => {
   console.log("Start button clicked");
-  startButton.style.display = "none"; // Hide start button
+  startButton.style.display = "none";
   resetGame();
-  draw(); // Start game loop
-
-  // Remove button focus to ensure game controls work
-  startButton.blur();
+  draw();
+  startButton.blur(); // Ensure controls work
 };
 
+// Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw background
   ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-  // Update and draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
-    let constant = obstacleHeight + obstacles[i].gap;
-
-    // Draw top and bottom obstacles
+    const constant = obstacleHeight + gap * scaleY;
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
-    // Move obstacles to the left
-    obstacles[i].x -= (2 * scaleX) + (score * 0.1); // Speed increases slightly with score
+    obstacles[i].x -= 2 * scaleX + score * 0.1;
 
-    // Check if the obstacle is off the screen
     if (obstacles[i].x + obstacleWidth < 0) {
-      obstacles.splice(i, 1); // Remove off-screen obstacle
-      i--; // Adjust index after removal
-      continue; // Skip to the next iteration
+      obstacles.splice(i, 1);
+      i--;
     }
 
-    // Collision detection
     if (
-      (fishX + fishWidth > obstacles[i].x && // Fish overlaps obstacle horizontally
-        fishX < obstacles[i].x + obstacleWidth &&
-        (fishY < obstacles[i].y + obstacleHeight || // Fish hits top obstacle
-          fishY + fishHeight > obstacles[i].y + constant)) || // Fish hits bottom obstacle
-      fishY + fishHeight >= canvas.height - fgHeight // Fish hits the ground
+      fishX + fishWidth > obstacles[i].x &&
+      fishX < obstacles[i].x + obstacleWidth &&
+      (fishY < obstacles[i].y + obstacleHeight ||
+        fishY + fishHeight > obstacles[i].y + constant) ||
+      fishY + fishHeight >= canvas.height - fgHeight
     ) {
-      if (isGameOver) {
-  // Draw semi-opaque overlay
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the entire canvas
-}
       if (!isGameOver) {
         displayFact();
         isGameOver = true;
         setTimeout(() => startButton.style.display = "block", 1000);
-        console.log("Collision detected, game over");
-        return; // Stop draw loop
+        console.log("Game over!");
+        return;
       }
     }
 
-    // Increase score when the fish clears an obstacle
     if (!obstacles[i].scored && obstacles[i].x + obstacleWidth < fishX) {
       score++;
-      obstacles[i].scored = true; // Mark obstacle as scored
-      console.log("Score updated:", score);
+      obstacles[i].scored = true;
+      console.log("Score:", score);
     }
   }
 
-  // Add new obstacles at varying heights and gaps
   if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.75) {
-    let newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
-    let newGap = gap * (0.8 + Math.random() * 0.4); // Vary the gap size slightly
-
+    const newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
     obstacles.push({
-      x: canvas.width, // Start just outside the canvas
+      x: canvas.width,
       y: newObstacleY,
-      gap: newGap,
-      scored: false // Mark for scoring
+      scored: false,
     });
   }
 
-  // Draw foreground
   ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
-
-  // Draw fish and apply gravity
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
   fishY += gravity * scaleY;
 
-  // Draw score
   ctx.fillStyle = "#000";
   ctx.font = `${20 * scaleY}px Verdana`;
   ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
-  // Continue game loop if not over
-  if (!isGameOver) {
-    requestAnimationFrame(draw);
-  }
+  if (!isGameOver) requestAnimationFrame(draw);
 }
 
-// Initialize canvas and handle resizing
+// Initialize canvas
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
