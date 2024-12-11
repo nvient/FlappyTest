@@ -71,9 +71,9 @@ function resizeCanvas() {
 // Function to display a random fact on collision
 function displayFact() {
   const facts = [
-    "Fact 1: Phishing is dangerous!",
-    "Fact 2: Be careful with suspicious links!",
-    "Fact 3: Keep your credentials safe!"
+    "Fact 1: Remember the SLAM method!",
+    "Fact 2: Don't click suspicious links!",
+    "Fact 3: Don't share your login credentials!"
   ];
   const randomFact = facts[Math.floor(Math.random() * facts.length)];
   document.getElementById("fact").innerText = randomFact;
