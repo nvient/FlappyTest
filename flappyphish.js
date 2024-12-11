@@ -186,7 +186,7 @@ function draw() {
   }
 
   // Add new obstacles at varying heights and gaps
-  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 1.0) {
+  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.9) {
     const newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
     obstacles.push({
       x: canvas.width,
