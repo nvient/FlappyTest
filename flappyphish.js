@@ -12,8 +12,7 @@ const referenceHeight = 797;
 let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
 
 // Center the fish horizontally and vertically
-let fishX = referenceWidth / 4; // Move to 1/4th of the canvas width (left-to-right)
-let fishY = referenceHeight / 2; // Center vertically
+let fishX, fishY;
 let gravity = 1.5;
 let jumpHeight = 25;
 let gap = 150;
@@ -82,7 +81,10 @@ function resizeCanvas() {
   obstacleWidth = 80 * scaleX;
   obstacleHeight = 300 * scaleY;
   fgHeight = 80 * scaleY;
-
+  
+  // Dynamically set fish's starting position
+  fishX = canvas.width / 4; // 1/4th of the current canvas width
+  fishY = canvas.height / 2; // Centered vertically
   console.log("Canvas resized:", canvas.width, canvas.height);
 }
 
