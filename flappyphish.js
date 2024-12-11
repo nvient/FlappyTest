@@ -22,17 +22,19 @@ let isGameOver = false;
 // Load images
 let bg = new Image();
 bg.src = "UnderseaBackground.png";
+bg.onload = () => console.log("Background image loaded");
 
 let obstacleTop = new Image();
 obstacleTop.src = "computerpiletop.png";
-
-let obstacleBottom = obstacleTop;
+obstacleTop.onload = () => console.log("Obstacle image loaded");
 
 let fg = new Image();
 fg.src = "UnderseaForeground.png";
+fg.onload = () => console.log("Foreground image loaded");
 
 let fish = new Image();
 fish.src = "fish.png";
+fish.onload = () => console.log("Fish image loaded");
 
 // Track loaded images
 let imagesLoaded = 0;
@@ -40,8 +42,9 @@ const totalImages = 4;
 
 function imageLoaded() {
   imagesLoaded++;
+  console.log(`Images loaded: ${imagesLoaded}/${totalImages}`);
   if (imagesLoaded === totalImages) {
-    startButton.style.display = "block"; // Show start button when images are ready
+    startButton.style.display = "block"; // Show start button when all images are loaded
   }
 }
 
@@ -77,6 +80,8 @@ function resizeCanvas() {
   obstacleWidth = 80 * scaleX;
   obstacleHeight = 300 * scaleY;
   fgHeight = 80 * scaleY;
+
+  console.log("Canvas resized:", canvas.width, canvas.height);
 }
 
 // Function to reset game variables
@@ -91,6 +96,7 @@ function resetGame() {
   score = 0;
   isGameOver = false;
   factDisplay.style.display = "none"; // Hide fact display
+  console.log("Game reset");
 }
 
 // Function to display a random fact
@@ -104,10 +110,76 @@ function displayFact() {
   factDisplay.style.display = "block";
 }
 
-// Main game logic (unchanged)...
+// Main draw function
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  console.log("Drawing frame...");
+
+  // Draw background
+  ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+  // Draw and update obstacles
+  for (let i = 0; i < obstacles.length; i++) {
+    let constant = obstacleHeight + gap * scaleY;
+    ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
+    ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
+
+    // Move obstacles to the left
+    obstacles[i].x -= 2 * scaleX;
+
+    // Add a new obstacle
+    if (obstacles[i].x === 125 * scaleX) {
+      obstacles.push({
+        x: canvas.width,
+        y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
+      });
+    }
+
+    // Check for collision with obstacles or ground
+    if (
+      (fishX + fishWidth >= obstacles[i].x &&
+        fishX <= obstacles[i].x + obstacleWidth &&
+        (fishY <= obstacles[i].y + obstacleHeight ||
+          fishY + fishHeight >= obstacles[i].y + constant)) ||
+      fishY + fishHeight >= canvas.height - fgHeight
+    ) {
+      if (!isGameOver) {
+        displayFact();
+        isGameOver = true;
+        setTimeout(() => startButton.style.display = "block", 1000);
+        console.log("Collision detected, game over");
+        return; // Stop the draw loop on game over
+      }
+    }
+
+    // Increase score when passing an obstacle
+    if (obstacles[i].x === 5 * scaleX) {
+      score++;
+      console.log("Score:", score);
+    }
+  }
+
+  // Draw foreground
+  ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
+
+  // Draw fish and apply gravity
+  ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
+  fishY += gravity * scaleY;
+
+  // Display score
+  ctx.fillStyle = "#000";
+  ctx.font = `${20 * scaleY}px Verdana`;
+  ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
+
+  // Continue animation if game is not over
+  if (!isGameOver) {
+    requestAnimationFrame(draw);
+  }
+}
 
 // Start game when button is clicked
 startButton.onclick = () => {
+  console.log("Start button clicked");
   startButton.style.display = "none"; // Hide start button
   resetGame();
   draw(); // Start game loop
