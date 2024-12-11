@@ -5,57 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flappy Phish</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #87CEEB; /* Matches background to avoid visible gaps */
-    }
-    .game-container {
-      position: relative;
-      width: 60%; /* Canvas width as percentage of viewport */
-      height: 70%; /* Canvas height as percentage of viewport */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #000; /* Optional border-like appearance */
-    }
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none; /* Allows clicks to pass through unless elements are visible */
-    }
-    #startButton {
-      pointer-events: auto; /* Enables button interaction */
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 5px;
-      display: none; /* Initially hidden */
-    }
-    #fact {
-      font-size: 20px;
-      margin-top: 20px;
-      display: none; /* Initially hidden */
-    }
+body, html {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #87CEEB; /* Matches the game background */
+}
+
+.game-container {
+  position: relative;
+  width: 80%; /* Adjusted for larger width */
+  height: 85%; /* Adjusted for larger height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000; /* Optional border */
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+#startButton {
+  pointer-events: auto; /* Allows interaction */
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: none; /* Hidden initially */
+}
+
+#fact {
+  font-size: 20px;
+  margin-top: 20px;
+  display: none; /* Hidden initially */
+}
   </style>
 </head>
 <body>
