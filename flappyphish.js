@@ -5,8 +5,8 @@ const startButton = document.getElementById("startButton");
 const factDisplay = document.getElementById("fact");
 
 // Reference game dimensions
-const referenceWidth = 3125;
-const referenceHeight = 2084;
+const referenceWidth = 1198;
+const referenceHeight = 797;
 
 // Game variables
 let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
@@ -136,10 +136,15 @@ startButton.onclick = () => {
 // Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw background
   ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
+  // Update and draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
     const constant = obstacleHeight + gap * scaleY;
+
+    // Draw top and bottom obstacles
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
@@ -150,29 +155,37 @@ function draw() {
       i--;
     }
 
+    // Collision detection
     if (
-      fishX + fishWidth > obstacles[i].x &&
-      fishX < obstacles[i].x + obstacleWidth &&
-      (fishY < obstacles[i].y + obstacleHeight ||
-        fishY + fishHeight > obstacles[i].y + constant) ||
+      (fishX + fishWidth > obstacles[i].x &&
+        fishX < obstacles[i].x + obstacleWidth &&
+        (fishY < obstacles[i].y + obstacleHeight ||
+          fishY + fishHeight > obstacles[i].y + constant)) ||
       fishY + fishHeight >= canvas.height - fgHeight
     ) {
       if (!isGameOver) {
-        displayFact();
+        console.log("Collision detected");
         isGameOver = true;
+
+        // Display game over overlay
+        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the entire canvas
+
+        displayFact();
         setTimeout(() => startButton.style.display = "block", 1000);
-        console.log("Game over!");
-        return;
+
+        return; // Stop game loop
       }
     }
 
     if (!obstacles[i].scored && obstacles[i].x + obstacleWidth < fishX) {
       score++;
       obstacles[i].scored = true;
-      console.log("Score:", score);
+      console.log("Score updated:", score);
     }
   }
 
+  // Add new obstacles at varying heights and gaps
   if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.75) {
     const newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
     obstacles.push({
@@ -182,15 +195,28 @@ function draw() {
     });
   }
 
+  // Draw foreground
   ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
   fishY += gravity * scaleY;
 
+  // Draw score
   ctx.fillStyle = "#000";
   ctx.font = `${20 * scaleY}px Verdana`;
   ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
-  if (!isGameOver) requestAnimationFrame(draw);
+  // Display game over overlay
+  if (isGameOver) {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#FFF";
+    ctx.font = `${30 * scaleY}px Verdana`;
+    ctx.fillText("Game Over!", canvas.width / 2 - 100 * scaleX, canvas.height / 2);
+    return; // Exit the draw loop
+  }
+
+  // Continue game loop
+  requestAnimationFrame(draw);
 }
 
 // Initialize canvas
