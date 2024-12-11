@@ -133,7 +133,6 @@ startButton.onclick = () => {
   startButton.blur(); // Ensure controls work
 };
 
-// Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -148,36 +147,30 @@ function draw() {
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
-    obstacles[i].x -= 2 * scaleX + score * 0.1;
+    obstacles[i].x -= (2 * scaleX) + (score * 0.1); // Speed increases with score
 
+    // Remove off-screen obstacles
     if (obstacles[i].x + obstacleWidth < 0) {
       obstacles.splice(i, 1);
-      i--;
+      i--; // Adjust index after removal
+      continue;
     }
 
     // Collision detection
     if (
-      (fishX + fishWidth > obstacles[i].x &&
-        fishX < obstacles[i].x + obstacleWidth &&
-        (fishY < obstacles[i].y + obstacleHeight ||
-          fishY + fishHeight > obstacles[i].y + constant)) ||
-      fishY + fishHeight >= canvas.height - fgHeight
+      fishX + fishWidth > obstacles[i].x && // Fish overlaps obstacle horizontally
+      fishX < obstacles[i].x + obstacleWidth &&
+      (fishY < obstacles[i].y + obstacleHeight || // Fish hits top obstacle
+        fishY + fishHeight > obstacles[i].y + constant) || // Fish hits bottom obstacle
+      fishY + fishHeight >= canvas.height - fgHeight // Fish hits the ground
     ) {
-      if (!isGameOver) {
-        console.log("Collision detected");
-        isGameOver = true;
-
-        // Display game over overlay
-        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the entire canvas
-
-        displayFact();
-        setTimeout(() => startButton.style.display = "block", 1000);
-
-        return; // Stop game loop
-      }
+      console.log("Collision detected. Game over.");
+      isGameOver = true;
+      displayGameOver(); // Trigger game over overlay
+      return; // Stop game loop
     }
 
+    // Increase score when the fish passes an obstacle
     if (!obstacles[i].scored && obstacles[i].x + obstacleWidth < fishX) {
       score++;
       obstacles[i].scored = true;
@@ -185,18 +178,21 @@ function draw() {
     }
   }
 
-  // Add new obstacles at varying heights and gaps
-  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.6) {
+  // Add new obstacles
+  if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < canvas.width * 0.75) {
     const newObstacleY = Math.floor(Math.random() * (canvas.height / 2)) - obstacleHeight;
     obstacles.push({
       x: canvas.width,
       y: newObstacleY,
+      gap: gap * (0.8 + Math.random() * 0.4),
       scored: false,
     });
   }
 
   // Draw foreground
   ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
+
+  // Draw fish and apply gravity
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
   fishY += gravity * scaleY;
 
@@ -205,26 +201,36 @@ function draw() {
   ctx.font = `${20 * scaleY}px Verdana`;
   ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
+  // Game over state
   if (isGameOver) {
+    displayGameOver();
+    return; // Stop rendering further frames
+  }
+
+  // Continue game loop
+  requestAnimationFrame(draw);
+}
+
+function displayGameOver() {
   // Draw semi-opaque overlay
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw "Game Over" text
-  ctx.fillStyle = "#FFF";
+  ctx.fillStyle = "#FFF"; // White text
   ctx.font = `${40 * scaleY}px "Courier New", monospace`;
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 20 * scaleY);
 
-  // Draw instructions
+  // Draw restart instructions
   ctx.font = `${20 * scaleY}px "Arial", sans-serif`;
   ctx.fillText("Click Start to Play Again", canvas.width / 2, canvas.height / 2 + 20 * scaleY);
 
-  return; // Exit draw loop
-}
-
-  // Continue game loop
-  requestAnimationFrame(draw);
+  // Show the start button
+  setTimeout(() => {
+    startButton.style.display = "block";
+    factDisplay.style.display = "block"; // Ensure fact is shown
+  }, 500);
 }
 
 // Initialize canvas
