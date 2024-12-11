@@ -110,6 +110,27 @@ function displayFact() {
   factDisplay.style.display = "block";
 }
 
+// Add keydown listener
+document.addEventListener("keydown", moveUp);
+
+function moveUp(event) {
+  if (!isGameOver) {
+    fishY -= jumpHeight * scaleY;
+    console.log("Fish moved up:", fishY); // Debug: Confirm fish movement
+  }
+}
+
+// Start game when button is clicked
+startButton.onclick = () => {
+  console.log("Start button clicked");
+  startButton.style.display = "none"; // Hide start button
+  resetGame();
+  draw(); // Start game loop
+
+  // Remove button focus to ensure game controls work
+  startButton.blur();
+};
+
 // Main draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -118,16 +139,16 @@ function draw() {
   // Draw background
   ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-  // Draw and update obstacles
+  // Update and draw obstacles
   for (let i = 0; i < obstacles.length; i++) {
     let constant = obstacleHeight + gap * scaleY;
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
     ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
 
-    // Move obstacles to the left
+    // Move obstacles
     obstacles[i].x -= 2 * scaleX;
 
-    // Add a new obstacle
+    // Add new obstacle when needed
     if (obstacles[i].x === 125 * scaleX) {
       obstacles.push({
         x: canvas.width,
@@ -135,7 +156,7 @@ function draw() {
       });
     }
 
-    // Check for collision with obstacles or ground
+    // Check for collisions
     if (
       (fishX + fishWidth >= obstacles[i].x &&
         fishX <= obstacles[i].x + obstacleWidth &&
@@ -148,14 +169,14 @@ function draw() {
         isGameOver = true;
         setTimeout(() => startButton.style.display = "block", 1000);
         console.log("Collision detected, game over");
-        return; // Stop the draw loop on game over
+        return; // Stop draw loop
       }
     }
 
-    // Increase score when passing an obstacle
+    // Update score
     if (obstacles[i].x === 5 * scaleX) {
       score++;
-      console.log("Score:", score);
+      console.log("Score updated:", score); // Debug: Confirm score update
     }
   }
 
@@ -166,24 +187,16 @@ function draw() {
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
   fishY += gravity * scaleY;
 
-  // Display score
+  // Draw score
   ctx.fillStyle = "#000";
   ctx.font = `${20 * scaleY}px Verdana`;
   ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
 
-  // Continue animation if game is not over
+  // Continue game loop if not over
   if (!isGameOver) {
     requestAnimationFrame(draw);
   }
 }
-
-// Start game when button is clicked
-startButton.onclick = () => {
-  console.log("Start button clicked");
-  startButton.style.display = "none"; // Hide start button
-  resetGame();
-  draw(); // Start game loop
-};
 
 // Initialize canvas and handle resizing
 resizeCanvas();
