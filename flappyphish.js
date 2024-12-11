@@ -77,7 +77,7 @@ function resizeCanvas() {
   scaleY = canvas.height / referenceHeight;
 
   fishWidth = canvas.width / 12;
-  fishHeight = fishWidth * (fish.height / fish.width);
+  fishHeight = fish.Width * (fish.height / fish.width);
   obstacleWidth = 80 * scaleX;
   obstacleHeight = 300 * scaleY;
   fgHeight = 80 * scaleY;
