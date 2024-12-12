@@ -222,12 +222,13 @@ function displayGameOver() {
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40 * scaleY);
 
-  // Position Start Button dynamically within the canvas
-  startButton.style.position = "absolute";
-  startButton.style.top = `${canvas.getBoundingClientRect().top + canvas.height / 2 + 20 * scaleY}px`; // Below "Game Over"
-  startButton.style.left = `${canvas.getBoundingClientRect().left + canvas.width / 2}px`; // Centered horizontally
-  startButton.style.transform = "translate(-50%, -50%)`;
-  startButton.style.display = "block"; // Show button
+// Dynamically position the Start Button within the canvas
+const canvasBounds = canvas.getBoundingClientRect();
+startButton.style.position = "absolute";
+startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 40}px`; // Adjust vertical position
+startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
+startButton.style.transform = "translate(-50%, -50%)";
+startButton.style.display = "block"; // Make button visible
 
   // Position Fact Display
   factDisplay.style.position = "absolute";
