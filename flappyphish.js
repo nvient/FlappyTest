@@ -91,7 +91,7 @@ function displayGameOver() {
 
   // Position Start Button dynamically within the canvas
   startButton.style.position = "absolute";
-  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 100}px`; // Move 100px below center
+  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 200}px`; // Move 100px below center
   startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
   startButton.style.transform = "translate(-50%, -50%)"; // Proper centering
   startButton.style.display = "block"; // Make button visible
