@@ -172,14 +172,13 @@ function draw() {
   ctx.fillText(`Score: ${score}`, 10, 30);
 
   // Keep game loop running if the game is not over
-  if (!isGameOver) {
-  console.log("Game is not over, continuing animation frame...");
-  requestAnimationFrame(draw); // Continue drawing the game
-} else {
-  console.log("Game is over, should enter else block...");
-  displayGameOver(); // Show the game over overlay
-  return; // Ensure no further drawing happens
+  if (isGameOver) {
+  console.log("Game is over, stopping the loop and displaying overlay."); // Debug
+  displayGameOver(); // Show the overlay
+  return; // Stop the loop
 }
+
+requestAnimationFrame(draw); // Continue the game loop if not over
 
 }
 function displayGameOver() {
