@@ -53,7 +53,6 @@ fish.onload = () => {
   console.log("Fish dimensions set after image load:", fishWidth, fishHeight);
   imageLoaded();
 };
-
 // Resize canvas and adjust scaling
 function resizeCanvas() {
   const container = document.querySelector(".game-container");
@@ -65,12 +64,15 @@ function resizeCanvas() {
   const containerRatio = containerWidth / containerHeight;
 
   if (canvasRatio > containerRatio) {
-    canvas.width = containerWidth;
-    canvas.height = containerWidth / canvasRatio;
+    canvas.style.width = `${containerWidth}px`;
+    canvas.style.height = `${containerWidth / canvasRatio}px`;
   } else {
-    canvas.height = containerHeight;
-    canvas.width = containerHeight * canvasRatio;
+    canvas.style.height = `${containerHeight}px`;
+    canvas.style.width = `${containerHeight * canvasRatio}px`;
   }
+
+  // Set correct resolution for high-DPI screens
+  setCanvasResolution();
 
   scaleX = canvas.width / referenceWidth;
   scaleY = canvas.height / referenceHeight;
@@ -85,6 +87,18 @@ function resizeCanvas() {
   fishY = canvas.height / 2;
 
   console.log("Canvas resized:", canvas.width, canvas.height);
+}
+
+// Add this function just before or after resizeCanvas
+function setCanvasResolution() {
+  const dpr = window.devicePixelRatio || 1; // Detect high-DPI screens
+  const canvasWidth = canvas.offsetWidth * dpr;
+  const canvasHeight = canvas.offsetHeight * dpr;
+
+  // Set canvas resolution and scale context
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+  ctx.scale(dpr, dpr);
 }
 
 // Function to reset game variables
@@ -222,19 +236,27 @@ function displayGameOver() {
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40 * scaleY);
 
-// Dynamically position the Start Button within the canvas
-const canvasBounds = canvas.getBoundingClientRect();
-startButton.style.position = "absolute";
-startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 40}px`; // Adjust vertical position
-startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
-startButton.style.transform = "translate(-50%, -50%)";
-startButton.style.display = "block"; // Make button visible
+  // Dynamically position the Start Button within the canvas
+  const canvasBounds = canvas.getBoundingClientRect();
+  startButton.style.position = "absolute";
+  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 40}px`; // Below "Game Over"
+  startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
+  startButton.style.transform = "translate(-50%, -50%)";
+  startButton.style.display = "block"; // Make button visible
+
+  // Position Fact Display
+  factDisplay.style.position = "absolute";
+  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 90}px`; // Below the button
+  factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Centered horizontally
+  factDisplay.style.transform = "translate(-50%, -50%)";
+  factDisplay.style.display = "block"; // Make fact visible
+}
 
   // Position Fact Display
   factDisplay.style.position = "absolute";
   factDisplay.style.top = `${canvas.getBoundingClientRect().top + canvas.height / 2 + 70 * scaleY}px`; // Below the button
   factDisplay.style.left = `${canvas.getBoundingClientRect().left + canvas.width / 2}px`; // Centered horizontally
-  factDisplay.style.transform = "translate(-50%, -50%)`;
+  factDisplay.style.transform = "translate(-50%, -50%)";
   factDisplay.style.display = "block";
 }
 
