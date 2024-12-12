@@ -207,9 +207,6 @@ function draw() {
   }
 }
 
-requestAnimationFrame(draw); // Continue the loop if the game isn't over
-}
-
 // Initialize canvas and listen for resize
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
