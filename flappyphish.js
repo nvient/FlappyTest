@@ -76,32 +76,35 @@ function resetGame() {
   factDisplay.style.display = "none";
 }
 function displayGameOver() {
-  // Draw semi-opaque overlay
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Draw semi-opaque overlay
+ctx.save(); // Save the current drawing state
+ctx.globalAlpha = 0.5; // Set transparency level (50%)
+ctx.fillStyle = "#000"; // Black background
+ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the entire canvas
+ctx.restore(); // Restore the drawing state to avoid affecting other elements
 
   // Draw "Game Over" text
   ctx.fillStyle = "#FFF"; // White text
   ctx.font = "40px 'Courier New', monospace"; // Static font size for clarity
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
+  
+// Get the canvas's position and size
+const canvasBounds = canvas.getBoundingClientRect();
 
-  // Get the canvas's position and size
-  const canvasBounds = canvas.getBoundingClientRect();
+// Position Start Button dynamically within the canvas
+startButton.style.position = "absolute";
+startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 60}px`; // Adjust vertical position
+startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
+startButton.style.transform = "translate(-50%, -50%)"; // Proper centering
+startButton.style.display = "block"; // Make button visible
 
-  // Position Start Button dynamically within the canvas
-  startButton.style.position = "absolute";
-  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 200}px`; // Move 100px below center
-  startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
-  startButton.style.transform = "translate(-50%, -50%)"; // Proper centering
-  startButton.style.display = "block"; // Make button visible
-
-  // Optionally, position the fact display below the button
-  factDisplay.style.position = "absolute";
-  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 150}px`; // Below the button
-  factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`;
-  factDisplay.style.transform = "translate(-50%, -50%)";
-  factDisplay.style.display = "block"; // Show fact
+// Position Fact Display below the button
+factDisplay.style.position = "absolute";
+factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 120}px`; // Below the button
+factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`;
+factDisplay.style.transform = "translate(-50%, -50%)";
+factDisplay.style.display = "block"; // Show fact
 }
 // Display a random fact
 function displayFact() {
