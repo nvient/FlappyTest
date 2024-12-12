@@ -173,17 +173,16 @@ function draw() {
 
   // Keep game loop running if the game is not over
   if (isGameOver) {
-  console.log("Game is over, stopping the loop and displaying overlay."); // Debug
-  displayGameOver(); // Show the overlay
-  return; // Stop the loop
+    console.log("Game is over, stopping the loop and displaying overlay."); // Debug
+    displayGameOver(); // Call the overlay
+    return; // Stop the loop
 }
 
 requestAnimationFrame(draw); // Continue the game loop if not over
-
 }
 function displayGameOver() {
-  console.log("Game Over overlay triggered!"); // Debug message
-
+  console.log("displayGameOver function triggered!"); 
+  
   // Draw semi-opaque overlay
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
   ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the canvas
