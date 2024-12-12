@@ -76,18 +76,17 @@ function resetGame() {
   factDisplay.style.display = "none";
 }
 function displayGameOver() {
+  console.log("displayGameOver called!"); // Add this to confirm the function runs
+
   // Draw semi-opaque overlay
-  ctx.save();
-  ctx.globalAlpha = 0.5;
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.restore();
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the canvas
 
   // Draw "Game Over" text
-  ctx.fillStyle = "#FFF";
-  ctx.font = `${40 * scaleY}px 'Courier New', monospace`; // Adjust size dynamically
+  ctx.fillStyle = "#FFF"; // White text
+  ctx.font = "40px 'Courier New', monospace"; // Use a fixed font for now
   ctx.textAlign = "center";
-  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 50); // Slightly above center
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40); // Centered
 }
   // Get the canvas's position and size
   const canvasBounds = canvas.getBoundingClientRect();
@@ -184,8 +183,12 @@ function draw() {
   ctx.font = `${20 * scaleY}px Arial`;
   ctx.fillText(`Score: ${score}`, 10, 30);
 
-  // Keep game loop running
-  if (!isGameOver) requestAnimationFrame(draw);
+if (isGameOver) {
+  displayGameOver(); // Call your new Game Over function
+  return; // Stop the loop
+}
+
+requestAnimationFrame(draw); // Continue the loop if the game isn't over
 }
 
 // Initialize canvas and listen for resize
