@@ -75,7 +75,34 @@ function resetGame() {
   isGameOver = false;
   factDisplay.style.display = "none";
 }
+function displayGameOver() {
+  // Draw semi-opaque overlay
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // Draw "Game Over" text
+  ctx.fillStyle = "#FFF"; // White text
+  ctx.font = "40px 'Courier New', monospace"; // Static font size for clarity
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
+
+  // Get the canvas's position and size
+  const canvasBounds = canvas.getBoundingClientRect();
+
+  // Position Start Button dynamically within the canvas
+  startButton.style.position = "absolute";
+  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 100}px`; // Move 100px below center
+  startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
+  startButton.style.transform = "translate(-50%, -50%)"; // Proper centering
+  startButton.style.display = "block"; // Make button visible
+
+  // Optionally, position the fact display below the button
+  factDisplay.style.position = "absolute";
+  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 150}px`; // Below the button
+  factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`;
+  factDisplay.style.transform = "translate(-50%, -50%)";
+  factDisplay.style.display = "block"; // Show fact
+}
 // Display a random fact
 function displayFact() {
   const facts = [
