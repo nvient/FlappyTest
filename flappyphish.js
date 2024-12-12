@@ -84,11 +84,11 @@ function displayGameOver() {
   ctx.restore();
 
   // Draw "Game Over" text
-  ctx.fillStyle = "#FFF"; // White text
-  ctx.font = "40px 'Courier New', monospace"; // Static font size for clarity
+  ctx.fillStyle = "#FFF";
+  ctx.font = `${40 * scaleY}px 'Courier New', monospace`; // Adjust size dynamically
   ctx.textAlign = "center";
-  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
-
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 50); // Slightly above center
+}
   // Get the canvas's position and size
   const canvasBounds = canvas.getBoundingClientRect();
 
