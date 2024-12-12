@@ -175,6 +175,7 @@ function draw() {
   if (!isGameOver) {
     requestAnimationFrame(draw); // Continue drawing the game
   } else {
+    console.log("Entering else block for game over logic");
     console.log("Game over detected, calling displayGameOver..."); // Debug: Game over detected
     displayGameOver(); // Show the game over overlay
     return; // Ensure no further drawing happens
