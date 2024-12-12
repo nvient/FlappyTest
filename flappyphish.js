@@ -147,7 +147,8 @@ function draw() {
       fishX + fishWidth >= obstacles[i].x &&
       fishX <= obstacles[i].x + 80 * scaleX &&
       (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
-      {
+      
+    {
   console.log("Collision with obstacle detected"); // Add this
   displayFact();
   isGameOver = true;      
