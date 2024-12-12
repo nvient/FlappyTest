@@ -182,8 +182,9 @@ function draw() {
   ctx.fillText(`Score: ${score}`, 10, 30);
 
 if (isGameOver) {
-  displayGameOver(); // Call your new Game Over function
-  return; // Stop the loop
+  console.log("Game over detected, calling displayGameOver...");
+  displayGameOver();
+  return; 
 }
 
 requestAnimationFrame(draw); // Continue the loop if the game isn't over
