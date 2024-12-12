@@ -76,7 +76,7 @@ function resetGame() {
   factDisplay.style.display = "none";
 }
 function displayGameOver() {
-  console.log("displayGameOver called!"); // Add this to confirm the function runs
+  console.log("displayGameOver called!"); // Debug message
 
   // Draw semi-opaque overlay
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
@@ -84,23 +84,21 @@ function displayGameOver() {
 
   // Draw "Game Over" text
   ctx.fillStyle = "#FFF"; // White text
-  ctx.font = "40px 'Courier New', monospace"; // Use a fixed font for now
+  ctx.font = "40px 'Courier New', monospace"; // Use fixed font size for simplicity
   ctx.textAlign = "center";
-  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40); // Centered
-}
-  // Get the canvas's position and size
-  const canvasBounds = canvas.getBoundingClientRect();
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40); // Centered text above button
 
-  // Position Start Button dynamically within the canvas
+  // Dynamically position the Start Button
+  const canvasBounds = canvas.getBoundingClientRect(); // Get canvas position
   startButton.style.position = "absolute";
-  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 200}px`; // Adjust vertical position
+  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 40}px`; // Below text
   startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
-  startButton.style.transform = "translate(-50%, -50%)"; // Proper centering
+  startButton.style.transform = "translate(-50%, -50%)";
   startButton.style.display = "block"; // Make button visible
 
-  // Position Fact Display below the button
+  // Dynamically position the Fact Display below the button
   factDisplay.style.position = "absolute";
-  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 120}px`; // Below the button
+  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 100}px`; // Below the button
   factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`;
   factDisplay.style.transform = "translate(-50%, -50%)";
   factDisplay.style.display = "block"; // Show fact
