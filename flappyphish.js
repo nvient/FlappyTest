@@ -124,6 +124,7 @@ function draw() {
       console.log("Collision with obstacle detected"); // Debug: Collision with obstacle
       displayFact(); // Show fun fact
       isGameOver = true;
+      console.log("isGameOver set to true after obstacle collision");
 
       setTimeout(() => {
         startButton.style.display = "block"; // Show the start button after 1 second
@@ -142,6 +143,7 @@ function draw() {
     console.log("Fish hit the ground"); // Debug: Collision with ground
     displayFact(); // Show fun fact
     isGameOver = true;
+    console.log("isGameOver set to true after hitting the ground");
 
     setTimeout(() => {
       startButton.style.display = "block"; // Show the start button after 1 second
