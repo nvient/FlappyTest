@@ -143,15 +143,14 @@ function draw() {
     obstacles[i].x -= 2 * scaleX;
 
     // Check for collisions
-    if (
-      fishX + fishWidth >= obstacles[i].x &&
-      fishX <= obstacles[i].x + 80 * scaleX &&
-      (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
-      
-    {
-  console.log("Collision with obstacle detected"); // Add this
+if (
+  fishX + fishWidth >= obstacles[i].x &&
+  fishX <= obstacles[i].x + 80 * scaleX &&
+  (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
+) {
+  console.log("Collision with obstacle detected");
   displayFact();
-  isGameOver = true;      
+  isGameOver = true;     
   
       setTimeout(() => (startButton.style.display = "block"), 1000);
       return;
