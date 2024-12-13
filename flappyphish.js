@@ -50,6 +50,7 @@ fish.onload = imageLoaded;
 
 // Resize canvas based on window size
 function resizeCanvas() {
+  console.log(`Fish dimensions - Width: ${fishWidth}, Height: ${fishHeight}`);
   canvas.width = window.innerWidth * 0.8; // 80% of window width
   canvas.height = canvas.width * (referenceHeight / referenceWidth); // Maintain aspect ratio
 
@@ -116,22 +117,20 @@ function draw() {
     obstacles[i].x -= 2 * scaleX;
 
     // Check for collisions with obstacles
-    if (
-      fishX + fishWidth >= obstacles[i].x &&
-      fishX <= obstacles[i].x + 80 * scaleX &&
-      (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
-    ) {
-      console.log("Collision with obstacle detected"); // Debug: Collision with obstacle
-      displayFact(); // Show fun fact
-      isGameOver = true;
-      console.log("isGameOver set to true after obstacle collision");
+if (
+  fishX + fishWidth >= obstacles[i].x &&
+  fishX <= obstacles[i].x + 80 * scaleX &&
+  (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
+) {
+  console.log("Fish collided with obstacle!");
+  displayFact();
+  isGameOver = true;
+  console.log("isGameOver set to true after obstacle collision");
 
-      setTimeout(() => {
-        startButton.style.display = "block"; // Show the start button after 1 second
-      }, 1000);
-      return; // Stop further drawing (important)
-    }
-
+  setTimeout(() => {
+    startButton.style.display = "block"; // Show the start button after 1 second
+  }, 1000);
+  return; // Stop further drawing (important)
     // Remove off-screen obstacles
     if (obstacles[i].x + 80 * scaleX < 0) {
       obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
@@ -164,7 +163,9 @@ function draw() {
 
   // Draw fish and apply gravity
   ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
-  fishY += gravity * scaleY;
+fishY = Math.min(fishY + gravity * scaleY, canvas.height - fishHeight); // Prevent fish from falling below canvas
+fishY = Math.max(fishY, 0); // Prevent fish from going above the canvas
+ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
 
   // Draw score
   ctx.fillStyle = "#000";
