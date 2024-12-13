@@ -10,7 +10,7 @@ const referenceHeight = 797;
 
 // Game variables
 let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
-let gravity = 1.4;
+let gravity = 1.5;
 let jumpHeight = 25;
 let obstacles = [];
 let score = 0;
