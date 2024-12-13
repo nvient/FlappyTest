@@ -166,11 +166,11 @@ function draw() {
 
   // Keep game loop running if the game is not over
   console.log("Checking isGameOver condition...");
-  if (isGameOver) {
-    console.log("Game is over, stopping the loop and displaying overlay."); // Debug
-    displayGameOver(); // Call the overlay
-    return; // Stop the loop
-  }
+if (isGameOver) {
+  console.log("Game is over, stopping the loop and displaying overlay.");
+  displayGameOver(); // Call the overlay
+  // Don't return here, let the loop continue to display the overlay
+}
 
   requestAnimationFrame(draw); // Continue the game loop if not over
 }
