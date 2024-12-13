@@ -179,8 +179,8 @@ function displayGameOver() {
   console.log("displayGameOver function triggered!"); 
   
   // Draw semi-opaque overlay
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the canvas
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw "Game Over" text
   ctx.fillStyle = "#FFF"; // White text
@@ -188,22 +188,24 @@ function displayGameOver() {
   ctx.textAlign = "center";
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
 
-  // Get the canvas's position and size
-  const canvasBounds = canvas.getBoundingClientRect(); // This line is inside the function
+ const container = document.querySelector(".game-container");
 
   // Position Start Button dynamically within the canvas
   startButton.style.display = "block"; // Make the button visible
   startButton.style.position = "absolute";
-  startButton.style.top = `${canvas.offsetTop + canvas.height / 2}px`;
-  startButton.style.left = `${canvas.offsetLeft + canvas.width / 2}px`;
+  startButton.style.top = `${container.offsetTop + canvas.height / 2}px`;
+  startButton.style.left = `${container.offsetLeft + canvas.width / 2}px`;
   startButton.style.transform = "translate(-50%, -50%)";
+  console.log(`Start Button Position -> Top: ${startButton.style.top}, Left: ${startButton.style.left}`); // Debug position
 
   // Position Fact Display below the button
   factDisplay.style.position = "absolute";
-  factDisplay.style.top = `${canvasBounds.top + canvas.height / 2 + 70}px`; // Below the button
-  factDisplay.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Centered horizontally
+factDisplay.style.top = `${container.offsetTop + canvas.height / 2 + 70}px`;
+  factDisplay.style.left = `${container.offsetLeft + canvas.width / 2}px`;
   factDisplay.style.transform = "translate(-50%, -50%)";
   factDisplay.style.display = "block"; // Show fact display
+    console.log(`Fact Display Position -> Top: ${factDisplay.style.top}, Left: ${factDisplay.style.left}`); // Debug position
+
 }
 
 // Initialize canvas and listen for resize
