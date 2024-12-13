@@ -52,13 +52,13 @@ fish.onload = imageLoaded;
 function resizeCanvas() {
   canvas.width = window.innerWidth * 0.8; // 80% of window width
   canvas.height = canvas.width * (referenceHeight / referenceWidth); // Maintain aspect ratio
-  console.log(`Fish dimensions - Width: ${fishWidth}, Height: ${fishHeight}`);
   
   scaleX = canvas.width / referenceWidth;
   scaleY = canvas.height / referenceHeight;
 
   fishWidth = canvas.width / 12;
   fishHeight = fishWidth * (fish.height / fish.width);
+  console.log(`Fish dimensions - Width: ${fishWidth}, Height: ${fishHeight}`);
   fishX = canvas.width / 4;
   fishY = canvas.height / 2;
 }
@@ -159,8 +159,7 @@ if (obstacles[i].x + 80 * scaleX < 0) {
   ctx.drawImage(fg, 0, canvas.height - 80 * scaleY, canvas.width, 80 * scaleY);
 
   // Draw fish and apply gravity
-fishY = Math.min(fishY + gravity * scaleY, canvas.height - fishHeight); // Prevent fish from falling below canvas
-fishY = Math.max(fishY, 0); // Prevent fish from going above the canvas
+fishY = Math.max(0, Math.min(fishY + gravity * scaleY, canvas.height - fishHeight));
 ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
 
   // Draw score
