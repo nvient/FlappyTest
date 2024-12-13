@@ -116,7 +116,6 @@ function draw() {
     // Move obstacle to the left
     obstacles[i].x -= 2 * scaleX;
 
-    // Check for collisions with obstacles
 if (
   fishX + fishWidth >= obstacles[i].x &&
   fishX <= obstacles[i].x + 80 * scaleX &&
@@ -128,10 +127,9 @@ if (
   console.log("isGameOver set to true after obstacle collision");
   return; // Stop further drawing
 }
-
 // Remove off-screen obstacles
 if (obstacles[i].x + 80 * scaleX < 0) {
-  obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
+  obstacles.splice(i, 1);
 }
 
   // Check if fish hits the ground
