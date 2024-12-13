@@ -189,6 +189,7 @@ function displayGameOver() {
   ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
 
  const container = document.querySelector(".game-container");
+console.log(`Container -> Top: ${container.offsetTop}, Left: ${container.offsetLeft}, Width: ${container.offsetWidth}, Height: ${container.offsetHeight}`);
 
   // Position Start Button dynamically within the canvas
   startButton.style.display = "block"; // Make the button visible
@@ -197,6 +198,7 @@ function displayGameOver() {
   startButton.style.left = `${container.offsetLeft + canvas.width / 2}px`;
   startButton.style.transform = "translate(-50%, -50%)";
   console.log(`Start Button Position -> Top: ${startButton.style.top}, Left: ${startButton.style.left}`); // Debug position
+console.log(`Start Button Computed -> Top: ${startButton.style.top}, Left: ${startButton.style.left}`);
 
   // Position Fact Display below the button
   factDisplay.style.position = "absolute";
