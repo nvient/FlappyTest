@@ -50,10 +50,10 @@ fish.onload = imageLoaded;
 
 // Resize canvas based on window size
 function resizeCanvas() {
-  console.log(`Fish dimensions - Width: ${fishWidth}, Height: ${fishHeight}`);
   canvas.width = window.innerWidth * 0.8; // 80% of window width
   canvas.height = canvas.width * (referenceHeight / referenceWidth); // Maintain aspect ratio
-
+  console.log(`Fish dimensions - Width: ${fishWidth}, Height: ${fishHeight}`);
+  
   scaleX = canvas.width / referenceWidth;
   scaleY = canvas.height / referenceHeight;
 
@@ -126,16 +126,13 @@ if (
   displayFact();
   isGameOver = true;
   console.log("isGameOver set to true after obstacle collision");
+  return; // Stop further drawing
+}
 
-  setTimeout(() => {
-    startButton.style.display = "block"; // Show the start button after 1 second
-  }, 1000);
-  return; // Stop further drawing (important)
-    // Remove off-screen obstacles
-    if (obstacles[i].x + 80 * scaleX < 0) {
-      obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
-    }
-  }
+// Remove off-screen obstacles
+if (obstacles[i].x + 80 * scaleX < 0) {
+  obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
+}
 
   // Check if fish hits the ground
   if (fishY + fishHeight >= canvas.height) {
@@ -162,7 +159,6 @@ if (
   ctx.drawImage(fg, 0, canvas.height - 80 * scaleY, canvas.width, 80 * scaleY);
 
   // Draw fish and apply gravity
-  ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
 fishY = Math.min(fishY + gravity * scaleY, canvas.height - fishHeight); // Prevent fish from falling below canvas
 fishY = Math.max(fishY, 0); // Prevent fish from going above the canvas
 ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
