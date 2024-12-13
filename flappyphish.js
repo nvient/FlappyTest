@@ -179,7 +179,6 @@ function displayGameOver() {
   console.log("displayGameOver function triggered!"); 
   
   // Draw semi-opaque overlay
-  console.log("Drawing semi-opaque overlay for Game Over.");
   ctx.fillStyle = "rgba(0, 0, 0, 0.5)"; // Black with 50% opacity
   ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover the canvas
 
@@ -193,11 +192,11 @@ function displayGameOver() {
   const canvasBounds = canvas.getBoundingClientRect(); // This line is inside the function
 
   // Position Start Button dynamically within the canvas
-  startButton.style.position = "absolute";
-  startButton.style.top = `${canvasBounds.top + canvas.height / 2 + 20}px`; // Position below text
-  startButton.style.left = `${canvasBounds.left + canvas.width / 2}px`; // Center horizontally
-  startButton.style.transform = "translate(-50%, -50%)";
   startButton.style.display = "block"; // Make the button visible
+  startButton.style.position = "absolute";
+  startButton.style.top = `${canvas.offsetTop + canvas.height / 2}px`;
+  startButton.style.left = `${canvas.offsetLeft + canvas.width / 2}px`;
+  startButton.style.transform = "translate(-50%, -50%)";
 
   // Position Fact Display below the button
   factDisplay.style.position = "absolute";
