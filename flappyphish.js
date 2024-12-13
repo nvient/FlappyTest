@@ -115,27 +115,25 @@ function draw() {
 
     // Move obstacle to the left
     obstacles[i].x -= 2 * scaleX;
-if (
-  fishX + fishWidth >= obstacles[i].x &&
-  fishX <= obstacles[i].x + 80 * scaleX &&
-  (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
-) {
-  console.log("Fish collided with obstacle!");
-  displayFact();
-  isGameOver = true;
-  console.log("isGameOver set to true after obstacle collision");
-  return; // Stop further drawing
-}
 
-// Remove off-screen obstacles
-if (obstacles[i].x + 80 * scaleX < 0) {
-  obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
-}
+    // Check for collisions with obstacles
+    if (
+      fishX + fishWidth >= obstacles[i].x &&
+      fishX <= obstacles[i].x + 80 * scaleX &&
+      (fishY <= obstacles[i].y + 300 * scaleY || fishY + fishHeight >= obstacles[i].y + constant + 300 * scaleY)
+    ) {
+      console.log("Fish collided with obstacle!");
+      displayFact();
+      isGameOver = true;
+      console.log("isGameOver set to true after obstacle collision");
+      return; // Stop further drawing
+    }
 
-// Always check for and remove off-screen obstacles
-if (obstacles[i].x + 80 * scaleX < 0) {
-  obstacles.splice(i, 1);
-}
+    // Remove off-screen obstacles
+    if (obstacles[i].x + 80 * scaleX < 0) {
+      obstacles.splice(i, 1); // Remove obstacle when it goes off-screen
+    }
+  }
 
   // Check if fish hits the ground
   if (fishY + fishHeight >= canvas.height) {
@@ -143,11 +141,7 @@ if (obstacles[i].x + 80 * scaleX < 0) {
     displayFact(); // Show fun fact
     isGameOver = true;
     console.log("isGameOver set to true after hitting the ground");
-
-    setTimeout(() => {
-      startButton.style.display = "block"; // Show the start button after 1 second
-    }, 1000);
-    return; // Stop further drawing (important)
+    return; // Stop further drawing
   }
 
   // Add new obstacles
@@ -162,8 +156,8 @@ if (obstacles[i].x + 80 * scaleX < 0) {
   ctx.drawImage(fg, 0, canvas.height - 80 * scaleY, canvas.width, 80 * scaleY);
 
   // Draw fish and apply gravity
-fishY = Math.max(0, Math.min(fishY + gravity * scaleY, canvas.height - fishHeight));
-ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
+  fishY = Math.max(0, Math.min(fishY + gravity * scaleY, canvas.height - fishHeight));
+  ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
 
   // Draw score
   ctx.fillStyle = "#000";
@@ -172,16 +166,15 @@ ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
 
   // Keep game loop running if the game is not over
   console.log("Checking isGameOver condition...");
-if (isGameOver) {
+  if (isGameOver) {
     console.log("Game is over, stopping the loop and displaying overlay."); // Debug
     displayGameOver(); // Call the overlay
     return; // Stop the loop
-} else {
-    console.log("Game is not over, continuing animation frame..."); // Debug
+  }
+
+  requestAnimationFrame(draw); // Continue the game loop if not over
 }
 
-requestAnimationFrame(draw); // Continue the game loop if not over
-}
 function displayGameOver() {
   console.log("displayGameOver function triggered!"); 
   
