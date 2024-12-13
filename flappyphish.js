@@ -38,7 +38,7 @@ function imageLoaded() {
   imagesLoaded++;
   console.log(`Images loaded: ${imagesLoaded}/${totalImages}`);
   if (imagesLoaded === totalImages) {
-    startButton.style.display = "block"; // Show the start button
+    Button.style.display = "block"; // Show the  button
   }
 }
 
@@ -92,12 +92,6 @@ document.addEventListener("keydown", () => {
   if (!isGameOver) fishY -= jumpHeight * scaleY;
 });
 
-// Start the game
-startButton.onclick = () => {
-  resetGame();
-  startButton.style.display = "none";
-  draw();
-};
 function draw() {
   console.log("Draw function running"); // Debug: Confirms the draw() function is called
 
@@ -175,41 +169,22 @@ if (isGameOver) {
   requestAnimationFrame(draw); // Continue the game loop if not over
 }
 
-function displayGameOver() {
-  console.log("displayGameOver function triggered!"); 
-  
-  // Draw semi-opaque overlay
-  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+unction displayGameOver() {
+  console.log("displayGameOver function triggered!");
 
-  // Draw "Game Over" text
-  ctx.fillStyle = "#FFF"; // White text
-  ctx.font = "40px 'Courier New', monospace"; // Font style and size
-  ctx.textAlign = "center";
-  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
+  // Show the "Game Over" overlay
+  document.getElementById("gameOver").style.display = "block";
 
- const container = document.querySelector(".game-container");
-console.log(`Container -> Top: ${container.offsetTop}, Left: ${container.offsetLeft}, Width: ${container.offsetWidth}, Height: ${container.offsetHeight}`);
-
-  // Position Start Button dynamically within the canvas
-  startButton.style.display = "block"; // Make the button visible
-  startButton.style.position = "absolute";
-  startButton.style.top = `${container.offsetTop + canvas.height / 2}px`;
-  startButton.style.left = `${container.offsetLeft + canvas.width / 2}px`;
-  startButton.style.transform = "translate(-50%, -50%)";
-  console.log(`Start Button Position -> Top: ${startButton.style.top}, Left: ${startButton.style.left}`); // Debug position
-console.log(`Start Button Computed -> Top: ${startButton.style.top}, Left: ${startButton.style.left}`);
-
-  // Position Fact Display below the button
-  factDisplay.style.position = "absolute";
-factDisplay.style.top = `${container.offsetTop + canvas.height / 2 + 70}px`;
-  factDisplay.style.left = `${container.offsetLeft + canvas.width / 2}px`;
-  factDisplay.style.transform = "translate(-50%, -50%)";
-  factDisplay.style.display = "block"; // Show fact display
-    console.log(`Fact Display Position -> Top: ${factDisplay.style.top}, Left: ${factDisplay.style.left}`); // Debug position
-
+  // Add event listener to the "Restart" button (assuming it exists within #gameOver)
+  document.getElementById("restartButton").addEventListener("click", () => {
+    // Hide the "Game Over" overlay
+    document.getElementById("gameOver").style.display = "none";
+    // Reset the game
+    resetGame();
+    // Start the game loop again
+    draw();
+  });
 }
-
 // Initialize canvas and listen for resize
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
