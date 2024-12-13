@@ -210,3 +210,4 @@ function displayGameOver() {
 // Initialize canvas and listen for resize
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
+console.log("Script loaded successfully.");
