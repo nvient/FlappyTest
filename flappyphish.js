@@ -1,208 +1,129 @@
-// Get canvas and context
-const canvas = document.getElementById("flappyCanvas");
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Reference game dimensions
-const referenceWidth = 1198;
-const referenceHeight = 797;
+canvas.width = 800;
+canvas.height = 400;
 
-// Responsive variables
-let scaleX, scaleY, fishWidth, fishHeight, obstacleWidth, obstacleHeight, fgHeight;
-let fishX = 50;
-let fishY = 150;
-let gravity = 1.5;
-let jumpHeight = 25;
-let gap = 150;
+const fishImg = new Image();
+fishImg.src = "fish.png";
+
+const obstacleImg = new Image();
+obstacleImg.src = "computerpiletop.png";
+
+const backgroundImg = new Image();
+backgroundImg.src = "UnderseaBackground.png";
+
+const foregroundImg = new Image();
+foregroundImg.src = "UnderseaForeground.png";
+
+let fish = { x: 100, y: 200, width: 40, height: 30, velocity: 0 };
+let gravity = 0.5;
 let obstacles = [];
-let score = 0;
-let isGameOver = false;
+let gameRunning = false;
+let gameOver = false;
 
-// Load images
-let bg = new Image();
-bg.src = "UnderseaBackground.png";
-
-let obstacleTop = new Image();
-obstacleTop.src = "computerpiletop.png";
-
-let obstacleBottom = obstacleTop;
-
-let fg = new Image();
-fg.src = "UnderseaForeground.png";
-
-let fish = new Image();
-fish.src = "fish.png";
-
-// Track loaded images
-let imagesLoaded = 0;
-const totalImages = 4;
-
-function imageLoaded() {
-imagesLoaded++;
-if (imagesLoaded === totalImages) {
-document.getElementById("startButton").disabled = false;
-}
-}
-
-// Attach onload listeners to count loaded images
-bg.onload = imageLoaded;
-obstacleTop.onload = imageLoaded;
-fg.onload = imageLoaded;
-fish.onload = imageLoaded;
-
-// Resize canvas based on window size
-function resizeCanvas() {
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-scaleX = canvas.width / referenceWidth;
-scaleY = canvas.height / referenceHeight;
-
-// Scale elements based on canvas size
-fishWidth = 50 * scaleX;
-fishHeight = 38 * scaleY;
-obstacleWidth = 80 * scaleX;
-obstacleHeight = 300 * scaleY;
-fgHeight = 80 * scaleY;
-
-// Adjust fishY to stay in view
-fishY = Math.min(fishY, canvas.height - fgHeight - fishHeight);
-}
-
-// Function to display a random fact on collision
-function displayFact() {
-const facts = [
-"Fact 1: Remember the SLAM method!",
-"Fact 2: Don't click suspicious links!",
-"Fact 3: Don't share your login credentials!"
+// Random phishing facts
+const phishingFacts = [
+  "Never click on links in unsolicited emails.",
+  "Hover over links to verify URLs.",
+  "Phishing often uses urgency to trick you.",
+  "Check email sender addresses carefully."
 ];
-const randomFact = facts[Math.floor(Math.random() * facts.length)];
-document.getElementById("fact").innerText = randomFact;
-}
 
-// Function to reset game variables and prepare for a new game
-function resetGame() {
-fishY = 150;
-obstacles = [
-{
-x: canvas.width,
-y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
-}
-];
-score = 0;
-isGameOver = false;
-}
-
-// Function to move fish up
-document.addEventListener("keydown", moveUp);
-function moveUp() {
-if (!isGameOver) {
-fishY -= jumpHeight * scaleY;
-}
-}
-
-// Main draw function
-function draw() {
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw background
-  ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-// Draw background with preserved aspect ratio
-let bgRatio = bg.width / bg.height;
-let canvasRatio = canvas.width / canvas.height;
-
-if (bgRatio > canvasRatio) {
-  // Background is wider than canvas
-  let bgHeight = canvas.height;
-  let bgWidth = bg.height * bgRatio;
-  ctx.drawImage(bg, (canvas.width - bgWidth) / 2, 0, bgWidth, bgHeight);
-} else {
-  // Background is taller or equal to canvas
-  let bgWidth = canvas.width;
-  let bgHeight = bg.width / bgRatio;
-  ctx.drawImage(bg, 0, (canvas.height - bgHeight) / 2, bgWidth, bgHeight);
-}
-
-// Draw and update obstacles
-for (let i = 0; i < obstacles.length; i++) {
-let constant = obstacleHeight + gap * scaleY;
-ctx.drawImage(obstacleTop, obstacles[i].x, obstacles[i].y, obstacleWidth, obstacleHeight);
-ctx.drawImage(obstacleBottom, obstacles[i].x, obstacles[i].y + constant, obstacleWidth, obstacleHeight);
-
-// Move obstacles to the left
-obstacles[i].x -= 2 * scaleX;
-
-// Add a new obstacle
-if (obstacles[i].x === 125 * scaleX) {
-obstacles.push({
-x: canvas.width,
-y: Math.floor(Math.random() * obstacleHeight) - obstacleHeight
+// Event Listeners
+document.getElementById("startButton").addEventListener("click", startGame);
+canvas.addEventListener("click", () => {
+  if (gameRunning) fish.velocity = -8; // Jump
 });
-}
 
-// Check for collision with obstacles or ground
-if (
-(fishX + fishWidth >= obstacles[i].x &&
-fishX <= obstacles[i].x + obstacleWidth &&
-(fishY <= obstacles[i].y + obstacleHeight ||
-fishY + fishHeight >= obstacles[i].y + constant)) ||
-fishY + fishHeight >= canvas.height - fgHeight
-) {
-if (!isGameOver) {
-displayFact();
-isGameOver = true;
-setTimeout(() => document.getElementById("startButton").style.display = "block", 1000);
-return; // Stop the draw loop on game over
-}
-}
-
-// Increase score when passing an obstacle
-if (obstacles[i].x === 5 * scaleX) {
-score++;
-}
-}
-
-  // Draw foreground
-  ctx.drawImage(fg, 0, canvas.height - fgHeight, canvas.width, fgHeight);
-// Draw foreground with preserved aspect ratio
-let fgRatio = fg.width / fg.height;
-
-if (fgRatio > canvasRatio) {
-  // Foreground is wider than canvas
-  let fgHeightScaled = fg.height * (canvas.width / fg.width);
-  ctx.drawImage(fg, 0, canvas.height - fgHeightScaled, canvas.width, fgHeightScaled);
-} else {
-  // Foreground is taller or equal to canvas
-  let fgWidthScaled = fg.width * (canvas.height / fg.height);
-  ctx.drawImage(fg, (canvas.width - fgWidthScaled) / 2, canvas.height - fgHeight, fgWidthScaled, fgHeight);
-}
-
-// Draw fish and apply gravity
-ctx.drawImage(fish, fishX, fishY, fishWidth, fishHeight);
-fishY += gravity * scaleY;
-
-// Display score
-ctx.fillStyle = "#000";
-ctx.font = `${20 * scaleY}px Verdana`;
-ctx.fillText("Score: " + score, 10 * scaleX, canvas.height - 20 * scaleY);
-
-// Continue animation if game is not over
-if (!isGameOver) {
-requestAnimationFrame(draw);
-}
-}
-
-// Start game when button is clicked
+// Start Game
 function startGame() {
-if (imagesLoaded === totalImages) {
-document.getElementById("startButton").style.display = "none";
-resetGame(); // Reset game variables
-draw(); // Start the game loop
-}
+  fish = { x: 100, y: 200, width: 40, height: 30, velocity: 0 };
+  obstacles = [];
+  gameRunning = true;
+  gameOver = false;
+  document.getElementById("overlay").style.display = "none";
+  animate();
 }
 
-// Resize canvas initially and on window resize
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+// Draw Background
+function drawBackground() {
+  ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+}
 
-// Attach startGame to button
-document.getElementById("startButton").onclick = startGame;
+// Draw Fish
+function drawFish() {
+  ctx.drawImage(fishImg, fish.x, fish.y, fish.width, fish.height);
+}
+
+// Draw Obstacles
+function drawObstacles() {
+  obstacles.forEach((obstacle) => {
+    ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+  });
+}
+
+// Update Obstacles
+function updateObstacles() {
+  if (gameRunning && Math.random() < 0.02) {
+    obstacles.push({
+      x: canvas.width,
+      y: canvas.height - 100,
+      width: 40,
+      height: 80
+    });
+  }
+  obstacles.forEach((obstacle, index) => {
+    obstacle.x -= 5;
+    if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1);
+  });
+}
+
+// Collision Detection
+function detectCollision() {
+  if (fish.y + fish.height > canvas.height) return true;
+  return obstacles.some(
+    (obstacle) =>
+      fish.x < obstacle.x + obstacle.width &&
+      fish.x + fish.width > obstacle.x &&
+      fish.y < obstacle.y + obstacle.height &&
+      fish.y + fish.height > obstacle.y
+  );
+}
+
+// End Game
+function endGame() {
+  gameRunning = false;
+  gameOver = true;
+  document.getElementById("phishingFact").textContent =
+    phishingFacts[Math.floor(Math.random() * phishingFacts.length)];
+  document.getElementById("overlay").style.display = "flex";
+}
+
+// Animation Loop
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBackground();
+
+  if (gameRunning) {
+    fish.velocity += gravity;
+    fish.y += fish.velocity;
+
+    drawFish();
+    updateObstacles();
+    drawObstacles();
+
+    if (detectCollision()) endGame();
+  }
+
+  drawForeground();
+  if (!gameOver) requestAnimationFrame(animate);
+}
+
+// Draw Foreground
+function drawForeground() {
+  ctx.drawImage(foregroundImg, 0, canvas.height - 40, canvas.width, 40);
+}
+
+// Initialize Game
+document.getElementById("overlay").style.display = "flex";
