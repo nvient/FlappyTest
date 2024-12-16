@@ -24,10 +24,11 @@ let gameOver = false;
 
 // Random phishing facts
 const phishingFacts = [
-  "Never click on links in unsolicited emails.",
-  "Hover over links to verify URLs.",
+  "Remember the SLAM method.",
+  "Hover over, but do not click, on links in unsolicited emails to verify URLs.",
+  "Never open unexpected attachments, especially in an unsoliticed email.",
   "Phishing often uses urgency to trick you.",
-  "Check email sender addresses carefully."
+  "Check the email sender addresses carefully."
 ];
 
 // Event Listeners
