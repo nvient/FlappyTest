@@ -5,40 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flappy Phish</title>
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-    canvas {
-      display: block;
-      margin: auto;
-    }
-    #overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      font-size: 24px;
-      display: none;
-      z-index: 2;
-    }
-    #startButton {
-      padding: 10px 20px;
-      background-color: #ff5733;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 18px;
-    }
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center;    /* Vertically center */
+    height: 100vh;          /* Full viewport height */
+    background-color: #001f3f; /* Optional: dark background */
+    overflow: hidden;       /* Prevent scrollbars */
+  }
+
+  #gameCanvas {
+    display: block;
+    border: 2px solid white; /* Optional: Border around the game */
+  }
+  #overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;  /* Match canvas width */
+    height: 600px;  /* Match canvas height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #startButton {
+    margin-top: 20px;
+    pointer-events: auto; /* Allow interaction */
+  }
   </style>
 </head>
 <body>
