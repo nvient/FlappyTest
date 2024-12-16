@@ -1,7 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Resize Canvas Function
 function resizeCanvas() {
   const aspectRatio = 16 / 9; // Maintain 16:9 aspect ratio
   const maxWidth = window.innerWidth * 0.9; // 90% of window width
@@ -14,12 +13,11 @@ function resizeCanvas() {
     canvas.height = maxHeight;
     canvas.width = maxHeight * aspectRatio;
   }
-
-  // Adjust overlay size
-  document.getElementById("overlay").style.width = `${canvas.width}px`;
-  document.getElementById("overlay").style.height = `${canvas.height}px`;
+  
+  const overlay = document.getElementById("overlay");
+  overlay.style.width = `${canvas.width}px`;
+  overlay.style.height = `${canvas.height}px`;
 }
-
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
@@ -64,8 +62,10 @@ function startGame() {
   obstacles = [];
   gameRunning = true;
   gameOver = false;
-  document.getElementById("overlay").style.display = "none";
+ const overlay = document.getElementById("overlay");
+  overlay.style.display = "none";
   animate();
+
 }
 
 // Draw Background
