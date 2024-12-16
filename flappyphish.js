@@ -1,8 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 800;
-canvas.height = 400;
+canvas.width = 1031;
+canvas.height = 687;
 
 const fishImg = new Image();
 fishImg.src = "fish.png";
