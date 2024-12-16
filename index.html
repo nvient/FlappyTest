@@ -11,13 +11,13 @@ body {
     justify-content: center; /* Horizontally center */
     align-items: center;    /* Vertically center */
     height: 100vh;          /* Full viewport height */
-    background-color: #001f3f; /* Optional: dark background */
+    background-color: #f0f0f0; /* Optional: dark background */
     overflow: hidden;       /* Prevent scrollbars */
   }
 
   #gameCanvas {
     display: block;
-    border: 2px solid white; /* Optional: Border around the game */
+    border: 0px
   }
   #overlay {
     position: absolute;
@@ -27,6 +27,7 @@ body {
     width: 1000px;  /* Match canvas width */
     height: 600px;  /* Match canvas height */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
@@ -48,8 +49,7 @@ body {
   <div id="overlay">
     <p id="phishingFact"></p>
     <button id="startButton">Start Game</button>
-  </div>
-  <canvas id="gameCanvas"></canvas>
-  <script src="flappyphish.js"></script>
+</div>
+<canvas id="gameCanvas"></canvas>
 </body>
 </html>
