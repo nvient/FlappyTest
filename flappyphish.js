@@ -17,7 +17,7 @@ const foregroundImg = new Image();
 foregroundImg.src = "UnderseaForeground.png";
 
 let fish = { x: 100, y: 200, width: 40, height: 30, velocity: 0 };
-let gravity = 0.5;
+let gravity = 0.25;
 let obstacles = [];
 let gameRunning = false;
 let gameOver = false;
