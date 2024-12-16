@@ -1,9 +1,30 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1031;
-canvas.height = 687;
+// Resize Canvas Function
+function resizeCanvas() {
+  const aspectRatio = 16 / 9; // Maintain 16:9 aspect ratio
+  const maxWidth = window.innerWidth * 0.9; // 90% of window width
+  const maxHeight = window.innerHeight * 0.9; // 90% of window height
 
+  if (maxWidth / aspectRatio < maxHeight) {
+    canvas.width = maxWidth;
+    canvas.height = maxWidth / aspectRatio;
+  } else {
+    canvas.height = maxHeight;
+    canvas.width = maxHeight * aspectRatio;
+  }
+
+  // Adjust overlay size
+  document.getElementById("overlay").style.width = `${canvas.width}px`;
+  document.getElementById("overlay").style.height = `${canvas.height}px`;
+}
+
+// Add Resize Listener
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas(); // Initial resize setup
+
+// Global Variables
 const fishImg = new Image();
 fishImg.src = "fish.png";
 
@@ -26,15 +47,15 @@ let gameOver = false;
 const phishingFacts = [
   "Remember the SLAM method.",
   "Hover over, but do not click, on links in unsolicited emails to verify URLs.",
-  "Never open unexpected attachments, especially in an unsoliticed email.",
+  "Never open unexpected attachments, especially in an unsolicited email.",
   "Phishing often uses urgency to trick you.",
   "Check the email sender addresses carefully."
 ];
 
-// Event Listeners
+// Event Listeners for User Interaction
 document.getElementById("startButton").addEventListener("click", startGame);
 canvas.addEventListener("click", () => {
-  if (gameRunning) fish.velocity = -8; // Jump
+  if (gameRunning) fish.velocity = -8; // Fish "jump"
 });
 
 // Start Game
