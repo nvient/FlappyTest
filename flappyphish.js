@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const overlay = document.getElementById("overlay");
@@ -72,6 +73,7 @@ canvas.addEventListener("click", () => {
 
 // Start Game
 function startGame() {
+console.log("Start button clicked!");
   fish = { 
     x: 100, 
     y: canvas.height / 2, 
@@ -167,3 +169,4 @@ function drawForeground() {
 
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
+});
