@@ -3,6 +3,8 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const overlay = document.getElementById("overlay");
 
+  console.log("Start button:", document.getElementById("startButton"));
+  
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
   const maxWidth = window.innerWidth * 0.9;
@@ -66,7 +68,11 @@ const phishingFacts = [
 ];
 
 // Event Listeners for User Interaction
-document.getElementById("startButton").addEventListener("click", startGame);
+document.getElementById("startButton").addEventListener("click", () => {
+  console.log("Start button clicked!"); // Debugging line - you can remove this later
+  startGame();
+});
+
 canvas.addEventListener("click", () => {
   if (gameRunning) fish.velocity = -8; // Fish "jump"
 });
