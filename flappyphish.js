@@ -1,9 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-
 function resizeCanvas() {
   const aspectRatio = 16 / 9; // Maintain 16:9 aspect ratio
   const maxWidth = window.innerWidth * 0.9; // 90% of window width
