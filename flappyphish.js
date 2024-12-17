@@ -8,6 +8,13 @@ const overlay = document.getElementById("overlay");
 let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
 let gravity = 1.5;
 let jumpHeight = 25;
+  let fish = { 
+  x: 100, 
+  y: 0, 
+  width: 40,
+  height: 30,
+  velocity: 0
+};
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
@@ -33,11 +40,7 @@ function resizeCanvas() {
   overlay.style.left = "50%";
   overlay.style.transform = "translate(-50%, -50%)";
 
-  fish.x = 100; 
   fish.y = canvas.height / 2; // Reset fish position to center
-
-  gravity = canvas.height / 3000;
-
 }
 
 let obstacles = [];
@@ -87,11 +90,9 @@ canvas.addEventListener("click", () => {
 function startGame() {
 console.log("Start button clicked!");
   fish = { 
-    x: 100, 
-    y: canvas.height / 2, 
-    width: 40,
-    height: 30,
-    velocity: 0
+    fish.x = 100, 
+    fish.y = canvas.height / 2, 
+    fish.velocity = 0
   };
   obstacles = [];
   gameRunning = true;
