@@ -16,10 +16,18 @@ function resizeCanvas() {
     canvas.height = maxHeight;
     canvas.width = maxHeight * aspectRatio;
   }
+
+  canvas.style.position = "absolute";
+  canvas.style.top = "50%";
+  canvas.style.left = "50%";
+  canvas.style.transform = "translate(-50%, -50%)";
   
   const overlay = document.getElementById("overlay");
   overlay.style.width = `${canvas.width}px`;
   overlay.style.height = `${canvas.height}px`;
+   overlay.style.top = "50%";
+  overlay.style.left = "50%";
+  overlay.style.transform = "translate(-50%, -50%)";
 }
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
