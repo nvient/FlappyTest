@@ -158,10 +158,6 @@ function drawForeground() {
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
 
-// Add Resize Listener
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas(); // Initial resize setup
-
 // Global Variables
 const fishImg = new Image();
 fishImg.src = "fish.png";
