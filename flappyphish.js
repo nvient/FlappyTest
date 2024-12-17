@@ -79,8 +79,14 @@ document.getElementById("startButton").addEventListener("click", () => {
 
 canvas.addEventListener("click", () => {
   if (gameRunning) {
-    fish.velocity = -6; // Adjust upward jump strength
+    fish.velocity = -4; // Adjust upward jump strength
     console.log("Fish jumps!"); // Debug log to confirm clicks
+  }
+});
+  document.addEventListener("keydown", (event) => {
+  if (gameRunning && event.code === "Space") {
+    fish.velocity = -4; // Spacebar makes fish jump
+    console.log("Spacebar pressed! Fish jumps!");
   }
 });
                           
