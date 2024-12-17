@@ -89,11 +89,10 @@ canvas.addEventListener("click", () => {
 // Start Game
 function startGame() {
 console.log("Start button clicked!");
-  fish = { 
-    fish.x = 100, 
+     fish.x = 100, 
     fish.y = canvas.height / 2, 
     fish.velocity = 0
-  };
+ 
   obstacles = [];
   gameRunning = true;
   gameOver = false;
