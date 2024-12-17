@@ -36,8 +36,10 @@ function resizeCanvas() {
 
 }
 
-let fish = { x: 0, y: 0, width: 40, height: 30, velocity: 0 };
-let gravity;
+let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
+let gravity = 1.5;
+let jumpHeight = 25;
+
 let obstacles = [];
 let gameRunning = false;
 let gameOver = false;
