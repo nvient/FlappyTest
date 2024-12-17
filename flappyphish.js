@@ -5,9 +5,11 @@ const overlay = document.getElementById("overlay");
 
   console.log("Start button:", document.getElementById("startButton"));
   
-let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
 let gravity = 1.5;
 let jumpHeight = 25;
+  let gameRunning = false; // Initialize game as not running
+let gameOver = false; 
+  let obstacles = [];
   let fish = { 
   x: 100, 
   y: 0, 
@@ -43,10 +45,6 @@ function resizeCanvas() {
   fish.y = canvas.height / 2; // Reset fish position to center
 }
 
-let obstacles = [];
-let gameRunning = false;
-let gameOver = false;
-  
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
@@ -89,7 +87,7 @@ canvas.addEventListener("click", () => {
 // Start Game
 function startGame() {
 console.log("Start button clicked!");
-     fish.x = 100, 
+    fish.x = 100, 
     fish.y = canvas.height / 2, 
     fish.velocity = 0
  
