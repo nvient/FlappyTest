@@ -49,8 +49,8 @@ backgroundImg.src = "UnderseaBackground.png";
 const foregroundImg = new Image();
 foregroundImg.src = "UnderseaForeground.png";
 
-let fish = { x: 100, y: canvas.height / 2, width: 40, height: 30, velocity: 0 };
-let gravity = 0.25;
+let fish = { x: 0, y: 0, width: 40, height: 30, velocity: 0 };
+let gravity;
 let obstacles = [];
 let gameRunning = false;
 let gameOver = false;
@@ -72,7 +72,13 @@ canvas.addEventListener("click", () => {
 
 // Start Game
 function startGame() {
-  fish = { x: 100, y: 200, width: 40, height: 30, velocity: 0 };
+  fish = { 
+    x: 100, 
+    y: canvas.height / 2, 
+    width: 40,
+    height: 30,
+    velocity: 0
+  };
   obstacles = [];
   gameRunning = true;
   gameOver = false;
