@@ -32,7 +32,7 @@ function resizeCanvas() {
   fish.x = 100; 
   fish.y = canvas.height / 2; // Reset fish position to center
 
-  gravity = canvas.height / 1600;
+  gravity = canvas.height / 3000;
 
 }
 
@@ -75,9 +75,12 @@ document.getElementById("startButton").addEventListener("click", () => {
 });
 
 canvas.addEventListener("click", () => {
-  if (gameRunning) fish.velocity = -8; // Fish "jump"
+  if (gameRunning) {
+    fish.velocity = -6; // Adjust upward jump strength
+    console.log("Fish jumps!"); // Debug log to confirm clicks
+  }
 });
-
+                          
 // Start Game
 function startGame() {
 console.log("Start button clicked!");
