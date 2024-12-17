@@ -35,6 +35,13 @@ function resizeCanvas() {
   gravity = canvas.height / 1600;
 
 }
+
+let fish = { x: 0, y: 0, width: 40, height: 30, velocity: 0 };
+let gravity;
+let obstacles = [];
+let gameRunning = false;
+let gameOver = false;
+  
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
@@ -51,12 +58,6 @@ backgroundImg.src = "UnderseaBackground.png";
 
 const foregroundImg = new Image();
 foregroundImg.src = "UnderseaForeground.png";
-
-let fish = { x: 0, y: 0, width: 40, height: 30, velocity: 0 };
-let gravity;
-let obstacles = [];
-let gameRunning = false;
-let gameOver = false;
 
 // Random phishing facts
 const phishingFacts = [
