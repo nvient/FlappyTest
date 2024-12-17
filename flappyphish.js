@@ -5,7 +5,7 @@ const overlay = document.getElementById("overlay");
 
   console.log("Start button:", document.getElementById("startButton"));
   
-let gravity = 1.5;
+let gravity = 0.25;
 let jumpHeight = 25;
   let gameRunning = false; // Initialize game as not running
 let gameOver = false; 
@@ -73,7 +73,7 @@ const phishingFacts = [
 
 // Event Listeners for User Interaction
 document.getElementById("startButton").addEventListener("click", () => {
-  console.log("Start button clicked!"); // Debugging line - you can remove this later
+  console.log("Start button clicked!"); 
   startGame();
 });
 
@@ -159,7 +159,7 @@ function animate() {
 
   if (gameRunning) {
     fish.velocity += gravity;
-    fish.y += fish.velocity;
+    fish.y += fish.velocity; 
 
     drawFish();
     updateObstacles();
