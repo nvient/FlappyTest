@@ -5,6 +5,10 @@ const overlay = document.getElementById("overlay");
 
   console.log("Start button:", document.getElementById("startButton"));
   
+let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
+let gravity = 1.5;
+let jumpHeight = 25;
+  
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
   const maxWidth = window.innerWidth * 0.9;
@@ -35,10 +39,6 @@ function resizeCanvas() {
   gravity = canvas.height / 3000;
 
 }
-
-let fishX, fishY, fishWidth, fishHeight, scaleX, scaleY;
-let gravity = 1.5;
-let jumpHeight = 25;
 
 let obstacles = [];
 let gameRunning = false;
