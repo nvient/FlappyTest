@@ -162,7 +162,7 @@ function drawObstacles() {
 }
 
 function updateObstacles() {
-  if (gameRunning && Math.random() < 0.02) {
+  if (gameRunning && Math.random() < 0.01) {
     createObstacle(); // Call the new obstacle creation function
   }
 obstacles.forEach((obstacle, index) => {
