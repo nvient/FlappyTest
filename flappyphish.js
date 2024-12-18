@@ -18,6 +18,9 @@ let gameOver = false;
   height: canvas.height * 0.05, // Dynamically scale height based on canvas size
   velocity: 0
 };
+
+const fishImg = new Image();
+fishImg.src = "fish.png";
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
@@ -52,10 +55,6 @@ function resizeCanvas() {
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
-
-// Global Variables
-const fishImg = new Image();
-fishImg.src = "fish.png";
 
 const obstacleImages = [
   "firewall.svg",
