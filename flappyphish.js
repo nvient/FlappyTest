@@ -52,6 +52,7 @@ function resizeCanvas() {
 
 fishImg.onload = () => {
   const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
+const fishScaleFactor = 1.5; // Scale the fish to be 1.5 times larger
 
   fish.width = Math.max(canvas.width * 0.05, 40); // Minimum width is 40px
   fish.height = fish.width / aspectRatio; // Maintain proportions
@@ -231,11 +232,21 @@ function animate() {
   if (!gameOver) requestAnimationFrame(animate);
 }
 
-// Draw Foreground
 function drawForeground() {
-  ctx.drawImage(foregroundImg, 0, canvas.height - 40, canvas.width, 40);
-}
+  // Ensure the image is loaded
+  const aspectRatio = foregroundImg.naturalWidth / foregroundImg.naturalHeight || 1;
 
+  // Calculate the scaled height and width based on canvas dimensions
+  const scaledHeight = canvas.height * 0.1; // Foreground occupies 10% of canvas height
+  const scaledWidth = scaledHeight * aspectRatio;
+
+  // Center the image horizontally, or tile it if necessary
+  const xPosition = 0; // Start from the left edge
+  const yPosition = canvas.height - scaledHeight; // Position at the bottom of the canvas
+
+  ctx.drawImage(foregroundImg, xPosition, yPosition, canvas.width, scaledHeight);
+}
+  
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
 });
