@@ -14,8 +14,8 @@ let gameOver = false;
   let fish = { 
   x: 100, 
   y: 0, 
-  width: 40,
-  height: 30,
+  width: canvas.width * 0.05, // Dynamically scale width based on canvas size
+  height: canvas.height * 0.05, // Dynamically scale height based on canvas size
   velocity: 0
 };
   
@@ -44,6 +44,9 @@ function resizeCanvas() {
   overlay.style.transform = "translate(-50%, -50%)";
 
   fish.y = canvas.height / 2; // Reset fish position to center
+  fish.width = canvas.width * 0.05; // Adjust the scaling as needed
+  fish.height = fish.width * (fishImg.naturalHeight / fishImg.naturalWidth);
+
 }
 
 // Add Resize Listener
@@ -56,7 +59,10 @@ fishImg.src = "fish.png";
 
 const obstacleImages = [
   "firewall.svg",
-  "computerpiletop.png"
+  "behavior-blocker.svg",
+  "cloud-firewall.svg",
+  "cyber-security.svg",
+  "virus-free.svg"
 ].map((src) => {
   const img = new Image();
   img.src = src;
