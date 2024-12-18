@@ -54,8 +54,14 @@ resizeCanvas(); // Initial resize setup
 const fishImg = new Image();
 fishImg.src = "fish.png";
 
-const obstacleImg = new Image();
-obstacleImg.src = "firewall.svg";
+const obstacleImages = [
+  "firewall.svg",
+  "computerpiletop.png"
+].map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
 
 const backgroundImg = new Image();
 backgroundImg.src = "UnderseaBackground.png";
@@ -90,6 +96,19 @@ canvas.addEventListener("click", () => {
     console.log("Spacebar pressed! Fish jumps!");
   }
 });
+function createObstacle() {
+  const randomImage = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
+  const baseWidth = canvas.width * 0.05; // Adjust the scaling as needed
+  const aspectRatio = randomImage.naturalWidth / randomImage.naturalHeight;
+
+  obstacles.push({
+    x: canvas.width,
+    y: Math.random() * (canvas.height - 100), // Random y-position
+    width: baseWidth,                        // Dynamically scaled width
+    height: baseWidth / aspectRatio,         // Proportional height
+    img: randomImage                         // Store the selected image
+  });
+}
                           
 // Start Game
 function startGame() {
@@ -123,25 +142,15 @@ function drawObstacles() {
   });
 }
 
-// Update Obstacles
 function updateObstacles() {
   if (gameRunning && Math.random() < 0.02) {
-const baseWidth = canvas.width * 0.05; // 5% of canvas width
-const aspectRatio = obstacleImg.naturalWidth / obstacleImg.naturalHeight;
-obstacles.push({
-  x: canvas.width,
-  y: Math.random() * (canvas.height - 100),
-  width: baseWidth,
-  height: baseWidth / aspectRatio
-});
-  obstacles.forEach((obstacle, index) => {
-    obstacle.x -= obstacleSpeed;
-    if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1);
-  });
+    createObstacle(); // Call the new obstacle creation function
+  }
 
-  if (gameRunning) {
-  obstacleSpeed += 0.001;
-}
+  obstacles.forEach((obstacle, index) => {
+    obstacle.x -= obstacleSpeed; // Move the obstacle to the left
+    if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1); // Remove off-screen obstacles
+  });
 }
 
 // Collision Detection
@@ -192,4 +201,4 @@ function drawForeground() {
 
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
-};
+});
