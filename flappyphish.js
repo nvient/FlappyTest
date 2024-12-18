@@ -157,13 +157,22 @@ function updateObstacles() {
   if (gameRunning && Math.random() < 0.02) {
     createObstacle(); // Call the new obstacle creation function
   }
+obstacles.forEach((obstacle, index) => {
+  obstacle.x -= obstacleSpeed; // Move the obstacle to the left
 
-  obstacles.forEach((obstacle, index) => {
-    obstacle.x -= obstacleSpeed; // Move the obstacle to the left
-    if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1); // Remove off-screen obstacles
-    score++;
+  // Check if the obstacle has been passed by the fish
+  if (!obstacle.cleared && obstacle.x + obstacle.width < fish.x) {
+    score++; // Increment score only when the obstacle is cleared
+    obstacle.cleared = true; // Mark the obstacle as cleared
     console.log(`Score: ${score}`); // Debug log
-  });
+  }
+
+  // Remove the obstacle if it moves off-screen
+  if (obstacle.x + obstacle.width < 0) {
+    obstacles.splice(index, 1);
+  }
+});
+
 }
 function drawScore() {
   ctx.font = "24px 'Lato'"; // Set font size and family
