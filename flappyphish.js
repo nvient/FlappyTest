@@ -126,11 +126,13 @@ function drawObstacles() {
 // Update Obstacles
 function updateObstacles() {
   if (gameRunning && Math.random() < 0.02) {
+    const baseWidth = 40; // Adjust this as needed for scaling
+const aspectRatio = obstacleImg.naturalWidth / obstacleImg.naturalHeight;
     obstacles.push({
       x: canvas.width,
       y: Math.random() * (canvas.height /2) + (canvas.height / 4),
-      width: 40,
-      height: 80
+      width: baseWidth,
+      height: baseWidth / aspectRatio
     });
   }
   obstacles.forEach((obstacle, index) => {
