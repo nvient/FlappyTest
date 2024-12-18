@@ -25,8 +25,8 @@ fishImg.src = "fish.png";
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
-  const maxWidth = window.innerWidth * 0.8;
-  const maxHeight = window.innerHeight * 0.8; 
+  const maxWidth = window.innerWidth * 0.9;
+  const maxHeight = window.innerHeight * 0.9; 
   
   if (maxWidth / aspectRatio < maxHeight) {
     canvas.width = maxWidth;
