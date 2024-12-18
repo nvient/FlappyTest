@@ -127,7 +127,23 @@ function createObstacle() {
     img: randomImage                         // Store the selected image
   });
 }
-                          
+function drawBackground() {
+  // Scale the background to match the canvas width while maintaining proportions
+  const scale = canvas.width / backgroundImg.naturalWidth;
+  const scaledHeight = backgroundImg.naturalHeight * scale;
+
+  ctx.drawImage(backgroundImg, 0, 0, canvas.width, scaledHeight);
+}
+
+function drawForeground() {
+  // Scale the foreground to match the canvas width while maintaining proportions
+  const scale = canvas.width / foregroundImg.naturalWidth;
+  const scaledHeight = foregroundImg.naturalHeight * scale;
+
+  const yPosition = canvas.height - scaledHeight; // Align to the bottom of the canvas
+
+  ctx.drawImage(foregroundImg, 0, yPosition, canvas.width, scaledHeight);
+}                          
 // Start Game
 function startGame() {
 console.log("Start button clicked!");
@@ -142,11 +158,6 @@ console.log("Start button clicked!");
   score = 0;
   overlay.style.display = "none";
   animate();
-}
-
-// Draw Background
-function drawBackground() {
-  ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
 }
 
 // Draw Fish
@@ -227,13 +238,6 @@ function animate() {
 
   drawForeground();
   if (!gameOver) requestAnimationFrame(animate);
-}
-function drawForeground() {
-  // Position the foreground at the bottom of the canvas
-  const yPosition = canvas.height * 0.9; // Start just above the bottom edge (adjust as needed)
-
-  // Draw the foreground stretched horizontally across the full canvas width
-  ctx.drawImage(foregroundImg, 0, yPosition, canvas.width, canvas.height * 0.1);
 }
  
 // Initialize Game
