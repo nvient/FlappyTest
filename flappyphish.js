@@ -242,7 +242,6 @@ function drawForeground() {
 
   ctx.drawImage(foregroundImg, 0, yPosition, scaledWidth, scaledHeight);
   }
-}
   
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
