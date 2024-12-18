@@ -7,9 +7,10 @@ const overlay = document.getElementById("overlay");
   
 let gravity = 0.08;
 let jumpHeight = 25;
-  let gameRunning = false; // Initialize game as not running
+let gameRunning = false; // Initialize game as not running
 let gameOver = false; 
   let obstacles = [];
+  let obstacle speed = 2;
   let fish = { 
   x: 100, 
   y: 0, 
@@ -98,6 +99,7 @@ console.log("Start button clicked!");
     fish.velocity = 0
  
   obstacles = [];
+  obstacleSpeed = 2;
   gameRunning = true;
   gameOver = false;
   overlay.style.display = "none";
@@ -132,9 +134,13 @@ function updateObstacles() {
     });
   }
   obstacles.forEach((obstacle, index) => {
-    obstacle.x -= 5;
+    obstacle.x -= obstacleSpeed;
     if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1);
   });
+
+  if (gameRunning) {
+  obstacleSpeed += 0.001;
+}
 }
 
 // Collision Detection
