@@ -138,7 +138,7 @@ function drawFish() {
 // Draw Obstacles
 function drawObstacles() {
   obstacles.forEach((obstacle) => {
-    ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+    ctx.drawImage(obstacle.img, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
   });
 }
 
