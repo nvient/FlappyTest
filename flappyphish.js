@@ -55,7 +55,7 @@ const fishImg = new Image();
 fishImg.src = "fish.png";
 
 const obstacleImg = new Image();
-obstacleImg.src = "computerpiletop.png";
+obstacleImg.src = "firewall.svg";
 
 const backgroundImg = new Image();
 backgroundImg.src = "UnderseaBackground.png";
@@ -128,7 +128,7 @@ function updateObstacles() {
   if (gameRunning && Math.random() < 0.02) {
     obstacles.push({
       x: canvas.width,
-      y: Math.random() * (canvas.height - 100),
+      y: Math.random() * (canvas.height /2) + (canvas.height / 4),
       width: 40,
       height: 80
     });
