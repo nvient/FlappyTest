@@ -52,7 +52,7 @@ function resizeCanvas() {
 
 fishImg.onload = () => {
   const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
-const fishScaleFactor = 1.5; // Scale the fish to be 1.5 times larger
+const fishScaleFactor = 2; // Scale the fish to be 1.5 times larger
 
   fish.width = Math.max(canvas.width * 0.05, 40); // Minimum width is 40px
   fish.height = fish.width / aspectRatio; // Maintain proportions
