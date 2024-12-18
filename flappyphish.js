@@ -46,10 +46,14 @@ function resizeCanvas() {
   overlay.style.left = "50%";
   overlay.style.transform = "translate(-50%, -50%)";
 
-  fish.y = canvas.height / 2; // Reset fish position to center
-  fish.width = canvas.width * 0.05; // Adjust the scaling as needed
-  fish.height = fish.width * (fishImg.naturalHeight / fishImg.naturalWidth);
+  const scalingFactor = 0.05; // 5% of canvas width
+  const minFishSize = 40; // Minimum size for fish
 
+  fish.width = Math.max(canvas.width * scalingFactor, minFishSize);
+  fish.height = fish.width * ((fishImg.naturalHeight || 1) / (fishImg.naturalWidth || 1));
+
+  // Center fish
+  fish.y = (canvas.height / 2) - (fish.height / 2);
 }
 
 // Add Resize Listener
