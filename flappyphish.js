@@ -3,7 +3,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const overlay = document.getElementById("overlay");
 
-  console.log("Start button:", document.getElementById("startButton"));
+console.log("Start button:", document.getElementById("startButton"));
   
 let gravity = 0.08;
 let jumpHeight = 25;
@@ -128,7 +128,7 @@ function updateObstacles() {
   if (gameRunning && Math.random() < 0.02) {
     obstacles.push({
       x: canvas.width,
-      y: canvas.height - 100,
+      y: Math.random() * (canvas.height - 100),
       width: 40,
       height: 80
     });
