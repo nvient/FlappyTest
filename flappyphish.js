@@ -10,7 +10,7 @@ let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
 let gameOver = false; 
   let obstacles = [];
-  let obstacle speed = 2;
+  let obstacleSpeed = 2;
   let fish = { 
   x: 100, 
   y: 0, 
