@@ -47,16 +47,13 @@ function resizeCanvas() {
   overlay.style.left = "50%";
   overlay.style.transform = "translate(-50%, -50%)";
 
-  const scalingFactor = 0.05; // 5% of canvas width
-  const minFishSize = 40; // Minimum size for fish
-
+const fishScaleFactor = 1.5; // Scale the fish to be 1.5 times larger
 fishImg.onload = () => {
   const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
-const fishScaleFactor = 2; // Scale the fish to be 1.5 times larger
-
-  fish.width = Math.max(canvas.width * 0.05, 40); // Minimum width is 40px
-  fish.height = fish.width / aspectRatio; // Maintain proportions
-
+  
+  fish.width = Math.max(canvas.width * 0.05 * fishScaleFactor, 40); 
+  fish.height = fish.width / aspectRatio;
+  
   // Center fish vertically
   fish.y = (canvas.height / 2) - (fish.height / 2);
 };
@@ -238,12 +235,12 @@ function drawForeground() {
 
   // Calculate the scaled height and width based on canvas dimensions
   const scaledHeight = canvas.height * 0.1; // Foreground occupies 10% of canvas height
-  const scaledWidth = scaledHeight * aspectRatio;
-
+  const scaledWidth = canvas.width;
+  
   // Center the image horizontally, or tile it if necessary
-  const xPosition = 0; // Start from the left edge
-  const yPosition = canvas.height - scaledHeight; // Position at the bottom of the canvas
+  const xPosition = canvas.height - scaledHeight; 
 
+  for (let x = 0; x < canvas.width; x += scaledWidth) {
   ctx.drawImage(foregroundImg, xPosition, yPosition, canvas.width, scaledHeight);
 }
   
