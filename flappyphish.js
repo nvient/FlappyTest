@@ -228,21 +228,14 @@ function animate() {
   drawForeground();
   if (!gameOver) requestAnimationFrame(animate);
 }
-
 function drawForeground() {
-  // Ensure the image is loaded
-  const aspectRatio = foregroundImg.naturalWidth / foregroundImg.naturalHeight || 1;
+  // Position the foreground at the bottom of the canvas
+  const yPosition = canvas.height * 0.9; // Start just above the bottom edge (adjust as needed)
 
-  // Calculate the scaled height and width based on canvas dimensions
-  const scaledHeight = canvas.height * 0.1; // Foreground occupies 10% of canvas height
-  const scaledWidth = scaledHeight * aspectRatio;
-
-  const xPosition = 0; // Start from the left edge
-  const yPosition = canvas.height - scaledHeight; // Position at the bottom of the canvas
-
-  ctx.drawImage(foregroundImg, 0, yPosition, scaledWidth, scaledHeight);
-  }
-  
+  // Draw the foreground stretched horizontally across the full canvas width
+  ctx.drawImage(foregroundImg, 0, yPosition, canvas.width, canvas.height * 0.1);
+}
+ 
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
 });
