@@ -50,10 +50,18 @@ function resizeCanvas() {
   const scalingFactor = 0.05; // 5% of canvas width
   const minFishSize = 40; // Minimum size for fish
 
-fish.width = Math.max(canvas.width * 0.05, 20); // Minimum width is 20px
-fish.height = fish.width * ((fishImg.naturalHeight || 1) / (fishImg.naturalWidth || 1)); // Proportional height
-console.log("Fish dimensions:", fish.width, fish.height);
-console.log("Image dimensions:", fishImg.naturalWidth, fishImg.naturalHeight);
+fishImg.onload = () => {
+  const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
+
+  fish.width = Math.max(canvas.width * 0.05, 40); // Minimum width is 40px
+  fish.height = fish.width / aspectRatio; // Maintain proportions
+
+  // Center fish vertically
+  fish.y = (canvas.height / 2) - (fish.height / 2);
+};
+
+// Fallback in case `onload` triggers after resizing
+if (fishImg.complete) fishImg.onload();
 
   // Center fish
   fish.y = (canvas.height / 2) - (fish.height / 2);
