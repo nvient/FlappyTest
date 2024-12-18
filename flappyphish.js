@@ -237,11 +237,10 @@ function drawForeground() {
   const scaledHeight = canvas.height * 0.1; // Foreground occupies 10% of canvas height
   const scaledWidth = scaledHeight * aspectRatio;
 
+  const xPosition = 0; // Start from the left edge
   const yPosition = canvas.height - scaledHeight; // Position at the bottom of the canvas
 
-  // Tile the foreground image if necessary
-  for (let x = 0; x < canvas.width; x += scaledWidth) {
-    ctx.drawImage(foregroundImg, x, yPosition, scaledWidth, scaledHeight);
+  ctx.drawImage(foregroundImg, 0, yPosition, scaledWidth, scaledHeight);
   }
 }
   
