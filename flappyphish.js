@@ -21,8 +21,8 @@ let gameOver = false;
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
-  const maxWidth = window.innerWidth * 0.9;
-  const maxHeight = window.innerHeight * 0.9; 
+  const maxWidth = window.innerWidth * 0.8;
+  const maxHeight = window.innerHeight * 0.8; 
   
   if (maxWidth / aspectRatio < maxHeight) {
     canvas.width = maxWidth;
@@ -80,7 +80,7 @@ document.getElementById("startButton").addEventListener("click", () => {
 
 canvas.addEventListener("click", () => {
   if (gameRunning) {
-    fish.velocity = -4; // Adjust upward jump strength
+    fish.velocity = -6; // Adjust upward jump strength
     console.log("Fish jumps!"); // Debug log to confirm clicks
   }
 });
