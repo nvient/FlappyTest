@@ -192,4 +192,4 @@ function drawForeground() {
 
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
-});
+};
