@@ -8,7 +8,8 @@ console.log("Start button:", document.getElementById("startButton"));
 let gravity = 0.2;
 let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
-let gameOver = false; 
+let score = 0;
+  let gameOver = false; 
   let obstacles = [];
   let obstacleSpeed = 2;
   let fish = { 
@@ -130,6 +131,7 @@ console.log("Start button clicked!");
   obstacleSpeed = 2;
   gameRunning = true;
   gameOver = false;
+  score = 0;
   overlay.style.display = "none";
   animate();
 }
@@ -159,9 +161,15 @@ function updateObstacles() {
   obstacles.forEach((obstacle, index) => {
     obstacle.x -= obstacleSpeed; // Move the obstacle to the left
     if (obstacle.x + obstacle.width < 0) obstacles.splice(index, 1); // Remove off-screen obstacles
+    score++;
+    console.log(`Score: ${score}`); // Debug log
   });
 }
-
+function drawScore() {
+  ctx.font = "24px 'Lato'"; // Set font size and family
+  ctx.fillStyle = "white"; // Set text color
+  ctx.fillText(`Score: ${score}`, 20, 30); // Draw score at top-left
+}
 // Collision Detection
 function detectCollision() {
   if (fish.y + fish.height > canvas.height) return true;
@@ -195,6 +203,7 @@ function animate() {
     drawFish();
     updateObstacles();
     drawObstacles();
+    drawScore();
 
     if (detectCollision()) endGame();
   }
