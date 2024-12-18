@@ -235,15 +235,16 @@ function drawForeground() {
 
   // Calculate the scaled height and width based on canvas dimensions
   const scaledHeight = canvas.height * 0.1; // Foreground occupies 10% of canvas height
-  const scaledWidth = canvas.width;
-  
-  // Center the image horizontally, or tile it if necessary
-  const xPosition = canvas.height - scaledHeight; 
+  const scaledWidth = scaledHeight * aspectRatio;
 
+  const yPosition = canvas.height - scaledHeight; // Position at the bottom of the canvas
+
+  // Tile the foreground image if necessary
   for (let x = 0; x < canvas.width; x += scaledWidth) {
-  ctx.drawImage(foregroundImg, xPosition, yPosition, canvas.width, scaledHeight);
+    ctx.drawImage(foregroundImg, x, yPosition, scaledWidth, scaledHeight);
+  }
 }
   
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
-};
+});
