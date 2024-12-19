@@ -57,7 +57,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        .game-section {
+  .game-section {
     text-align: center;
     padding: 40px;
     position: relative; /* For positioning the overlay */
@@ -65,19 +65,20 @@
 margin-bottom: 40px;
 	}
 	    
-.game-container {
+game-container {
     position: relative;
     width: 100%;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto; /* Centers the game container */
+    overflow: hidden;
 }
+	    
 #gameCanvas {
     display: block;
     margin: 0 auto; /* Center the canvas */
     width: 100%; /* Adjust as needed */
     max-width: 800px; /* Set a max width */
     height: auto; /* Maintain aspect ratio */
-    border: 2px solid #308c83;
 }
 
 #overlay {
@@ -96,12 +97,13 @@ margin-bottom: 40px;
     font-weight: 700;
     font-size: 20px;
     text-align: center;
-    z-index: 2;
-    pointer-events: auto;
+    z-index: 1;
+    pointer-events: none;
 }
 
 #phishingFact {
     margin-bottom: 20px;
+    pointer-events: none;
 }
 
 #startButton {
@@ -204,15 +206,17 @@ margin-bottom: 40px;
 
 .special-content {
     display: flex;
+	flex-direction: row;
     align-items: flex-start;
+	justify-content: space-between;
     gap: 20px; 
-    flex-wrap: wrap; /* Ensures stacking on smaller screens */
+    flex-wrap: nowrap; /* Ensures stacking on smaller screens */
 }
 
 .special-content img {
     max-width: 300px; /* Limit the image width */
-    height: auto;
     border-radius: 5px; /* Optional rounded corners */
+	flex-shrink: 0;
 }
 
 .special-content p {
