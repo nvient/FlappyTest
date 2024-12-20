@@ -114,48 +114,47 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+}header {
+    display: flex;
+    align-items: center; /* Align text and image */
+    justify-content: space-between;
+    background-color: #082f49;
+    padding: 20px 5%; /* Add consistent padding to the left and right */
+    color: white;
 }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #082f49;
-            padding: 20px 40px;
-            color: white;
-        }
-        header .text-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        header .text-section h1 {
-            font-size: clamp(2.5rem, 5vw, 5rem);
-            margin: 0;
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-        header .text-section h3 {                     
-        	font-size: clamp(1rem, 2vw, 1.5rem);
-            margin-top: 10px;
-            color: #ffffff;
-            font-weight: 400;
-        }
-        header .text-section h1 span {
-            color: #308c83;
-        }
-        header .image-section {
-            flex: 0;
-	    display: flex;
-align-items: center;
-			}
-        header .image-section img {
-    height: 100%; /* Match the height of the header */
-    max-height: calc(5rem + 1vw); /* Dynamically scale with text */
-    width: auto; /* Maintain aspect ratio */
-        }
 
-        main {
+header .text-section {
+    flex: 1; /* Take available space for text */
+    margin-right: 20px; /* Add spacing between text and image */
+}
+
+header .text-section h1 {
+    font-size: clamp(3rem, 5vw, 6rem); /* Proportional scaling for text */
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+header .text-section h3 {
+    font-size: clamp(1rem, 1.5vw, 1.5rem); /* Responsive scaling for subtitle */
+    margin-top: 10px;
+    line-height: 1.5;
+    color: #ffffff;
+    font-weight: 400;
+}
+
+header .image-section {
+    flex-shrink: 0; /* Prevent image from shrinking */
+    display: flex;
+    align-items: center; /* Align image vertically */
+}
+
+header .image-section img {
+    height: auto; /* Maintain aspect ratio */
+    max-height: 6rem; /* Scale the image to match the height of the text */
+    max-width: 150px; /* Ensure the image doesn’t grow disproportionately wide */
+}    
+main {
             padding: 20px;
             text-align: center;
         }
