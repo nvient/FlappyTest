@@ -117,7 +117,7 @@
 }
 	    header {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
     background-color: #082f49;
     padding: 20px 5%; /* Add consistent padding to the left and right */
@@ -126,7 +126,9 @@
 
 header .text-section {
     flex: 1; /* Take available space for text */
-    margin-right: 20px; /* Add spacing between text and image */
+	display: flex;
+	flex-direction: column;
+justify-content: flex-start; 
 }
 
 header .text-section h1 {
@@ -147,7 +149,7 @@ header .text-section h3 {
 header .image-section {
     flex-shrink: 0; /* Prevent image from shrinking */
     display: flex;
-    align-items: center; /* Align image vertically */
+    align-items: flex-start; /* Align image vertically */
 	justify-content: center;
 }
 
