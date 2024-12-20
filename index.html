@@ -1,346 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>This Site Has Been Shut Down by The Agency</title>
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Phish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Lato', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #082f49;
-            color: #ffffff;
-        }
-.container {
-    max-width: 1200px; /* Set a universal maximum width */
-    margin: 0 auto; /* Center content */
-    padding: 0 20px; /* Add padding on smaller screens */
-}
-		.tips-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 40px;
-        }
-
-        .card {
-            background-color: #308c83;
-            border: 2px solid #308c83;
-            border-radius: 20px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .card-icon {
-            font-size: 40px;
-            color: #308c83;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            line-height: 1.5;
-            color: #ffffff;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 800px) {
-            .tips-section {
-                grid-template-columns: 1fr;
-            }
-        }
-  .game-section {
-    text-align: center;
-    padding: 40px;
-    position: relative; /* For positioning the overlay */
-    background-color: #082f49; /* Match the rest of the page */
-    margin-bottom: 40px;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto; /* Centers the game container */
-    overflow: hidden;
-}
-	    
-#gameCanvas {
-    display: block;
-    margin: 0 auto; /* Center the canvas */
-    width: 100%; /* Adjust as needed */
-    max-width: 800px; 
-    aspect-ratio: 16 / 9;
-}
-
-#overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  <style>
+body {
+    margin: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
-    color: white;
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    text-align: center;
-    z-index: 1;
-    pointer-events: none;
+    justify-content: center; /* Horizontally center */
+    align-items: center;    /* Vertically center */
+    height: 100vh;          /* Full viewport height */
+    background-color: #d8dbe2; /* Optional: dark background */
+    overflow: hidden;       /* Prevent scrollbars */
+  }
+
+  #gameCanvas {
+    display: block;
+    border: 0px
+  }
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  z-index: 2;
+  pointer-events: auto;
 }
 
 #phishingFact {
-    margin-bottom: 20px;
-    pointer-events: none;
+  margin-bottom: 20px;
 }
-
 #startButton {
-    pointer-events: auto;
-    background-color: #308c83;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
+  pointer-events: auto; /* Allow interaction */
+  background-color: #308c83;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
 }
- header {
-    display: flex;
-    align-items: center;
-	 justify-content: space-between;
-    background-color: #082f49;
-	 padding: 20px 0;
-    color: white;
-gap: 20px;
-}
-
-header .text-section {
-    flex: 3; /* Take available space for text */
-	display: flex;
-	flex-direction: column;
-justify-content: center; 
-}
-
-header .text-section h1 {
-    font-size: clamp(3rem, 5vw, 6rem); /* Proportional scaling for text */
-    margin: 0;
-    text-transform: uppercase;
-    line-height: 1.2;
-}
-
-header .text-section h3 {
-    font-size: clamp(1rem, 1.5vw, 1.5rem); /* Responsive scaling for subtitle */
-    margin-top: 10px;
-    line-height: 1.5;
-    color: #ffffff;
-    font-weight: 400;
-}
-
-header .image-section {
-    flex: 1; /* Prevent image from shrinking */
-    display: flex;
-    align-items: center; /* Align image vertically */
-	justify-content: center;
-}
-
-header .image-section img {
- width: clamp(120px, 18vw, 250px); /* Increase the image size */
-    height: auto; /* Maintain the image's aspect ratio */
-}    
-main {
-            padding: 20px;
-            text-align: center;
-        }
-        section {
-            max-width: 1200px;
-		margin: 40px auto;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease-out;
-		padding: 0 20px;
-        }
-        section.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        section h2 {
-            font-size: 2rem;
-            color: #308c83;
-            text-transform: uppercase;
-        }
-          section h3 {
-            font-size: 1.5rem;
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        section p {
-            font-size: 1rem;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-        .special-statement {
-    text-align: center;
-    margin: 40px auto;
-    max-width: 800px;
-    padding: 40px;
-}
-
-.special-statement h2 {
-    font-size: 2rem;
-    color: #308c83;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.special-content {
-    display: flex;
-	flex-direction: row;
-    align-items: flex-start;
-	justify-content: space-between;
-    gap: 20px; 
-    flex-wrap: nowrap; /* Ensures stacking on smaller screens */
-}
-
-.special-content img {
-    max-width: 300px; /* Limit the image width */
-    border-radius: 5px; /* Optional rounded corners */
-	flex-shrink: 0;
-}
-
-.special-content p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #ffffff;
-    margin: 0;
-    flex: 1; /* Ensures text takes remaining space */
-    text-align: left; /* Align text to the left */
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .special-content {
-        flex-direction: column; /* Stack items vertically on small screens */
-        text-align: center; /* Center-align the text */
-    }
-
-    .special-content p {
-        text-align: center; /* Center text on small screens */
-    }
-}
-        footer {
-            margin-top: 40px;
-            padding: 10px;
-            background-color: #4c5454;
-        }
-        footer p {
-            margin: 0;
-            font-size: 0.9rem;
-        }
-    </style>
+  </style>
 </head>
 <body>
-    <header>
-	<div class="container">
-        <div class="text-section">
-            <h1>
-                This Scam Site<br>
-                Has Been<br>
-                Taken Down<br>
-                By <span>The Agency</span>
-            </h1>     
-            <h3>
-You followed a suspicious link and could have put your data in the hands of scammers!<br><br>
-Test your skills with a game of <em>Flappy Phish</em>, then read the important statement from Agent Coyle and explore the tips below to avoid your data falling into the wrong hands.
-            </h3>
-                   </div>
-        <div class="image-section">
-            <img src="CybersecurityAgency.png" alt="Cybersecurity Division Logo">
-        </div>
-	</div>
-            </header>
-            <main>
-	<div class="container">
-            <section class="game-section">
-                <h2>Flappy Phish</h2>
-    <p>Press the space bar to avoid the obstacles!</p>
-        <div id="overlay">
-            <button id="startButton">Start Game</button>
-        </div>    
-       <canvas id="gameCanvas"></canvas>
-	    </section>
-<script src="flappyphish.js"></script>
-        <section class="special-statement">
-            <h2>Public Statement from Agent Joshua Coyle</h2>
- <div class="special-content">
-        <img src="Agent-Coyle.png">
-        <p>Ladies and gentlemen, I am here today to address a difficult situation that has been keeping me up at night. It occurred during my recent undercover mission. As part of a covert operation to infiltrate a scam center, I published a fraudulent website designed by one of the scammers. Unfortunately, this meant their fraudulent site went live temporarily, targeting unsuspecting victims.
-<br>
-		<br>
-                I deeply regret the confusion and inconvenience this caused and want to assure the public that this situation has been handled. While my mission was ultimately successful—leading to the takedown of the entire operation—it doesn’t change the fact that innocent people may have lost money due to this incident. I’ve learned a tough lesson about the complexities of balancing operational secrecy with unintended consequences, and I’ll be working closely with my supervisors to improve decision-making in these high-pressure scenarios. To anyone who visited healthcarerebate.com, I’m sorry. And to the cybercriminal who forced me to hit “Publish”—let’s just say, justice was served, and I’m pretty sure her internet privileges are permanently revoked.
-            </p>
-            </div>
-        </section>
-<section>
-<h2>Quick Tips</h2>
-</section>
-<section class="tips-section">
-        <div class="card">
-            <div class="card-icon">🖱️</div> <!-- Replace with an actual icon/image -->
-            <div class="card-title">Think Before You Click</div>
-            <div class="card-text">
-                Think before clicking on links in messages. Verify the sender and go to the website directly if you know it.
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-icon">🔍</div> <!-- Replace with an actual icon/image -->
-            <div class="card-title">Confirm URLs From Search</div>
-            <div class="card-text">
-                Before clicking a site from a search engine, run it through a safety checker like Norton’s Safe Web feature.
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-icon">⌨️</div> <!-- Replace with an actual icon/image -->
-            <div class="card-title">Type Carefully</div>
-            <div class="card-text">
-                If you are typing a URL from scratch, review your typing before clicking “enter.” One letter off could lead you to a scammer’s spoofed website.
-            </div>
-        </div>
-    </section>
-	</div>
-    </main>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const sections = document.querySelectorAll("section");
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("animate");
-                    }
-                });
-            });
-
-            sections.forEach((section) => {
-                observer.observe(section);
-            });
-        });
-    </script>
+  <div id="overlay">
+    <p id="phishingFact"></p>
+    <button id="startButton">Start Game</button>
+</div>
+<canvas id="gameCanvas"></canvas>
+  <script src="flappyphish.js"></script>
 </body>
 </html>
