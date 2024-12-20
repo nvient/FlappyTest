@@ -148,12 +148,12 @@ header .image-section {
     flex-shrink: 0; /* Prevent image from shrinking */
     display: flex;
     align-items: center; /* Align image vertically */
+	justify-content: center;
 }
 
 header .image-section img {
-    height: 100%;
-    max-height: 6rem; /* Scale the image to match the height of the text */
-    max-width: auto; /* Ensure the image doesn’t grow disproportionately wide */
+ width: clamp(120px, 18vw, 250px); /* Increase the image size */
+    height: auto; /* Maintain the image's aspect ratio */
 }    
 main {
             padding: 20px;
