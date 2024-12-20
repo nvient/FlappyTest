@@ -114,9 +114,10 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
-}header {
+}
+	    header {
     display: flex;
-    align-items: center; /* Align text and image */
+    align-items: stretch;
     justify-content: space-between;
     background-color: #082f49;
     padding: 20px 5%; /* Add consistent padding to the left and right */
@@ -150,7 +151,7 @@ header .image-section {
 }
 
 header .image-section img {
-    height: auto; /* Maintain aspect ratio */
+    height: 100%;
     max-height: 6rem; /* Scale the image to match the height of the text */
     max-width: 150px; /* Ensure the image doesn’t grow disproportionately wide */
 }    
