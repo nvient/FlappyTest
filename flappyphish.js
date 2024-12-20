@@ -85,7 +85,7 @@ const backgroundImg = new Image();
 backgroundImg.src = "UnderseaBackground.png";
 
 const foregroundImg = new Image();
-foregroundImg.src = "UnderseaForeground.png";
+foregroundImg.src = "Seafloor.png";
 
 // Random phishing facts
 const phishingFacts = [
