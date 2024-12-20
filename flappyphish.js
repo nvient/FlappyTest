@@ -110,7 +110,7 @@ canvas.addEventListener("click", () => {
 });
   document.addEventListener("keydown", (event) => {
   if (gameRunning && event.code === "Space") {
-    fish.velocity = -4.5; // Spacebar makes fish jump
+    fish.velocity = -6; // Spacebar makes fish jump
     console.log("Spacebar pressed! Fish jumps!");
   }
 });
