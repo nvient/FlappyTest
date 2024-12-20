@@ -16,6 +16,11 @@
             background-color: #082f49;
             color: #ffffff;
         }
+.container {
+    max-width: 1200px; /* Set a universal maximum width */
+    margin: 0 auto; /* Center content */
+    padding: 0 20px; /* Add padding on smaller screens */
+}
 		.tips-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -115,20 +120,21 @@
     cursor: pointer;
     margin-top: 20px;
 }
-	    header {
+ header {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: center;
+	 justify-content: space-between;
     background-color: #082f49;
-    padding: 20px 5%; /* Add consistent padding to the left and right */
+	 padding: 20px 0;
     color: white;
+gap: 20px;
 }
 
 header .text-section {
-    flex: 1; /* Take available space for text */
+    flex: 3; /* Take available space for text */
 	display: flex;
 	flex-direction: column;
-justify-content: flex-start; 
+justify-content: center; 
 }
 
 header .text-section h1 {
@@ -147,9 +153,9 @@ header .text-section h3 {
 }
 
 header .image-section {
-    flex-shrink: 0; /* Prevent image from shrinking */
+    flex: 1; /* Prevent image from shrinking */
     display: flex;
-    align-items: flex-start; /* Align image vertically */
+    align-items: center; /* Align image vertically */
 	justify-content: center;
 }
 
@@ -162,11 +168,12 @@ main {
             text-align: center;
         }
         section {
-            margin: 40px auto;
-            max-width: 800px;
+            max-width: 1200px;
+		margin: 40px auto;
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease-out;
+		padding: 0 20px;
         }
         section.animate {
             opacity: 1;
@@ -250,6 +257,7 @@ main {
 </head>
 <body>
     <header>
+	<div class="container">
         <div class="text-section">
             <h1>
                 This Scam Site<br>
@@ -265,8 +273,10 @@ Test your skills with a game of <em>Flappy Phish</em>, then read the important s
         <div class="image-section">
             <img src="CybersecurityAgency.png" alt="Cybersecurity Division Logo">
         </div>
+	</div>
             </header>
             <main>
+	<div class="container">
             <section class="game-section">
                 <h2>Flappy Phish</h2>
     <p>Press the space bar to avoid the obstacles!</p>
@@ -313,6 +323,7 @@ Test your skills with a game of <em>Flappy Phish</em>, then read the important s
             </div>
         </div>
     </section>
+	</div>
     </main>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
