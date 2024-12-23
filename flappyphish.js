@@ -18,8 +18,8 @@ let score = 0;
   let fish = { 
   x: 100, 
   y: 0, 
-  width: canvas.width * 0.03, // Dynamically scale width based on canvas size
-  height: canvas.height * 0.03, // Dynamically scale height based on canvas size
+  width: canvas.width * 0.04, // Dynamically scale width based on canvas size
+  height: canvas.height * 0.04, // Dynamically scale height based on canvas size
   velocity: 0
 };
 
@@ -72,7 +72,7 @@ const fishScaleFactor = 1.5; // Scale the fish to be 1.5 times larger
 fishImg.onload = () => {
   const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
   
-  fish.width = Math.max(canvas.width * 0.05 * fishScaleFactor, 40); 
+  fish.width = Math.max(canvas.width * 0.04 * fishScaleFactor, 40); 
   fish.height = fish.width / aspectRatio;
   
   // Center fish vertically
