@@ -13,13 +13,13 @@ let score = 0;
   let gameOver = false; 
   let obstacles = [];
   let obstacleSpeed = 2;
-  const speedIncrement = 0.2;
+  const speedIncrement = 0.3;
   const scoreThreshold = 5;  
   let fish = { 
   x: 100, 
   y: 0, 
-  width: canvas.width * 0.05, // Dynamically scale width based on canvas size
-  height: canvas.height * 0.05, // Dynamically scale height based on canvas size
+  width: canvas.width * 0.03, // Dynamically scale width based on canvas size
+  height: canvas.height * 0.03, // Dynamically scale height based on canvas size
   velocity: 0
 };
 
@@ -46,8 +46,8 @@ fishImg.src = "fish.png";
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
-  const maxWidth = window.innerWidth * 0.9;
-  const maxHeight = window.innerHeight * 0.9; 
+  const maxWidth = window.innerWidth * 0.7;
+  const maxHeight = window.innerHeight * 0.7; 
   
   if (maxWidth / aspectRatio < maxHeight) {
     canvas.width = maxWidth;
