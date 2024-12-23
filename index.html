@@ -21,6 +21,20 @@ body {
     overflow: hidden;       /* Prevent scrollbars */
   }
 
+#textOverlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.8); /* Black transparent background */
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      font-weight: 900;
+      font-size: 24px;
+      z-index: 3; /* Ensure it is above the other layers */
+    }
+
   #gameCanvas {
     display: block;
     border: 0px
