@@ -20,6 +20,24 @@ let score = 0;
   velocity: 0
 };
 
+const backgroundImg = new Image();
+backgroundImg.src = "UnderseaBackground.png";
+
+const foregroundImg = new Image();
+foregroundImg.src = "Seafloor.png";
+
+const obstacleImages = [
+  "firewall.svg",
+  "behavior-blocker.svg",
+  "cloud-firewall.svg",
+  "cyber-security.svg",
+  "virus-free.svg"
+].map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
+
 const fishImg = new Image();
 fishImg.src = "fish.png";
   
@@ -68,24 +86,6 @@ if (fishImg.complete) fishImg.onload();
 // Add Resize Listener
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
-
-const obstacleImages = [
-  "firewall.svg",
-  "behavior-blocker.svg",
-  "cloud-firewall.svg",
-  "cyber-security.svg",
-  "virus-free.svg"
-].map((src) => {
-  const img = new Image();
-  img.src = src;
-  return img;
-});
-
-const backgroundImg = new Image();
-backgroundImg.src = "UnderseaBackground.png";
-
-const foregroundImg = new Image();
-foregroundImg.src = "Seafloor.png";
 
 // Random phishing facts
 const phishingFacts = [
