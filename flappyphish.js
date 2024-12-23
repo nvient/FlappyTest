@@ -203,10 +203,10 @@ obstacles.forEach((obstacle, index) => {
     obstacles.splice(index, 1);
   }
 });
-        if (score % scoreThreshold === 0) {
-        obstacleSpeed += speedIncrement; // Increase speed
-        console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
-      } 
+  if (score > 0 && score % scoreThreshold === 0 && frameCount % 120 === 0) {
+    obstacleSpeed += speedIncrement;
+    console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
+  }
 }
 function drawScore() {
   ctx.font = "24px 'Lato'"; // Set font size and family
