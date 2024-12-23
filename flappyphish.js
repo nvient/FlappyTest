@@ -5,7 +5,7 @@ const overlay = document.getElementById("overlay");
 
 console.log("Start button:", document.getElementById("startButton"));
   
-let gravity = 0.3;
+let gravity = 0.2;
 let frameCount = 0;
 let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
@@ -13,7 +13,7 @@ let score = 0;
   let gameOver = false; 
   let obstacles = [];
   let obstacleSpeed = 2;
-  const speedIncrement = 0.1;
+  const speedIncrement = 0.2;
   const scoreThreshold = 5;  
   let fish = { 
   x: 100, 
@@ -183,33 +183,37 @@ function drawObstacles() {
   });
 }
 
+let lastSpeedIncreaseScore = 0; // Initialize last speed increment score
+
 function updateObstacles() {
-if (gameRunning && frameCount % Math.max(60, Math.floor(240 / obstacleSpeed)) === 0) {
-  createObstacle();
-}
-
-  }
-  
-obstacles.forEach((obstacle, index) => {
-  obstacle.x -= obstacleSpeed; // Move the obstacle to the left
-
-  // Check if the obstacle has been passed by the fish
-  if (!obstacle.cleared && obstacle.x + obstacle.width < fish.x) {
-    score++; // Increment score only when the obstacle is cleared
-    obstacle.cleared = true; // Mark the obstacle as cleared
-    console.log(`Score: ${score}`); // Debug log
+  // Create a new obstacle at intervals based on speed
+  if (gameRunning && frameCount % Math.max(60, Math.floor(240 / obstacleSpeed)) === 0) {
+    createObstacle();
   }
 
-  // Remove the obstacle if it moves off-screen
-  if (obstacle.x + obstacle.width < 0) {
-    obstacles.splice(index, 1);
-  }
-});
-  if (score > 0 && score % scoreThreshold === 0 && frameCount % 120 === 0) {
+  obstacles.forEach((obstacle, index) => {
+    obstacle.x -= obstacleSpeed;
+
+    // Check if the obstacle has been passed by the fish
+    if (!obstacle.cleared && obstacle.x + obstacle.width < fish.x) {
+      score++;
+      obstacle.cleared = true;
+      console.log(`Score: ${score}`);
+    }
+
+    // Remove the obstacle if it moves off-screen
+    if (obstacle.x + obstacle.width < 0) {
+      obstacles.splice(index, 1);
+    }
+  });
+
+  if (score > 0 && score % scoreThreshold === 0 && score !== lastSpeedIncreaseScore) {
     obstacleSpeed += speedIncrement;
+    lastSpeedIncreaseScore = score; // Update the last score at which speed was increased
     console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
   }
 }
+
 function drawScore() {
   ctx.font = "24px 'Lato'"; // Set font size and family
   ctx.fillStyle = "white"; // Set text color
@@ -245,7 +249,9 @@ function animate() {
     fish.velocity += gravity;
     fish.y += fish.velocity; 
 
-    updateObstacles();
+   
+    drawForeground();
+ updateObstacles();
     drawObstacles();
     drawFish();
     drawScore();
@@ -254,8 +260,9 @@ function animate() {
       endGame();
       return; 
     }
-}
-    drawForeground();
+  } else {
+    drawForeground(); // Ensure foreground is still drawn if the game is not running
+  }
 
   if (!gameOver) {
     frameCount++; // Increment frame counter
