@@ -93,7 +93,13 @@ const phishingFacts = [
   "Hover over, but do not click, on links in unsolicited emails to verify URLs.",
   "Never open unexpected attachments, especially in an unsolicited email.",
   "Phishing often uses urgency to trick you.",
-  "Check the email sender addresses carefully."
+  "Check the email sender addresses carefully.",
+  "Be skeptical of deals that seem too good to be true.",
+  "Don't divulge sensitive information to unverified senders.",
+  "Vishing or voice phishing refers to scams carried out through phone calls or voice messages.",
+  "A spear phishing attack occurs when a cybercriminal crafts a personalized message for their target.",
+  "Scammers are utilizing AI chatbots to write grammatically correct phishing emails, making scams difficult to spot off of spelling and grammar alone.",
+  "Phishing refers to the practice of sending a message to a user with the malicious intent of trying to trick them into revealing sensitive information or installing malware."
 ];
 
 // Event Listeners for User Interaction
