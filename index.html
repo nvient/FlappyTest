@@ -31,6 +31,9 @@ header {
   width: 70%; /* Same width as the canvas */
   margin-left: auto; /* Center align */
   margin-right: auto; /* Center align */
+  z-index: 3; /* Ensure the header is above the overlay */
+  position: relative; /* Required for z-index to work */
+  background-color: transparent;
 }
     header h1 {
       font-size: 4rem; /* Increase font size for larger text */
@@ -57,6 +60,9 @@ header h2 {
       width: 70%;
       margin-left: auto;
       margin-right: auto;
+      z-index: 2; /* Main should be below the header */
+  position: relative; /* Maintain stacking context */
+  padding-top: 20px;
     }
     
     #gameCanvas {
@@ -80,7 +86,7 @@ header h2 {
       font-weight: 700;
       font-size: 20px;
       text-align: center;
-      z-index: 2;
+      z-index: 1;
       pointer-events: auto;
     }
     #phishingFact {
@@ -103,7 +109,7 @@ header h2 {
 </head>
 <body>
   <header>
-    <h1>This site has been shut down by<span style="color: #308c83;">the agency</span></h1>
+    <h1>This site has been shut down by <span style="color: #308c83;">the agency</span></h1>
     <h2>You followed a suspicious link and could have put your data in the hands of scammers!<br><br>
 Test your skills with a game of <em>Flappy Phish</em>, then read the important statement from Agent Coyle and explore the tips below to avoid your data falling into the wrong hands.</h2>
   </header>
