@@ -6,6 +6,7 @@ const overlay = document.getElementById("overlay");
 console.log("Start button:", document.getElementById("startButton"));
   
 let gravity = 0.3;
+let frameCount = 0;
 let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
 let score = 0;
@@ -183,8 +184,8 @@ function drawObstacles() {
 }
 
 function updateObstacles() {
-  if (gameRunning && Math.random() < 0.01) {
-    createObstacle(); // Call the new obstacle creation function
+  if (gameRunning && frameCount % 120 === 0) {
+    createObstacle();
   }
   
 obstacles.forEach((obstacle, index) => {
@@ -196,17 +197,16 @@ obstacles.forEach((obstacle, index) => {
     obstacle.cleared = true; // Mark the obstacle as cleared
     console.log(`Score: ${score}`); // Debug log
   }
-        if (score % scoreThreshold === 0) {
-        obstacleSpeed += speedIncrement; // Increase speed
-        console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
-      }
 
   // Remove the obstacle if it moves off-screen
   if (obstacle.x + obstacle.width < 0) {
     obstacles.splice(index, 1);
   }
 });
-
+        if (score % scoreThreshold === 0) {
+        obstacleSpeed += speedIncrement; // Increase speed
+        console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
+      } 
 }
 function drawScore() {
   ctx.font = "24px 'Lato'"; // Set font size and family
@@ -242,20 +242,25 @@ function animate() {
   if (gameRunning) {
     fish.velocity += gravity;
     fish.y += fish.velocity; 
-    
-  drawForeground();
-  if (!gameOver) requestAnimationFrame(animate);
-    
-    drawFish();
+
     updateObstacles();
     drawObstacles();
+    drawFish();
     drawScore();
-
-    if (detectCollision()) endGame();
-  }
-
+    
+    if (detectCollision()) {
+      endGame();
+      return; 
+    }
 }
- 
+    drawForeground();
+
+  if (!gameOver) {
+    frameCount++; // Increment frame counter
+    requestAnimationFrame(animate); 
+  }
+}
+                          
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
 });
