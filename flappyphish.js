@@ -184,8 +184,10 @@ function drawObstacles() {
 }
 
 function updateObstacles() {
-  if (gameRunning && frameCount % 120 === 0) {
-    createObstacle();
+if (gameRunning && frameCount % Math.max(60, Math.floor(240 / obstacleSpeed)) === 0) {
+  createObstacle();
+}
+
   }
   
 obstacles.forEach((obstacle, index) => {
