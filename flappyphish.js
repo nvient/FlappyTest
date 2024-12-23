@@ -162,6 +162,8 @@ console.log("Start button clicked!");
   gameRunning = true;
   gameOver = false;
   score = 0;
+
+  createObstacle(); 
   overlay.style.display = "none";
   animate();
 }
