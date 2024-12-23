@@ -12,6 +12,8 @@ let score = 0;
   let gameOver = false; 
   let obstacles = [];
   let obstacleSpeed = 2;
+  const speedIncrement = 0.1;
+  const scoreThreshold = 5;  
   let fish = { 
   x: 100, 
   y: 0, 
@@ -184,6 +186,7 @@ function updateObstacles() {
   if (gameRunning && Math.random() < 0.01) {
     createObstacle(); // Call the new obstacle creation function
   }
+  
 obstacles.forEach((obstacle, index) => {
   obstacle.x -= obstacleSpeed; // Move the obstacle to the left
 
@@ -193,6 +196,10 @@ obstacles.forEach((obstacle, index) => {
     obstacle.cleared = true; // Mark the obstacle as cleared
     console.log(`Score: ${score}`); // Debug log
   }
+        if (score % scoreThreshold === 0) {
+        obstacleSpeed += speedIncrement; // Increase speed
+        console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
+      }
 
   // Remove the obstacle if it moves off-screen
   if (obstacle.x + obstacle.width < 0) {
