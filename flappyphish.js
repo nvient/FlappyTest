@@ -233,7 +233,10 @@ function animate() {
   if (gameRunning) {
     fish.velocity += gravity;
     fish.y += fish.velocity; 
-
+    
+  drawForeground();
+  if (!gameOver) requestAnimationFrame(animate);
+    
     drawFish();
     updateObstacles();
     drawObstacles();
@@ -242,8 +245,6 @@ function animate() {
     if (detectCollision()) endGame();
   }
 
-  drawForeground();
-  if (!gameOver) requestAnimationFrame(animate);
 }
  
 // Initialize Game
