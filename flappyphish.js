@@ -5,7 +5,7 @@ const overlay = document.getElementById("overlay");
 
 console.log("Start button:", document.getElementById("startButton"));
   
-let gravity = 0.5;
+let gravity = 0.3;
 let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
 let score = 0;
