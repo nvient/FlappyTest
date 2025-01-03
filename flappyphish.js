@@ -50,11 +50,11 @@ function resizeCanvas() {
   const maxHeight = window.innerHeight * 0.7; 
   
   if (maxWidth / aspectRatio < maxHeight) {
-    canvas.width = maxWidth;
-    canvas.height = maxWidth / aspectRatio;
+    gameCanvas.width = maxWidth;
+    gameCanvas.height = maxWidth / aspectRatio;
   } else {
-    canvas.height = maxHeight;
-    canvas.width = maxHeight * aspectRatio;
+    gameCanvas.height = maxHeight;
+    gameCanvas.width = maxHeight * aspectRatio;
   }
 
   canvas.style.position = "absolute";
