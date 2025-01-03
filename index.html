@@ -20,7 +20,8 @@ html, body {
     height: 100%;
 }
 
-header {
+.header {
+    display: flex;
     text-align: center;
     width: 100%;
     padding: 20px;
@@ -29,19 +30,39 @@ header {
     background-color: #082f49; /* Matches background color */
 }
 
-header h1 {
+.header-text h1 {
     font-size: 3rem;
     font-weight: 700;
     margin: 0;
     text-transform: uppercase;
 }
 
-header h2 {
+.header-text h2 {
     font-size: 1.2rem;
     font-weight: 400;
     margin: 10px 0;
 }
+      
+.header-image {
+    max-width: 100px; /* Adjust as needed */
+    height: auto;
+    margin-right: 20px;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
 
+.header-text {
+    flex-grow: 1;
+}
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .header-image {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
 main {
     display: flex;
     flex-direction: column;
@@ -88,10 +109,13 @@ main {
   </style>
 </head>
 <body>
-    <header>
+    <header class="header">
+        <img src="CybersecurityAgency.png" alt="Cybersecurity Agency" class="header-image">
+        <div class="header-text">
         <h1>This Site Has Been Shut Down by <span style="color: #308c83;">The Agency</span></h1>
         <h2>You followed a suspicious link and could have put your data in the hands of scammers!</h2>
         <h2>Test your skills with a game of <em>Flappy Phish</em>, then read the important statement from Agent Coyle and explore the tips below to avoid your data falling into the wrong hands.</h2>
+        </div>     
     </header>
     <main>
             <canvas id="gameCanvas"></canvas>
