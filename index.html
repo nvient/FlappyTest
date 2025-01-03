@@ -10,117 +10,103 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900&display=swap" rel="stylesheet">
   <style>
 html, body {
-      font-size: 16px;
-      font-family: 'Lato', sans-serif;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-      background-color: #082f49;
-      display: flex;
-      flex-direction: column; /* Stack sections vertically */
-  height: auto;    
-  min-height: 100vh;
-    }
-
-    body {
+  font-size: 16px;
   font-family: 'Lato', sans-serif;
   color: #ffffff;
+  margin: 0;
+  padding: 0;
+  background-color: #082f49;
+  display: flex;
+  flex-direction: column; /* Stack sections vertically */
+  min-height: 100vh; /* Ensure the body fills the viewport */
+}
+
+body {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content horizontally */
+  align-items: center;
 }
 
 header {
   text-align: left;
   padding: 40px 20px;
-  margin-top: 20px;
-  width: 70%; /* Same width as the canvas */
-  margin-left: auto; /* Center align */
-  margin-right: auto; /* Center align */
-  z-index: 3; /* Ensure the header is above the overlay */
+  width: 70%;
+  margin: 20px auto; /* Space above and below header */
+  background-color: transparent;
   position: relative;
 }
-header {
-  text-align: left;
-  padding: 40px 20px;
-  margin-top: 20px;
-  width: 70%; /* Same width as the canvas */
-  margin-left: auto; /* Center align */
-  margin-right: auto; /* Center align */
-  z-index: 3; /* Ensure the header is above the overlay */
-  position: relative; /* Required for z-index to work */
-  background-color: transparent;
+
+header h1 {
+  font-size: 4rem; /* Large font size */
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  line-height: 1.4; /* Improve readability */
 }
-    header h1 {
-      font-size: 4rem; /* Increase font size for larger text */
-      font-weight: 700; /* Make the text bolder */
-      text-transform: uppercase;
-      color: #ffffff;
-      margin: 0 0 20px 0;
-      line-height: 1.4; /* Slightly increase line height for better readability */
-    }
 
 header h2 {
   font-size: 1.5rem;
   font-weight: 400;
   color: #ffffff;
-  margin: 0 0 20px 0; /* Add space below the h2 */
+  margin: 0 0 20px 0;
 }
-    main {
-      flex: 1; /* Allow this section to grow */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      width: 70%;
-      margin-left: auto;
-      margin-right: auto;
-      z-index: 2; /* Main should be below the header */
-  position: relative; /* Maintain stacking context */
-  padding-top: 20px;
-    }
-    
-    #gameCanvas {
-      display: block;
-      border: 0;
-      width: 100%;
-      height: auto;
-    }
-    #overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
-      color: white;
-      font-weight: 700;
-      font-size: 20px;
-      text-align: center;
-      z-index: 1;
-      pointer-events: auto;
-    }
-    #phishingFact {
-      margin-bottom: 20px;
-    }
-    #startButton {
-      pointer-events: auto; /* Allow interaction */
-      background-color: #308c83;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensure content stacks */
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px 0; /* Space above and below the main section */
+  position: relative;
+}
+
+#gameCanvas {
+  display: block;
+  border: 0;
+  width: 100%;
+  height: auto;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8); /* Black transparent overlay */
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  z-index: 10; /* Ensure overlay is above all content */
+  pointer-events: auto;
+}
+
+#phishingFact {
+  margin-bottom: 20px;
+}
+
+#startButton {
+  pointer-events: auto;
+  background-color: #308c83;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
   </style>
 </head>
 <body>
