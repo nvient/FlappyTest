@@ -123,6 +123,17 @@ canvas.addEventListener("click", () => {
     console.log("Spacebar pressed! Fish jumps!");
   }
 });
+  function resizeOverlay() {
+  const overlay = document.getElementById("overlay");
+  const canvas = document.getElementById("gameCanvas");
+
+  overlay.style.width = `${canvas.width}px`;
+  overlay.style.height = `${canvas.height}px`;
+}
+
+window.addEventListener("resize", resizeOverlay);
+resizeOverlay();
+  
 function createObstacle() {
   const randomImage = obstacleImages[Math.floor(Math.random() * obstacleImages.length)];
   const baseWidth = canvas.width * 0.05; // Adjust the scaling as needed
