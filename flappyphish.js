@@ -6,27 +6,48 @@ const overlay = document.getElementById("overlay");
 console.log("Start button:", document.getElementById("startButton"));
   
 let gravity = 0.2;
+let frameCount = 0;
 let jumpHeight = 25;
 let gameRunning = false; // Initialize game as not running
 let score = 0;
   let gameOver = false; 
   let obstacles = [];
   let obstacleSpeed = 2;
+  const speedIncrement = 0.3;
+  const scoreThreshold = 5;  
   let fish = { 
   x: 100, 
   y: 0, 
-  width: canvas.width * 0.05, // Dynamically scale width based on canvas size
-  height: canvas.height * 0.05, // Dynamically scale height based on canvas size
+  width: canvas.width * 0.04, // Dynamically scale width based on canvas size
+  height: canvas.height * 0.04, // Dynamically scale height based on canvas size
   velocity: 0
 };
+
+const backgroundImg = new Image();
+backgroundImg.src = "UnderseaBackground.png";
+
+const foregroundImg = new Image();
+foregroundImg.src = "Seafloor.png";
+
+const obstacleImages = [
+  "firewall.svg",
+  "behavior-blocker.svg",
+  "cloud-firewall.svg",
+  "cyber-security.svg",
+  "virus-free.svg"
+].map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
 
 const fishImg = new Image();
 fishImg.src = "fish.png";
   
 function resizeCanvas() {
   const aspectRatio = 16 / 9;
-  const maxWidth = window.innerWidth * 0.9;
-  const maxHeight = window.innerHeight * 0.9; 
+  const maxWidth = window.innerWidth * 0.7;
+  const maxHeight = window.innerHeight * 0.7; 
   
   if (maxWidth / aspectRatio < maxHeight) {
     canvas.width = maxWidth;
@@ -51,7 +72,7 @@ const fishScaleFactor = 1.5; // Scale the fish to be 1.5 times larger
 fishImg.onload = () => {
   const aspectRatio = fishImg.naturalWidth / fishImg.naturalHeight || 1;
   
-  fish.width = Math.max(canvas.width * 0.05 * fishScaleFactor, 40); 
+  fish.width = Math.max(canvas.width * 0.04 * fishScaleFactor, 40); 
   fish.height = fish.width / aspectRatio;
   
   // Center fish vertically
@@ -69,31 +90,19 @@ if (fishImg.complete) fishImg.onload();
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Initial resize setup
 
-const obstacleImages = [
-  "firewall.svg",
-  "behavior-blocker.svg",
-  "cloud-firewall.svg",
-  "cyber-security.svg",
-  "virus-free.svg"
-].map((src) => {
-  const img = new Image();
-  img.src = src;
-  return img;
-});
-
-const backgroundImg = new Image();
-backgroundImg.src = "UnderseaBackground.png";
-
-const foregroundImg = new Image();
-foregroundImg.src = "UnderseaForeground.png";
-
 // Random phishing facts
 const phishingFacts = [
   "Remember the SLAM method.",
   "Hover over, but do not click, on links in unsolicited emails to verify URLs.",
   "Never open unexpected attachments, especially in an unsolicited email.",
   "Phishing often uses urgency to trick you.",
-  "Check the email sender addresses carefully."
+  "Check the email sender addresses carefully.",
+  "Be skeptical of deals that seem too good to be true.",
+  "Don't divulge sensitive information to unverified senders.",
+  "Vishing or voice phishing refers to scams carried out through phone calls or voice messages.",
+  "A spear phishing attack occurs when a cybercriminal crafts a personalized message for their target.",
+  "Scammers are utilizing AI chatbots to write grammatically correct phishing emails, making scams difficult to spot off of spelling and grammar alone.",
+  "Phishing refers to the practice of sending a message to a user with the malicious intent of trying to trick them into revealing sensitive information or installing malware."
 ];
 
 // Event Listeners for User Interaction
@@ -110,7 +119,7 @@ canvas.addEventListener("click", () => {
 });
   document.addEventListener("keydown", (event) => {
   if (gameRunning && event.code === "Space") {
-    fish.velocity = -4.5; // Spacebar makes fish jump
+    fish.velocity = -6; // Spacebar makes fish jump
     console.log("Spacebar pressed! Fish jumps!");
   }
 });
@@ -156,6 +165,8 @@ console.log("Start button clicked!");
   gameRunning = true;
   gameOver = false;
   score = 0;
+
+  createObstacle(); 
   overlay.style.display = "none";
   animate();
 }
@@ -172,27 +183,37 @@ function drawObstacles() {
   });
 }
 
+let lastSpeedIncreaseScore = 0; // Initialize last speed increment score
+
 function updateObstacles() {
-  if (gameRunning && Math.random() < 0.01) {
-    createObstacle(); // Call the new obstacle creation function
-  }
-obstacles.forEach((obstacle, index) => {
-  obstacle.x -= obstacleSpeed; // Move the obstacle to the left
-
-  // Check if the obstacle has been passed by the fish
-  if (!obstacle.cleared && obstacle.x + obstacle.width < fish.x) {
-    score++; // Increment score only when the obstacle is cleared
-    obstacle.cleared = true; // Mark the obstacle as cleared
-    console.log(`Score: ${score}`); // Debug log
+  // Create a new obstacle at intervals based on speed
+  if (gameRunning && frameCount % Math.max(60, Math.floor(240 / obstacleSpeed)) === 0) {
+    createObstacle();
   }
 
-  // Remove the obstacle if it moves off-screen
-  if (obstacle.x + obstacle.width < 0) {
-    obstacles.splice(index, 1);
-  }
-});
+  obstacles.forEach((obstacle, index) => {
+    obstacle.x -= obstacleSpeed;
 
+    // Check if the obstacle has been passed by the fish
+    if (!obstacle.cleared && obstacle.x + obstacle.width < fish.x) {
+      score++;
+      obstacle.cleared = true;
+      console.log(`Score: ${score}`);
+    }
+
+    // Remove the obstacle if it moves off-screen
+    if (obstacle.x + obstacle.width < 0) {
+      obstacles.splice(index, 1);
+    }
+  });
+
+  if (score > 0 && score % scoreThreshold === 0 && score !== lastSpeedIncreaseScore) {
+    obstacleSpeed += speedIncrement;
+    lastSpeedIncreaseScore = score; // Update the last score at which speed was increased
+    console.log(`Obstacle speed increased to: ${obstacleSpeed}`);
+  }
 }
+
 function drawScore() {
   ctx.font = "24px 'Lato'"; // Set font size and family
   ctx.fillStyle = "white"; // Set text color
@@ -228,18 +249,27 @@ function animate() {
     fish.velocity += gravity;
     fish.y += fish.velocity; 
 
-    drawFish();
-    updateObstacles();
+   
+    drawForeground();
+ updateObstacles();
     drawObstacles();
+    drawFish();
     drawScore();
-
-    if (detectCollision()) endGame();
+    
+    if (detectCollision()) {
+      endGame();
+      return; 
+    }
+  } else {
+    drawForeground(); // Ensure foreground is still drawn if the game is not running
   }
 
-  drawForeground();
-  if (!gameOver) requestAnimationFrame(animate);
+  if (!gameOver) {
+    frameCount++; // Increment frame counter
+    requestAnimationFrame(animate); 
+  }
 }
- 
+                          
 // Initialize Game
 document.getElementById("overlay").style.display = "flex";
 });
