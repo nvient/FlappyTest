@@ -53,10 +53,10 @@ main {
 }
 
 #gameContainer {
-    position: relative; /* Needed for overlay alignment */
-    width: 70%; /* Adjust as needed for your design */
-    max-width: 800px; /* Prevent it from becoming too large */
-    margin: 0 auto; /* Center the game container */
+    position: relative; 
+    width: 70%;
+    max-width: 800px;
+    margin: 0 auto; 
 }
 
 #gameCanvas {
@@ -82,7 +82,7 @@ main {
     font-size: 20px;
     text-align: center;
     z-index: 5; /* Above canvas but below header */
-    pointer-events: none; /* Blocks clicks during overlay */
+    pointer-events: auto; /* Blocks clicks during overlay */
 }
 
 #startButton {
@@ -106,11 +106,11 @@ main {
     </header>
     <main>
         <div id="gameContainer">
+            <canvas id="gameCanvas"></canvas>
             <div id="overlay">
                 <p id="phishingFact"></p>
                 <button id="startButton">Start Game</button>
             </div>
-            <canvas id="gameCanvas"></canvas>
         </div>
     </main>
     <script src="flappyphish.js"></script>
