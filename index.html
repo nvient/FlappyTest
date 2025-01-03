@@ -107,6 +107,34 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
+      .additional-content {
+    width: 70%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0a3a5c;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+.additional-content p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.additional-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.additional-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.additional-content li {
+    margin-bottom: 10px;
+}
   </style>
 </head>
 <body>
@@ -119,7 +147,6 @@ main {
         </div>     
     </header>
     <main>
-        <p>Press the "Start" button to begin, and use your mouse button or spacebar to avoid the obstacles!</p>
             <canvas id="gameCanvas"></canvas>
             <div id="overlay">
                 <p id="phishingFact"></p>
@@ -127,6 +154,17 @@ main {
             </div>
         </div>
     </main>
+        <section class="additional-content">
+        <h2>Important Statement from Agent Coyle</h2>
+        <p>Cybersecurity is critical in keeping your data safe. Always verify links before clicking.</p>
+
+        <h2>Tips to Stay Safe</h2>
+        <ul>
+            <li>Hover over links to preview their destination.</li>
+            <li>Be cautious of unsolicited emails or messages.</li>
+            <li>Keep your software and antivirus tools up to date.</li>
+        </ul>
+    </section>
     <script src="flappyphish.js"></script>
 </body>
 </html>
