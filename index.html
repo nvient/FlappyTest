@@ -18,6 +18,7 @@ html, body {
     display: flex;
     flex-direction: column; /* Stacks header above main */
     height: 100%;
+    padding-bottom: 20px;
 }
 
 .header {
@@ -72,7 +73,9 @@ main {
     position: relative;
     flex: 1; /* Main section takes up remaining height */
     width: 100%;
+    margin-top: 50px;
 }
+      
 #gameCanvas {
     display: block;
     width: 70%;
@@ -107,16 +110,18 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
-      .additional-content {
+
+.additional-content {
     width: 70%;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 50px auto; /* Space around the additional content */
     padding: 20px;
     background-color: #0a3a5c;
     color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
 .additional-content p {
     font-size: 1rem;
     margin-bottom: 10px;
