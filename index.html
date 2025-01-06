@@ -66,7 +66,13 @@ html, body {
 .header-text {
     flex-grow: 1;
 }
-
+.section-title {
+    font-size: 2rem;            /* Standardize size across sections */
+    color: #308c83;            /* Consistent color */
+    text-transform: uppercase; /* Uniform capitalization */
+    margin-bottom: 20px;       /* Space below the title */
+    text-align: center;        /* Center-align all section titles */
+}
 main {
     display: flex;
     flex-direction: column;
@@ -139,14 +145,7 @@ main {
     color: #ffffff;
     border-radius: 10px;
 }
-      
-.statement-content h2 {
-    font-size: 2rem;
-    color: #308c83;
-    text-transform: uppercase;
-    margin-bottom: 30px; 
-}
-      
+         
 .statement-flex {
     display: flex;
     gap: 50px;
@@ -272,21 +271,21 @@ I deeply regret the confusion and inconvenience this caused and want to assure t
 </section>
 <section class="tips-section">
         <div class="card">
-            <div class="card-icon">🖱️</div> <!-- Replace with an actual icon/image -->
+            <div class="card-icon">🖱️</div>
             <div class="card-title">Think Before You Click</div>
             <div class="card-text">
                 Think before clicking on links in messages. Verify the sender and go to the website directly if you know it.
             </div>
         </div>
         <div class="card">
-            <div class="card-icon">🔍</div> <!-- Replace with an actual icon/image -->
+            <div class="card-icon">🔍</div>
             <div class="card-title">Confirm URLs From Search</div>
             <div class="card-text">
                 Before clicking a site from a search engine, run it through a safety checker like Norton’s Safe Web feature.
             </div>
         </div>
         <div class="card">
-            <div class="card-icon">⌨️</div> <!-- Replace with an actual icon/image -->
+            <div class="card-icon">⌨️</div>
             <div class="card-title">Type Carefully</div>
             <div class="card-text">
                 If you are typing a URL from scratch, review your typing before clicking “enter.” One letter off could lead you to a scammer’s spoofed website.
