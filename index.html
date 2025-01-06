@@ -21,7 +21,13 @@ html, body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
     box-sizing: border-box; /* Include padding in width/height */
 }
-
+      
+.container {
+    max-width: 1200px; 
+    margin: 0 auto;   
+    padding: 0 20px;
+}
+      
 .header {
     display: flex;
     align-items: center;
@@ -102,6 +108,10 @@ main {
 }
       
 @media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
     .header-image {
         max-width: 100px; /* Smaller size for mobile */
         max-height: 100px;
@@ -112,6 +122,7 @@ main {
   </style>
 </head>
 <body>
+    <div class="container">
     <header class="header">
         <img src="CybersecurityAgency.png" alt="Cybersecurity Agency" class="header-image">
         <div class="header-text">
@@ -127,6 +138,6 @@ main {
             <p>I am so sorry for making this horrible mistake.</p>
         </section>
     </main>
-    <script src="flappyphish.js"></script>
+    </div>
 </body>
 </html>
