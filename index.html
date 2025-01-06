@@ -78,14 +78,18 @@ main {
 }
 
 .additional-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
     width: 90%; /* More responsive width */
     max-width: 800px;
     margin: 50px auto; /* Center content */
     padding: 20px;
-    background-color: #0a3a5c;
     color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .additional-content p {
@@ -106,6 +110,12 @@ main {
 .additional-content li {
     margin-bottom: 10px;
 }
+ .additional-content img {
+     max-width: 300px;
+     border-radius: 8px;
+     flex-shrink: 0;
+}
+      
       
 @media (max-width: 600px) {
     .header {
@@ -135,6 +145,7 @@ main {
 <p>Press the space bar to avoid the obstacles!</p>
         <section class="additional-content">
             <h2>Public Statement from Agent Josh Coyle</h2>
+            <img src="Agent-Coyle.png">
             <p>Ladies and gentlemen, I am here today to address a difficult situation that has been keeping me up at night. It occurred during my recent undercover mission. As part of a covert operation to infiltrate a scam center, I published a fraudulent website designed by one of the scammers. Unfortunately, this meant their fraudulent site went live temporarily, targeting unsuspecting victims.
                 <br>
                 <br>
