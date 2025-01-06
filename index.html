@@ -18,7 +18,8 @@ html, body {
     display: flex;
     flex-direction: column; /* Stacks header above main */
     height: 100%;
-    padding-bottom: 20px;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    box-sizing: border-box; /* Include padding in width/height */
 }
 
 .header {
@@ -27,13 +28,14 @@ html, body {
     width: 100%;
     padding: 50px;
     padding-top: 100px;
-    z-index: 10; /* Ensure header is always above other content */
-    position: relative; /* Maintain its stacking order */
-    background-color: #082f49; /* Matches background color */
+    z-index: 10;
+    position: relative;
+    background-color: #082f49;
+    box-sizing: border-box;
 }
 
 .header-text h1 {
-    font-size: clamp(3rem, 5vw, 6rem);
+    font-size: clamp(2rem, 5vw, 4rem); /* Adjusted max size */
     font-weight: 700;
     margin: 0;
     text-transform: uppercase;
@@ -44,44 +46,33 @@ html, body {
     font-weight: 400;
     margin: 10px 0;
 }
-      
+
 .header-image {
-    max-width: 200px; /* Adjust as needed */
-    width:auto;
+    max-width: 100%; /* Prevent overflow */
     height: auto;
     margin-right: 20px;
-    flex-shrink: 0; /* Prevent image from shrinking */
+    flex-shrink: 0;
 }
 
 .header-text {
     flex-grow: 1;
 }
-@media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        text-align: center;
-    }
-    .header-image {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-}
+
 main {
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: left;
     position: relative;
-    flex: 1; /* Main section takes up remaining height */
+    flex: 1;
     width: 100%;
     margin-top: 50px;
-    margin-left: 50px;
 }
 
 .additional-content {
-    width: 70%;
+    width: 90%; /* More responsive width */
     max-width: 800px;
-    margin: 50px auto; /* Space around the additional content */
+    margin: 50px auto; /* Center content */
     padding: 20px;
     background-color: #0a3a5c;
     color: #ffffff;
