@@ -48,12 +48,14 @@ html, body {
 }
 
 .header-image {
-    max-width: 100%; /* Prevent overflow */
+    max-width: 300px; 
+    max-height: 300px;
+    width: auto;    
     height: auto;
     margin-right: 20px;
-    flex-shrink: 0;
+    flex-shrink: 0;    /* Prevent shrinking */
 }
-
+      
 .header-text {
     flex-grow: 1;
 }
@@ -97,6 +99,15 @@ main {
 
 .additional-content li {
     margin-bottom: 10px;
+}
+      
+@media (max-width: 600px) {
+    .header-image {
+        max-width: 100px; /* Smaller size for mobile */
+        max-height: 100px;
+        margin-bottom: 10px; /* Add spacing below the image */
+        margin-right: 0;     /* Remove right margin for centering */
+    }
 }
   </style>
 </head>
