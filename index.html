@@ -21,24 +21,20 @@ html, body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
     box-sizing: border-box; /* Include padding in width/height */
 }
-      
+
 .container {
-    max-width: 1200px; 
-    margin: 0 auto;   
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 0 20px;
 }
-      
+
 .header {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 50px;
-    padding-top: 100px;
-    z-index: 10;
-    position: relative;
+    padding: 50px 20px;
     background-color: #082f49;
     box-sizing: border-box;
-    margin-top: 50px;
 }
 
 .header-text h1 {
@@ -55,42 +51,47 @@ html, body {
 }
 
 .header-image {
-    max-width: 300px; 
+    max-width: 300px;
     max-height: 300px;
-    width: auto;    
+    width: auto;
     height: auto;
     margin-right: 20px;
-    flex-shrink: 0;    /* Prevent shrinking */
+    flex-shrink: 0; /* Prevent shrinking */
 }
-      
+
 .header-text {
     flex-grow: 1;
 }
+
 .section-title {
-    font-size: 2rem;            /* Standardize size across sections */
+    font-size: 2rem;            /* Standardized size across sections */
     color: #308c83;            /* Consistent color */
     text-transform: uppercase; /* Uniform capitalization */
-    margin-bottom: 20px;       /* Space below the title */
-    text-align: center;        /* Center-align all section titles */
+    margin: 40px 0 20px;       /* Equal top and bottom spacing */
+    text-align: center;
 }
+
 main {
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    align-items: left;
-    position: relative;
-    flex: 1;
+    align-items: center;
     width: 100%;
 }
-      
+
+.game-instructions {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px; /* Spacing below game instructions */
+}
+
 .game-container {
     position: relative;
     width: 100%;
-    height: 600px;  /* Adjust this value to match your game's height */
+    height: 600px; /* Adjust this value to match your game's height */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin-bottom: 40px; /* Spacing between game container and additional content */
     overflow: hidden;
 }
 
@@ -136,19 +137,19 @@ main {
     cursor: pointer;
     margin-top: 20px;
 }
-      
+
 .additional-content {
     width: 90%;
     max-width: 800px;
-    margin: 10px auto; /* Center content */
+    margin: 20px auto; /* Consistent spacing */
     padding: 20px;
     color: #ffffff;
     border-radius: 10px;
 }
-         
+
 .statement-flex {
     display: flex;
-    gap: 50px;
+    gap: 30px; /* Reduced gap for balanced layout */
     align-items: flex-start;
 }
 
@@ -162,73 +163,59 @@ main {
     margin: 0; /* Remove default paragraph margins */
     font-size: 1rem;
     line-height: 1.6;
-}   
-      
-.game-instructions {
+}
+
+.tips-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+.card {
+    background-color: #308c83;
+    border: 2px solid #308c83;
+    border-radius: 20px;
     text-align: center;
+    padding: 20px;
+}
+
+.card-icon {
+    font-size: 40px;
+    color: #ffffff; /* Updated to white for consistency */
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
     color: #ffffff;
     margin-bottom: 10px;
 }
 
-.game-instructions p {
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin: 0;
-    font-family: 'Lato', sans-serif;
+.card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffff;
 }
-    .tips-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 40px;
-        }
 
-        .card {
-            background-color: #308c83;
-            border: 2px solid #308c83;
-            border-radius: 20px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .card-icon {
-            font-size: 40px;
-            color: #308c83;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            line-height: 1.5;
-            color: #ffffff;
-        } 
-.section-title {
-    font-size: 2rem; /* Match the font size */
-    color: #308c83; /* Match the color */
-    text-transform: uppercase; /* Match text transformation */
-    margin-bottom: 20px; /* Add some spacing below */
-    text-align: center; /* Center the title */
-}
 @media (max-width: 600px) {
     .header {
         flex-direction: column;
         text-align: center;
     }
     .header-image {
-        max-width: 100px; /* Smaller size for mobile */
+        max-width: 100px;
         max-height: 100px;
-        margin-bottom: 10px; /* Add spacing below the image */
-        margin-right: 0;     /* Remove right margin for centering */
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    .tips-section {
+        grid-template-columns: 1fr; /* Stack tips for smaller screens */
     }
 }
+
   </style>
 </head>
 <body>
