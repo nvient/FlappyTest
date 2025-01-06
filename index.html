@@ -162,6 +162,19 @@ main {
     font-size: 1rem;
     line-height: 1.6;
 }   
+      
+.game-instructions {
+    text-align: center;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+.game-instructions p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
      
 @media (max-width: 600px) {
     .header {
@@ -188,7 +201,9 @@ main {
         </div>     
     </header>
     <main>
-<p>Press the space bar to avoid the obstacles!</p>
+<div class="game-instructions">
+    <p>Press the space bar to avoid the obstacles!</p>
+</div>
         <div class="game-container">
     <div id="overlay">
         <p id="phishingFact"></p>
