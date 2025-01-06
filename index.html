@@ -76,7 +76,60 @@ main {
     width: 100%;
     margin-top: 50px;
 }
+.game-container {
+    position: relative;
+    width: 100%;
+    height: 600px;  /* Adjust this value to match your game's height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    background-color: #d8dbe2;
+    overflow: hidden;
+}
 
+#gameCanvas {
+    display: block;
+    border: 0px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+#phishingFact {
+    margin-bottom: 20px;
+}
+
+#startButton {
+    pointer-events: auto;
+    background-color: #308c83;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
 .additional-content {
     width: 90%;
     max-width: 800px;
@@ -137,6 +190,13 @@ main {
     </header>
     <main>
 <p>Press the space bar to avoid the obstacles!</p>
+        <div class="game-container">
+    <div id="overlay">
+        <p id="phishingFact"></p>
+        <button id="startButton">Start Game</button>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+</div>
         <section class="additional-content">
             <div class="statement-content">
                 <h2>Public Statement from Agent Josh Coyle</h2>
@@ -152,5 +212,6 @@ I deeply regret the confusion and inconvenience this caused and want to assure t
         </section>
     </main>
     </div>
+    <script src="flappyphish.js"></script>
 </body>
 </html>
