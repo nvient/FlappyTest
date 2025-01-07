@@ -118,7 +118,6 @@ section {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 20px;
     text-align: center;
@@ -144,14 +143,6 @@ section {
     margin-top: 20px;
 }
 
-.additional-content {
-    width: 90%;
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    color: #ffffff;
-}
-
 .statement-flex {
     display: flex;
     gap: 30px;
@@ -163,7 +154,7 @@ section {
 
 .statement-flex img {
     max-width: 300px;
-    border-radius: 8px;
+    border-radius: 20px;
     flex-shrink: 0;
 }
 
@@ -174,26 +165,24 @@ section {
 }
 
 .tips-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+	width: 100%;
+	max-width: 1200px;
+    margin: 30px auto;
     padding: 30px 20px;
-    margin: 30px 0;
+	text-align: center;
 }
 .tips-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    padding: 0 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin-top: 20px;
 }
 .card {
     background-color: #308c83;
-    border: 2px solid #308c83;
     border-radius: 20px;
     text-align: center;
     padding: 20px;
+    color: #ffffff;
 }
 
 .card-icon {
@@ -206,14 +195,12 @@ section {
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: #ffffff;
     margin-bottom: 10px;
 }
 
 .card-text {
     font-size: 1rem;
     line-height: 1.5;
-    color: #ffffff;
 }
 
 @media (max-width: 600px) {
@@ -293,6 +280,7 @@ I deeply regret the confusion and inconvenience this caused and want to assure t
                 If you are typing a URL from scratch, review your typing before clicking “enter.” One letter off could lead you to a scammer’s spoofed website.
             </div>
         </div>
+	</div>
     </section>
     </main>
     </div>
