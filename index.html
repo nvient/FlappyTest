@@ -74,8 +74,14 @@ main {
 section {
 	width: 100%;
 	margin: 60px 0;
+	transform: translateY(20px);
+        transition: all 1s ease-out;
 }
-	  
+section.animate {
+        opacity: 1;
+        transform: translateY(0);
+        }
+  
 .section-title {
     font-size: 2rem;
     color: #308c83;
@@ -297,5 +303,22 @@ I deeply regret the confusion and inconvenience this caused and want to assure t
     </main>
     </div>
     <script src="flappyphish.js"></script>
+	<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll("section");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("animate");
+                    }
+                });
+            });
+
+            sections.forEach((section) => {
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 </html>
